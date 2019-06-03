@@ -174,6 +174,26 @@ html, body {
     font-size: 12px;
   }
 
+  .toc-list-h3 {
+  display: none;
+  background-color: $nav-subitem-bg;
+}
+
+.toc-h3 {
+  padding-left: $nav-padding + $nav-padding + $nav-indent;
+  font-size: 12px;
+}
+
+.toc-list-h4 {
+  display: none;
+  background-color: $nav-subitem-bg;
+}
+
+.toc-h4 {
+  padding-left: $nav-padding + $nav-padding + $nav-padding + $nav-indent;
+  font-size: 12px;
+}
+
   .toc-footer {
     padding: 1em 0;
     margin-top: 1em;
@@ -256,25 +276,7 @@ html, body {
 
   padding-bottom: 1px; // prevent margin overflow
 
-  // The dark box is what gives the code samples their dark background.
-  // It sits essentially under the actual content block, which has a
-  // transparent background.
-  // I know, it's hackish, but it's the simplist way to make the left
-  // half of the content always this background color.
-  .dark-box {
-    width: $examples-width;
-    background-color: $examples-bg;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-  }
 
-  .lang-selector {
-    position: fixed;
-    z-index: 50;
-    border-bottom: 5px solid $lang-select-active-bg;
-  }
 }
 
 .lang-selector {
@@ -454,6 +456,7 @@ html, body {
     border-radius: 3px;
     @extend %break-words;
     @extend %code-font;
+
   }
 
   pre>code {
@@ -515,11 +518,9 @@ html, body {
     background-color: $code-bg;
     color: #fff;
 
-    margin: 0;
-    width: $examples-width;
+    margin: 20px;
+    width: auto;
 
-    float:right;
-    clear:right;
 
     box-sizing: border-box;
 
@@ -541,13 +542,7 @@ html, body {
     padding: 2em $main-padding;
   }
 
-  blockquote {
-    &>p {
-      background-color: $code-annotation-bg;
-      padding: $code-annotation-padding 2em;
-      color: #eee;
-    }
-  }
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -580,9 +575,6 @@ html, body {
 }
 
 @media (max-width: $phone-width) {
-  .dark-box {
-    display: none;
-  }
 
   %left-col {
     margin-right: 0;
