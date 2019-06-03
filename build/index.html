@@ -1,0 +1,994 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Documentation</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all_nosearch.js"></script>
+  </head>
+
+  <body class="index" data-languages="[]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/ffiec-logo.svg" class="logo" alt="Ffiec logo" />
+      <ul id="toc" class="toc-list-h1">
+          <li>
+            <a href="#hmda-api-documentation" class="toc-h1 toc-link" data-title="HMDA API Documentation">HMDA API Documentation</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#introduction" class="toc-h2 toc-link" data-title="Introduction">Introduction</a>
+                  </li>
+                  <li>
+                    <a href="#the-hmda-platform" class="toc-h2 toc-link" data-title="The HMDA Platform">The HMDA Platform</a>
+                  </li>
+                  <li>
+                    <a href="#dependencies" class="toc-h2 toc-link" data-title="Dependencies">Dependencies</a>
+                  </li>
+                  <li>
+                    <a href="#project-structure" class="toc-h2 toc-link" data-title="Project structure">Project structure</a>
+                  </li>
+                  <li>
+                    <a href="#building-and-running" class="toc-h2 toc-link" data-title="Building and Running">Building and Running</a>
+                  </li>
+                  <li>
+                    <a href="#resources" class="toc-h2 toc-link" data-title="Resources">Resources</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#platform-public-api" class="toc-h1 toc-link" data-title="Platform Public API">Platform Public API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#institutions" class="toc-h2 toc-link" data-title="Institutions">Institutions</a>
+                  </li>
+                  <li>
+                    <a href="#ts-parsing-and-validation" class="toc-h2 toc-link" data-title="TS Parsing and Validation">TS Parsing and Validation</a>
+                  </li>
+                  <li>
+                    <a href="#lar-parsing-and-validation" class="toc-h2 toc-link" data-title="LAR Parsing and Validation">LAR Parsing and Validation</a>
+                  </li>
+                  <li>
+                    <a href="#hmda-file-parsing-and-validation" class="toc-h2 toc-link" data-title="HMDA File Parsing and Validation">HMDA File Parsing and Validation</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#check-digit-uli" class="toc-h1 toc-link" data-title="Check Digit(ULI)">Check Digit(ULI)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#check-digit-generation" class="toc-h2 toc-link" data-title="Check digit generation">Check digit generation</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#filers-api" class="toc-h1 toc-link" data-title="Filers API">Filers API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#filters" class="toc-h2 toc-link" data-title="Filters">Filters</a>
+                  </li>
+              </ul>
+          </li>
+      </ul>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='hmda-api-documentation'>HMDA API Documentation</h1><h2 id='introduction'>Introduction</h2>
+<p>For more information on HMDA, checkout the <a href="http://www.consumerfinance.gov/data-research/hmda/learn-more">About HMDA page</a> on the CFPB website.</p>
+<h2 id='the-hmda-platform'>The HMDA Platform</h2>
+<p>The new HMDA Platform (“V2”) was totally updated over the past year to utilize a more flexible and resilient approach (Kubernetes Microservices) in order to better serve our customers. This repository contains the code for the entirety of the HMDA platform backend. This platform has been designed to accommodate the needs of the HMDA filing process by financial institutions, as well as the data management and publication needs of the HMDA data asset.</p>
+
+<p>The HMDA Platform uses sbt&#39;s multi-project builds, each project representing a specific task. The platform is an Akka Cluster application that can be deployed on a single node or as a distributed application. For more information on how Akka Cluster is used, see the documentation <a href="Documents/cluster.md">here</a></p>
+
+<p>The HMDA Platform is composed of the following modules:</p>
+<h3 id='parser-js-jvm'>Parser (JS/JVM)</h3>
+<p>Module responsible for reading incoming data and making sure that it conforms to the HMDA File Specification</p>
+<h3 id='data-validation'>Data Validation</h3>
+<p>Module responsible for validating incoming data by executing validation rules as per the Edit Checks documentation</p>
+<h3 id='persistence'>Persistence</h3>
+<p>Module responsible for persisting information into the system. It becomes the system of record for HMDA data</p>
+<h3 id='cluster'>Cluster</h3>
+<p>Module responsible for managing the various cluster roles, as well as starting the Hmda Platform</p>
+<h3 id='api'>API</h3>
+<p>This module contains both public APIs for HMDA data for general use by third party clients and web applications, as well as endpoints for receiving data and providing information about the filing process for Financial Institutions</p>
+<h3 id='api-model'>API Model</h3>
+<p>This module contains objects and JSON protocols for use by the API project</p>
+<h3 id='query'>Query</h3>
+<p>This module is responsible for interacting with the back-end database, as well as conversion between model objects and database objects.</p>
+<h3 id='panel'>Panel</h3>
+<p>This module is responsible for parsing and persisting a CSV-format panel file</p>
+<h3 id='model-js-jvm'>Model (JS/JVM)</h3>
+<p>This module is responsible for maintaining the objects used in our platform</p>
+<h3 id='census'>Census</h3>
+<p>This module is responsible for geographic translation (e.g. state number -&gt; state code)</p>
+<h3 id='publication'>Publication</h3>
+<p>This module generates Aggregate and Disclosure reports, as required by HMDA statute.</p>
+<h2 id='dependencies'>Dependencies</h2><h3 id='java-9-sdk'>Java 9 SDK</h3>
+<p>The HMDA Platform runs on the Java Virtual Machine (JVM), and requires the Java 9 JDK to build and run the project. This project is currently being built and tested on <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">Oracle JDK 9</a>. See <a href="http://docs.oracle.com/javase/9/docs/technotes/guides/install/install_overview.html">Oracle&#39;s JDK Install Overview</a> for install instructions.</p>
+
+<p>The HMDA Platform should also run on JDK 8.</p>
+<h3 id='scala'>Scala</h3>
+<p>The HMDA Platform is written in <a href="http://www.scala-lang.org/">Scala</a>. To build it, you will need to <a href="http://www.scala-lang.org/download/">download</a> and <a href="http://www.scala-lang.org/download/install.html">install</a> Scala 2.12.x</p>
+
+<p>In addition, you&#39;ll need Scala&#39;s interactive build tool <a href="https://www.scala-sbt.org/">sbt</a>. Please refer to sbt&#39;s <a href="https://www.scala-sbt.org/1.x/docs/Setup.html">installation instructions</a> to get started.</p>
+<h2 id='project-structure'>Project structure</h2>
+<p>The HMDA Platform is divided into individual projects, each responsible for a subset of the functionality, as follows:</p>
+<h3 id='hmda-platform'>hmda-platform</h3>
+<p>This is the main filing application, exposing the APIs necessary to upload, validate and store HMDA files.</p>
+<h3 id='check-digit'>check-digit</h3>
+<p>Microservice that exposes functionality to create a check digit from a loan id, and to validate <code>Univeral Loan Identifiers</code></p>
+<h2 id='building-and-running'>Building and Running</h2><h3 id='running-from-the-sbt-prompt'>Running from the SBT prompt</h3>
+<ul>
+<li>To run the project from the <code>SBT</code> prompt for development purposes, issue the following commands on a terminal:</li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">$ </span>sbt
+<span class="gp">sbt:root&gt; </span>project hmda-platform
+<span class="gp">sbt:hmda-platform&gt; </span>reStart
+</code></pre><h3 id='building-and-running-the-jar'>Building and running the .jar</h3>
+<ul>
+<li>To build JVM artifacts, from the sbt prompt first choose the project you want to build and use the assembly command:</li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="gp">$ </span>sbt
+<span class="gp">sbt:root&gt; </span>project check-digit
+sbt:check-digit&gt;assembly
+</code></pre>
+<p>This task will create a <code>fat jar</code>, which can be executed on any <code>JDK9</code> compliant <code>JVM</code>:</p>
+
+<p><code>java -jar target/scala-2.12/check-digit.jar</code></p>
+<h3 id='building-and-running-the-docker-image'>Building and running the Docker image</h3>
+<ul>
+<li>To build a <code>Docker</code> image that runs the <code>hmda-platform</code> as a single node cluster, from the sbt prompt:</li>
+</ul>
+<pre class="highlight shell tab-shell"><code><span class="nv">$sbt</span>
+<span class="gp">sbt:root&gt; </span>project hmda-platform
+<span class="gp">sbt:hmda-platform&gt; </span>docker:publishLocal
+</code></pre>
+<p>This task will create a <code>Docker</code> image. To run a container with the <code>HMDA Platform</code> filing application as a single node cluster:</p>
+
+<p><code>docker run --rm -ti -p 8080:8080 -p 8081:8081 -p 8082:8082 -p 19999:19999 hmda/hmda-platform</code></p>
+
+<p>The same approach can be followed to build and run Docker containers for the other microservices that form the HMDA Platform.</p>
+
+<p>Certain environment variables can be passed in to set the log level of the micro service</p>
+<pre class="highlight plaintext"><code>ZOOKEEPER_LOG_LEVEL (Defaulted to WARN)
+KAFKA_LOG_LEVEL (Defaulted to INFO)
+CASSANDRA_LOG_LEVEL (Defaulted to INFO)
+PLATFORM_LOG_LEVEL (Defaulted to WARN)
+INSTITUTION_LOG_LEVEL (Defaulted to INFO)
+CHECKDIGIT_LOG_LEVEL (Defaulted to DEBUG)
+</code></pre><h3 id='running-the-application-in-clustered-mode-mesos'>Running the application in clustered mode (mesos)</h3>
+<ul>
+<li>The script in the <a href="../../mesos">mesos</a> folder describes the deployment through <a href="https://mesosphere.github.io/marathon/">Marathon</a> on a DCOS / Mesos cluster.</li>
+</ul>
+
+<p>For a 3 node cluster deployed through the <a href="https://docs.mesosphere.com/1.10/cli/">DC/OS CLI</a>, the following command can be used:</p>
+<pre class="highlight shell tab-shell"><code>dcos marathon app add mesos/hmda-platform-host-mode.json
+</code></pre>
+<p>For more details, please refer to the <a href="https://mesosphere.github.io/marathon/">Marathon Documentation</a></p>
+<h2 id='resources'>Resources</h2><h3 id='api-documentation'>API Documentation</h3>
+<ul>
+<li><a href="#hmda-platform-public-api">HMDA Platform Public API Documentation</a></li>
+<li><a href="api/uli.md">HMDA Platform ULI API Documentation</a></li>
+<li><a href="api/filers-api.md">HMDA Platform Filers API Documentation</a></li>
+</ul>
+<h3 id='development'>Development</h3>
+<ul>
+<li><a href="development/kubernetes.md">Local Kubernetes CI/CD</a></li>
+</ul>
+<h3 id='data-specifications'>Data Specifications</h3>
+<ul>
+<li><a href="spec/2018_File_Spec_TS.csv">TS File Spec</a></li>
+<li><a href="spec/2018_File_Spec_LAR.csv">LAR File Spec</a></li>
+<li><a href="spec/2018_Institution_Data_Model_Spec.csv">Institution Data Model Spec</a></li>
+</ul>
+<h1 id='platform-public-api'>Platform Public API</h1>
+<p>This documentation describes de public HMDA Platform HTTP API</p>
+<h2 id='institutions'>Institutions</h2><h3 id='search-option-1'>Search Option 1</h3>
+<ul>
+<li><p><code>/institutions?domain=&lt;domain&gt;</code></p>
+
+<ul>
+<li><code>GET</code> - Returns a list of institutions filtered by their email domain. If none are found, an HTTP 404 error code (not found) is returned</li>
+</ul></li>
+</ul>
+
+<p>Example response, with HTTP code 200:</p>
+<pre class="highlight json tab-json"><code><span class="w">   </span><span class="p">{</span><span class="w">
+     </span><span class="s2">"institutions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"activityYear"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2019</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"LEI"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"54930084UKLVMY22DS16"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"agency"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"institutionType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"institutionId2017"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"taxId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"99-00000000"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"rssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"emailDomains"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"bank0.com"</span><span class="p">],</span><span class="w">
+         </span><span class="s2">"respondent"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"xvavjuitZa"</span><span class="p">,</span><span class="w">
+           </span><span class="s2">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NC"</span><span class="p">,</span><span class="w">
+           </span><span class="s2">"city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Raleigh"</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"parent"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="s2">"idRssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1520162208</span><span class="p">,</span><span class="w">
+           </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Parent Name"</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"assets"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"otherLenderCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1406639146</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"topHolder"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="s2">"idRssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">442825905</span><span class="p">,</span><span class="w">
+           </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TopHolder Name"</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"hmdaFiler"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+     </span><span class="p">]</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='search-option-2'>Search Option 2</h3>
+<ul>
+<li><p><code>/institutions?domain=&lt;domain&gt;&amp;lei=&lt;lei&gt;&amp;respondentName=&lt;respondentName&gt;&amp;taxId=&lt;taxId&gt;</code></p>
+
+<ul>
+<li><code>GET</code> - Returns a list of institutions filtered by field values. If none are found, an HTTP 404 error code (not found) is returned</li>
+</ul></li>
+</ul>
+
+<p>Example response, with HTTP code 200:</p>
+<pre class="highlight json tab-json"><code><span class="w">   </span><span class="p">{</span><span class="w">
+     </span><span class="s2">"institutions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"activityYear"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2019</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"LEI"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"54930084UKLVMY22DS16"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"agency"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"institutionType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"17"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"institutionId2017"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"taxId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"99-00000000"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"rssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Pb"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"emailDomains"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"email@bank0.com"</span><span class="p">],</span><span class="w">
+         </span><span class="s2">"respondent"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"xvavjuitZa"</span><span class="p">,</span><span class="w">
+           </span><span class="s2">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NC"</span><span class="p">,</span><span class="w">
+           </span><span class="s2">"city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Raleigh"</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"parent"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="s2">"idRssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1520162208"</span><span class="p">,</span><span class="w">
+           </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Parent Name"</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"assets"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"450"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"otherLenderCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1406639146"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"topHolder"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+           </span><span class="s2">"idRssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"442825905"</span><span class="p">,</span><span class="w">
+           </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TopHolder Name"</span><span class="w">
+         </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"hmdaFiler"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+     </span><span class="p">]</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='search-option-3'>Search Option 3</h3>
+<ul>
+<li><p><code>/institutions/&lt;institutionID&gt;</code></p>
+
+<ul>
+<li><code>GET</code></li>
+</ul>
+
+<p>Retrieves the details of an institution. If not found, returns HTTP code 404</p>
+
+<p>Example Response with HTTP code 200, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"activityYear"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2019</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"LEI"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"54930084UKLVMY22DS16"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"agency"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"institutionType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">17</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"institutionId2017"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"taxId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"99-00000000"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"rssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">12345</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"emailDomains"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"bank0.com"</span><span class="p">],</span><span class="w">
+  </span><span class="s2">"respondent"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"xvavjuitZa"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"state"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"NC"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"city"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Raleigh"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"parent"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"idRssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1520162208</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Parent Name"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"assets"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">450</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"otherLenderCode"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1406639146</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"topHolder"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"idRssd"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">442825905</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TopHolder Name"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"hmdaFiler"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">     
+</span></code></pre></li>
+</ul>
+<h2 id='ts-parsing-and-validation'>TS Parsing and Validation</h2><h3 id='parsing'>Parsing</h3>
+<ul>
+<li><p><code>/ts/parse</code></p>
+
+<ul>
+<li><code>POST</code> Returns a <code>JSON</code> representation of a TS, or a list of errors if the TS fails to parse</li>
+</ul>
+
+<p>Example body, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"ts"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"1|Bank 0|2018|4|Jane|111-111-1111|janesmith@bank.com|123 Main St|Washington|DC|20001|9|100|99-999999|10Bx939c5543TqA1144M"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Example response, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"institutionName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Bank 0"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"year"</span><span class="p">:</span><span class="w"> </span><span class="mi">2018</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"quarter"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"contact"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jane"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"phone"</span><span class="p">:</span><span class="w"> </span><span class="s2">"111-111-1111"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"janesmith@bank.com"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"address"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Main St"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Washington"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DC"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20001"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"agency"</span><span class="p">:</span><span class="w"> </span><span class="mi">9</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"totalLines"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"taxId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"99-999999"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"LEI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></li>
+</ul>
+<h3 id='validation'>Validation</h3>
+<ul>
+<li><p><code>/ts/validate</code></p>
+
+<ul>
+<li><code>POST</code> - Returns a <code>JSON</code> representation of a TS, or a list of edits if the TS fails to validate</li>
+</ul>
+
+<p>Example body, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"ts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1|Bank1|2018|4|testname|555-555-5555|test@email.com|1234 Hocus Potato Way|Testtown|UT|84096|9|1000|02-1234567|BANK1LEIFORTEST12345"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Example successful response, in <code>JSON</code> format: See above</p>
+
+<p>Example failed response, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"syntactical"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"S300"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"validity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"V600"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"V601"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"quality"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></li>
+</ul>
+<h2 id='lar-parsing-and-validation'>LAR Parsing and Validation</h2><h3 id='parsing-2'>Parsing</h3>
+<ul>
+<li><p><code>/lar/parse</code></p>
+
+<ul>
+<li><code>POST</code> - Returns a <code>JSON</code> representation of a LAR, or a list of errors if the LAR fails to parse</li>
+</ul>
+
+<p>Example body, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"lar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|1|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|9|1|9|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500|1|1|5|NA|1|1|12345|1|1|1|1|1||1|1|1|1|1||1|1|1"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Example response, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"larIdentifier"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"LEI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"NMLSRIdentifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12345"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"loan"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"ULI"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M999143X38"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"applicationDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"20180721"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"loanType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"loanPurpose"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"constructionMethod"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"occupancy"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="mi">110500</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"loanTerm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"360"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"rateSpread"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.428"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"interestRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4.125"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"prepaymentPenaltyTerm"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"debtToIncomeRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"42.95"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"loanToValueRatio"</span><span class="p">:</span><span class="w"> </span><span class="s2">"80.05"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"introductoryRatePeriod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"larAction"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"preapproval"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"actionTakenType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"actionTakenDate"</span><span class="p">:</span><span class="w"> </span><span class="mi">20180721</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"geography"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"street"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123 Main St"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"city"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Beverly Hills"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CA"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"zipCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"90210"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"county"</span><span class="p">:</span><span class="w"> </span><span class="s2">"06037"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"tract"</span><span class="p">:</span><span class="w"> </span><span class="s2">"06037264000"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"applicant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"ethnicity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"ethnicity1"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicity2"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicity3"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicity4"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicity5"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"otherHispanicOrLatino"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicityObserved"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"race1"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"race2"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"race3"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"race4"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"race5"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"otherNativeRace"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"otherAsianRace"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"otherPacificIslanderRace"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"raceObserved"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"sex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"sex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"sexObserved"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"age"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"creditScore"</span><span class="p">:</span><span class="w"> </span><span class="mi">750</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"creditScoreType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"otherCreditScoreModel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"coApplicant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"ethnicity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"ethnicity1"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicity2"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicity3"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicity4"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicity5"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"otherHispanicOrLatino"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"ethnicityObserved"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"race"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"race1"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"race2"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"race3"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"race4"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"race5"</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"otherNativeRace"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"otherAsianRace"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"otherPacificIslanderRace"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"raceObserved"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"sex"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"sex"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"sexObserved"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"age"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"creditScore"</span><span class="p">:</span><span class="w"> </span><span class="mi">750</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"creditScoreType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"otherCreditScoreModel"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"income"</span><span class="p">:</span><span class="w"> </span><span class="s2">"36"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"purchaserType"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"hoepaStatus"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lienStatus"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"denial"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"denialReason1"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"denialReason2"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"denialReason3"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"denialReason4"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"otherDenialReason"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"loanDisclosure"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"totalLoanCosts"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2399.04"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"totalPointsAndFees"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"originationCharges"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"discountPoints"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"lenderCredits"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"nonAmortizingFeatures"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"balloonPayment"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"interestOnlyPayment"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"negativeAmortization"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"otherNonAmortizingFeatures"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"property"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"propertyValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"350500.0"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"manufacturedHomeSecuredProperty"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"manufacturedHomeLandPropertyInterest"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"totalUnits"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"multiFamilyAffordableUnits"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NA"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"applicationSubmission"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"payableToInstitution"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"AUS"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"aus1"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"aus2"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"aus3"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"aus4"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"aus5"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"otherAUS"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"ausResult"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"ausResult1"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ausResult2"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ausResult3"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ausResult4"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"ausResult5"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"otherAusResult"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"reverseMortgage"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"lineOfCredit"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"businessOrCommercialPurpose"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></li>
+</ul>
+<h3 id='validation-2'>Validation</h3>
+<ul>
+<li><p><code>/lar/validate</code></p>
+
+<ul>
+<li><code>POST</code> - Returns a <code>JSON</code> representation of a LAR, or a list of edits if the LAR fails to validate</li>
+</ul>
+
+<p>Example body, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"lar"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|1|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|9|1|9|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500|1|1|5|NA|1|1|12345|1|1|1|1|1||1|1|1|1|1||1|1|1"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Example successful response, in <code>JSON</code> format: See above</p>
+
+<p>Example failed response, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"syntactical"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"validity"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"V619-1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"V619-2"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"V619-3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"V676-3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"V676-5"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"V677-2"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"quality"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="s2">"Q617"</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></li>
+</ul>
+<h2 id='hmda-file-parsing-and-validation'>HMDA File Parsing and Validation</h2><h3 id='parsing-3'>Parsing</h3>
+<ul>
+<li><p><code>/hmda/parse</code></p>
+
+<ul>
+<li><code>POST</code> - Parses a HMDA file. Returns list of errors per line in <code>JSON</code> format, if found.</li>
+</ul>
+
+<p>Example file:</p>
+<pre class="highlight plaintext"><code>1|Bank 0|2018|4|Jane|111-111-1111|janesmith@bank.com|123 Main St|Washington|DC|20001|9|100|99-999999|10Bx939c5543TqA1144M
+2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|A|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|9|1|9|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500|1|1|5|NA|1|1|12345|1|1|1|1|1||1|1|1|1|1||1|1|1
+</code></pre>
+<p>Example Response, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"validated"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"lineNumber"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"errors"</span><span class="p">:</span><span class="w"> </span><span class="s2">"loan type is not numeric"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></li>
+<li><p><code>/hmda/parse/csv</code></p>
+
+<ul>
+<li><code>POST</code> - Parses a HMDA file. Returns list of errors per line in <code>CSV</code> format, if found.</li>
+</ul>
+
+<p>Example file:</p>
+<pre class="highlight plaintext"><code>1|Bank 0|2018|4|Jane|111-111-1111|janesmith@bank.com|123 Main St|Washington|DC|20001|9|100|99-999999|10Bx939c5543TqA1144M
+2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|A|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|9|1|9|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500|1|1|5|NA|1|1|12345|1|1|1|1|1||1|1|1|1|1||1|1|1
+</code></pre>
+<p>Example response, in <code>CSV</code> format:</p>
+<pre class="highlight plaintext"><code>lineNumber|errors
+2|loan type is not numeric
+</code></pre></li>
+</ul>
+<h1 id='check-digit-uli'>Check Digit(ULI)</h1><h2 id='check-digit-generation'>Check digit generation</h2>
+<ul>
+<li><p><code>/uli/checkDigit</code></p>
+
+<ul>
+<li><code>POST</code> - Calculates check digit and full ULI from a loan id.</li>
+</ul></li>
+</ul>
+
+<p>Example payload, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"loanId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M999143X"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Example response:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"loanId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Cx939c5543TqA1144M999143X"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"checkDigit"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"uli"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Cx939c5543TqA1144M999143X10"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>A file with a list of Loan Ids can also be uploaded to this endpoint for batch check digit generation.</p>
+
+<p>Example file contents:</p>
+<pre class="highlight plaintext"><code>10Cx939c5543TqA1144M999143X
+10Bx939c5543TqA1144M999143X
+</code></pre>
+<p>Example response in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"loanIds"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"loanId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M999143X"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"checkDigit"</span><span class="p">:</span><span class="w"> </span><span class="mi">38</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"uli"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M999143X38"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"loanId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Cx939c5543TqA1144M999143X"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"checkDigit"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"uli"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Cx939c5543TqA1144M999143X10"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<ul>
+<li><p><code>/uli/checkDigit/csv</code></p>
+
+<ul>
+<li><code>POST</code> - calculates check digits for loan ids submitted as a file</li>
+</ul></li>
+</ul>
+
+<p>Example file contents:</p>
+<pre class="highlight plaintext"><code>10Cx939c5543TqA1144M999143X
+10Bx939c5543TqA1144M999143X
+</code></pre>
+<p>Example response in <code>CSV</code> format:</p>
+<pre class="highlight plaintext"><code>loanId,checkDigit,uli
+10Bx939c5543TqA1144M999143X,38,10Bx939c5543TqA1144M999143X38
+10Cx939c5543TqA1144M999143X,10,10Cx939c5543TqA1144M999143X10
+</code></pre><h3 id='uli-validation'>ULI Validation</h3>
+<ul>
+<li><p><code>/uli/validate</code></p>
+
+<ul>
+<li><code>POST</code> - Validates a ULI (correct check digit)</li>
+</ul></li>
+</ul>
+
+<p>Example payload, in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"uli"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M999143X38"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>Example response:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"isValid"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>A file with a list of ULIs can also be uploaded to this endpoint for batch ULI validation.</p>
+
+<p>Example file contents:</p>
+<pre class="highlight plaintext"><code>10Cx939c5543TqA1144M999143X10
+10Bx939c5543TqA1144M999143X38
+10Bx939c5543TqA1144M999133X38
+</code></pre>
+<p>Example response in <code>JSON</code> format:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"ulis"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"uli"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Cx939c5543TqA1144M999143X10"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"isValid"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"uli"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M999143X38"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"isValid"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"uli"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10Bx939c5543TqA1144M999133X38"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"isValid"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<ul>
+<li><p><code>/uli/validate/csv</code></p>
+
+<ul>
+<li><code>POST</code> - Batch validation of ULIs</li>
+</ul></li>
+</ul>
+
+<p>Example file contents:</p>
+<pre class="highlight plaintext"><code>10Cx939c5543TqA1144M999143X10
+10Bx939c5543TqA1144M999143X38
+10Bx939c5543TqA1144M999133X38
+</code></pre>
+<p>Example response in <code>CSV</code> format:</p>
+<pre class="highlight plaintext"><code>uli,isValid
+10Cx939c5543TqA1144M999143X10,true
+10Bx939c5543TqA1144M999143X38,true
+10Bx939c5543TqA1144M999133X38,false
+</code></pre><h1 id='filers-api'>Filers API</h1><h2 id='filters'>Filters</h2>
+<ul>
+<li><p><code>/filers/&lt;filing year&gt;</code></p>
+
+<ul>
+<li><code>GET</code> - Returns a list of filers for the filing year defined in the URI.</li>
+</ul></li>
+</ul>
+
+<p>Note : This endpoint is currently only supported for the 2018 filing year</p>
+
+<p>Example response:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+   </span><span class="s2">"institutions"</span><span class="p">:[</span><span class="w">  
+      </span><span class="p">{</span><span class="w">  
+         </span><span class="s2">"lei"</span><span class="p">:</span><span class="s2">"12345677654321"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Bank 1"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"period"</span><span class="p">:</span><span class="s2">"2018"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">  
+         </span><span class="s2">"lei"</span><span class="p">:</span><span class="s2">"5734315621455"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Bank 12"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"period"</span><span class="p">:</span><span class="s2">"2018"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<ul>
+<li><p><code>/filers/&lt;filing year&gt;/&lt;lei&gt;/msaMds</code></p>
+
+<ul>
+<li><code>GET</code> - Returns all MsaMds for the specified filer</li>
+</ul></li>
+</ul>
+
+<p>Example response:</p>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">  
+   </span><span class="s2">"institution"</span><span class="p">:{</span><span class="w">  
+      </span><span class="s2">"lei"</span><span class="p">:</span><span class="s2">"12345677654321"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"Test Bank 1"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"period"</span><span class="p">:</span><span class="s2">"2018"</span><span class="w">
+   </span><span class="p">},</span><span class="w">
+   </span><span class="s2">"msaMds"</span><span class="p">:[</span><span class="w">  
+      </span><span class="p">{</span><span class="w">  
+         </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"47664"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"FARMINGTON HILLS,MI"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="p">{</span><span class="w">  
+         </span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"19180"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"name"</span><span class="p">:</span><span class="s2">"DANVILLE,IL"</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+   </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+      </div>
+      <div class="dark-box">
+      </div>
+    </div>
+  </body>
+</html>
