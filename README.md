@@ -1,8 +1,8 @@
-### HMDA Platform Public API
+# HMDA Platform Public API
 
 This repo is for the front end public api
 
-### Running locally
+## Running locally
 
 You can either do this locally, or with Vagrant:
 
@@ -17,7 +17,7 @@ vagrant up
 
 You can now see the docs at http://localhost:4567. Whoa! That was fast!
 
-### Publishing
+## Publishing
 
 To publish the API, run:
 
@@ -25,6 +25,6 @@ To publish the API, run:
 ./deploy.sh
 ```
 
-### References
+## References
 
 [Slate](https://github.com/lord/slate) - API Docs Generator
