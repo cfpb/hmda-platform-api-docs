@@ -56,3 +56,7 @@ set :port, 4567
 helpers do
   require './lib/toc_data.rb'
 end
+
+# Global Variables
+set :apihost, 'http://localhost:8070'
+config[:apihost]
