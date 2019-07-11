@@ -620,14 +620,16 @@ html, body {
     clear: none;
     left: 0;
     float: left;
-    background-color: gray;
+    background-color: #2E3336;
   }
   .highlight, .highlight .w{
-    background-color: gray;
+    background-color: #2E3336;
   }
 }
 
-
+.page-wrapper .dark-box, .toc-wrapper {
+  background-color: gray;
+}
 
 .content table tr:nth-child(odd) > td {
       background-color: white; }

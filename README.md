@@ -17,13 +17,23 @@ vagrant up
 
 You can now see the docs at http://localhost:4567. Whoa! That was fast!
 
+## Build
+
+```shell
+bundle exec middleman build --clean
+```
+
 ## Publishing
 
-To publish the API, run:
+1. Edit api host variables in ```config.rb``` (bottom of file)
+
+2. Run to publish to gh-pages branch:
 
 ```shell
 ./deploy.sh
 ```
+
+3. Copy files to _hmda-platform_ repo in gh-pages branch
 
 ## References
 

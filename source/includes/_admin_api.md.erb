@@ -1,0 +1,59 @@
+# HMDA Admin API
+
+## Health Check
+
+```shell
+curl "<%= config[:adminapihost] %>"
+```
+
+Health checks could be preformed to see if the api server is live
+
+<br><br>
+
+```json
+{
+    "status":"OK",
+    "service":"hmda-amdmin-api",
+    "time":"2019-01-01T01:01:51.866Z",
+    "host":"HOSTNAME"
+}
+```
+
+<br>
+
+## Create Institution
+
+To create an institution, use the POST end point ```/institutions``` with the JSON the following info.
+
+```shell
+curl -X POST \
+  http://localhost:8081/institutions \
+  -H 'Content-Type: application/json' \
+  -d '{
+      "activityYear": 2018,
+      "lei": "BANK1LEIFORTEST12345",
+      "agency": 9,
+      "institutionType": -1,
+      "institutionId2017": "",
+      "taxId": "02-1234567",
+      "rssd": -1,
+      "emailDomains":
+        ["bank1.com"],
+      "respondent":
+        {"name": "Bank 1", "state": "", "city": ""},
+      "parent":
+        {"idRssd": -1, "name": ""},
+      "assets": -1,
+      "otherLenderCode": -1,
+      "topHolder":
+        {"idRssd": -1, "name": ""},
+      "hmdaFiler": true
+    }'
+```
+
+key | data type | values
+--- | --- | ---
+activityYear | int | (4 digit year)
+lei | String |
+agency | int |
+institutionType | int |  

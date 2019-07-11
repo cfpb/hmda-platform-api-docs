@@ -60,3 +60,12 @@ end
 # Global Variables
 set :apihost, 'http://localhost:8070'
 config[:apihost]
+
+set :filingapihost, 'http://localhost:8080'
+config[:filingapihost]
+
+set :adminapihost, 'http://localhost:8081'
+config[:adminapihost]
+
+set :publicapihost, 'http://localhost:8082'
+config[:publicapihost]

@@ -46,7 +46,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
   curl "<%= config[:apihost] %>/data-browser-api/view/aggregations?states=CA,MD&years=2017,2018&actions_taken=5,6&races=White,Asian,Joint"
   ```
 
-  Get JSON with the following parameters
+  ```GET``` JSON with the following parameters
 
   var | value
   --- | ---
@@ -55,15 +55,15 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
   races | Asian, Joint
 
   ```json
-  {  
-   "parameters":{  
+  {
+   "parameters":{
       "year":"2017,2018",
       "state":"CA,DC",
       "actions_taken":"5,6",
       "races":"Asian,Joint"
    },
-   "aggregations":[  
-      {  
+   "aggregations":[
+      {
          "count":50,
          "sum":250000.0,
          "year":"2017,2018",
@@ -71,7 +71,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
          "actions_taken":"6",
          "races":"Joint"
       },
-      {  
+      {
          "count":50,
          "sum":2.025E7,
          "year":"2017,2018",
@@ -79,7 +79,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
          "actions_taken":"5",
          "races":"Joint"
       },
-      {  
+      {
          "count":100,
          "sum":2.15E7,
          "year":"2017,2018",
@@ -87,7 +87,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
          "actions_taken":"6",
          "races":"Asian"
       },
-      {  
+      {
          "count":0,
          "sum":0.0,
          "year":"2017,2018",
@@ -100,15 +100,13 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
   ```
 
 
-## CSV & Pipe Examples
-
-  __CSV Example:__
+## CSV Example
 
   ```shell
   curl "<%= config[:apihost] %>/data-browser-api/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
   ```
 
-  GET CSV file with the following parameters
+  ```GET``` CSV file with the following parameters
 
   var | value
   --- | ---
@@ -116,15 +114,13 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
   years | 2018
   action_taken | 5
 
-<br><br>
-
-  __PIPE Example 2:__
+## PIPE Example
 
   ```shell
   curl "<%= config[:apihost] %>/data-browser-api/view/pipe?msamds=35614,47894&years=2018&loan_products=Conventional%3AFirst%20Lien"
   ```
 
-  GET PIPE file with the following parameters
+  ```GET``` PIPE file with the following parameters
 
   var | value
   --- | ---
