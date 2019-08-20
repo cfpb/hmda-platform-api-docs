@@ -69,3 +69,6 @@ config[:adminapihost]
 
 set :publicapihost, 'http://localhost:8082'
 config[:publicapihost]
+
+set :databrowserapihost, 'http://localhost:8070'
+config[:publicapihost]
