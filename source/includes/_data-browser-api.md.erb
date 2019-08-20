@@ -1,6 +1,6 @@
 # Data Browser API
 
-The data browser api enables developers to interact with HMDA data. The API will return the data in 3 formats: JSON, CSV or PIPE. The CSV and PIPE end points will return a file download.
+The data browser api enables developers to interact with HMDA data. The API will return the data in JSON or CSV.
 
 _Note:_ depending on the query, files might take a while to generate and may not open using conventional spread sheet applications.
 
@@ -15,10 +15,6 @@ Use ```data-browser-api/view/``` for the end points bellow. Each end point could
 - __CSV__
 
   The ```csv``` end point can be used to generate CSV reports. The file will be streamed.
-
-- __Pipe__
-
-  The ```pipe``` end point can be used to generate pipe reports. The file will be streamed.
 
 ## Filters
 
@@ -35,8 +31,8 @@ lien_statuses | 1,2
 loan_products | Conventional:First Lien<br>FHA:First Lien<br>VA:First Lien<br>FSA/RHS:First Lien<br>Conventional:Subordinate Lien<br>FHA:Subordinate Lien<br>VA:Subordinate Lien<br>FSA/RHS:Subordinate Lien
 loan_purposes  | 1,2,31,32,4,5
 loan_types | 1,2,3,4
-races | American Indian or Alaska Native<br>Asian<br>Black or African American<br>Native Hawaiian or Other Pacific Islander<br>White<br>2 or more minority races<br>Joint<br>Free Form Text Only<br>Race Not Available<br>
-sexes | Male<br>Female<br>Joint
+races | Asian<br>Native Hawaiian or Other Pacific Islander<br>Free Form Text Only<br>Race Not Available<br>American Indian or Alaska Native<br>Black or African American<br>2 or more minority races<br>White<br>Joint
+sexes | Male<br>Female<br>Joint<br>Sex Not Available
 total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
 
 
@@ -120,7 +116,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
 ## CSV Example
 
   ```shell
-  curl "<%= config[:apihost] %>/data-browser-api/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
+  curl -L "<%= config[:apihost] %>/data-browser-api/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
   ```
 
   ```GET``` CSV file with the following parameters
@@ -130,26 +126,6 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
   states | CA, MD, DC
   years | 2018
   action_taken | 5
-
-## PIPE Example
-
-  ```shell
-  curl "<%= config[:apihost] %>/data-browser-api/view/pipe?msamds=35614,47894&years=2018&loan_products=Conventional%3AFirst%20Lien"
-  ```
-
-  ```GET``` PIPE file with the following parameters
-
-  var | value
-  --- | ---
-  msamds | 23434,34243
-  years | 2018
-  loan_products | Conventional:First Lien
-
-
-<!--
-  - ```data-browser-api/view/nationwide/csv```
-  - ```data-browser-api/view/pipe```
-  - ```data-browser-api/view/nationwide/pipe``` -->
 
 ## Errors
 
