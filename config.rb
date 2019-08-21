@@ -58,6 +58,8 @@ helpers do
 end
 
 # Global Variables
+
+# Edit for host
 set :apihost, 'http://localhost:8070'
 config[:apihost]
 
