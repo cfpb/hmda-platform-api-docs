@@ -56,3 +56,21 @@ set :port, 4567
 helpers do
   require './lib/toc_data.rb'
 end
+
+# Global Variables
+
+# Edit for host
+set :apihost, 'http://localhost:8070'
+config[:apihost]
+
+set :filingapihost, 'http://localhost:8080'
+config[:filingapihost]
+
+set :adminapihost, 'http://localhost:8081'
+config[:adminapihost]
+
+set :publicapihost, 'http://localhost:8082'
+config[:publicapihost]
+
+set :databrowserapihost, 'http://localhost:8070'
+config[:publicapihost]

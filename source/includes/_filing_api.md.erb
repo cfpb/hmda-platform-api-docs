@@ -1,0 +1,22 @@
+# HMDA Filing API
+
+The following are HMDA Filling API end points
+
+### Health Check
+
+```shell
+curl "<%= config[:filingapihost] %>"
+```
+
+```GET``` Health checks could be preformed to see if the api server is live
+
+<br><br>
+
+```json
+{
+    "status":"OK",
+    "service":"hmda-filing-api",
+    "time":"2019-01-01T01:01:51.866Z",
+    "host":"HOSTNAME"
+}
+```
