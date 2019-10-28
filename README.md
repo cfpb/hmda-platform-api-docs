@@ -27,13 +27,15 @@ bundle exec middleman build --clean
 
 1. Edit api host variables in ```config.rb``` (bottom of file)
 
-2. Run to publish to gh-pages branch:
+2. Edit `layout.erb` logo image to link to root
+
+3. Run to publish to gh-pages branch:
 
 ```shell
 ./deploy.sh
 ```
 
-3. Copy files to _hmda-platform_ repo in gh-pages branch
+4. Copy files to _hmda-platform_ repo in gh-pages branch
 
 ## References
 
