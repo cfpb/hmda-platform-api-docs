@@ -10,7 +10,7 @@ curl "<%= config[:filingapihost] %>"
 
 ```GET``` Health checks could be preformed to see if the api server is live
 
-<br><br>
+> The above command should return the following JSON:
 
 ```json
 {
@@ -20,3 +20,176 @@ curl "<%= config[:filingapihost] %>"
     "host":"HOSTNAME"
 }
 ```
+
+## Authorization
+
+To file HMDA data using the API, an _bearer_ authorization token is required for all api calls. To acquire an authorization token use the `/auth` end point with your username and password as payload.
+
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/auth/realms/hmda2/protocol/openid-connect/token \
+  -d 'client_id=hmda2-api&grant_type=password&username={{username}}%40{{bank_domain}}&password={{password}}'
+```
+
+ | |
+---|---
+Method  |  `POST`
+URL | `<%= config[:filingapihost] %>/auth/realms/hmda2/protocol/openid-connect/token`
+Payload  | client_id=hmda2-api <br> grant_type=password <br> username={{username}}%40{{bank_domain}} <br> password={{password}}
+Return  |  JSON with `access_token`
+
+
+## End Points
+
+Use `<%= config[:filingapihost] %>/institutions/{lei}/filings` as a prefix for the following endpoints:
+
+### Start a Filing
+
+> Examples
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019 \
+  -H 'Authorization: Bearer  {{access_token}}' \
+```
+
+ | |
+---|---
+Method | `POST`
+End Point | `/{{year}}`
+
+### Get a Filing
+
+```shell
+curl -X GET \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019 \
+  -H 'Authorization: Bearer  {{access_token}}' \
+```
+
+ | |
+---|---  
+Method | `GET`
+End Point | `/{{year}}`
+
+---
+
+### Create Submission
+
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions \
+  -H 'Authorization: Bearer {{access_token}}' \
+```
+
+> JSON Response
+
+```json
+{
+    "id": {
+        "lei": "B90YWS6AFX2LGWOXJ1LD",
+        "period": "2018",
+        "sequenceNumber": 4
+    },
+    "status": {
+        "code": 1,
+        "message": "No data has been uploaded yet.",
+        "description": "The filing period is open and available to accept HMDA data. Make sure your data is in a pipe-delimited text file."
+    },
+    "start": 1572358820303,
+    "end": 0,
+    "fileName": "",
+    "receipt": ""
+}
+```
+
+ | |
+---|---
+Method | `POST`
+End Point | `/{{year}}/submissions`
+Payload  |  {{access_token}}
+Return | Returns JSON with `{{sequenceNumber}}`  
+
+### Get latest submission
+
+ | |
+---|---
+Method | `GET`|
+End Point | `/{{year}}/submissions/latest`
+Return | Details for the latest submission
+
+
+### Upload File
+
+ | |
+---|---  
+Method | `POST`|
+End Point | `/{{year}}/submissions/{{sequenceNumber}}`
+Payloads  |  
+Return | File upload status
+
+
+### View parse errors
+
+### View all edits 
+
+### View edit details
+
+view edit
+edit details
+
+
+
+### Verify Quality Edits
+
+ | |
+---|---  
+Method | `POST`
+End Point | `/{{year}}/submissions/{{sequenceNumber}}/edits/quality`
+Payload  |  
+Return | Quality edits verified
+
+### Verify Macro Edits
+
+ | |
+---|---  
+Method | `POST`
+End Point | `/{{year}}/submissions/{{sequenceNumber}}/edits/macro`
+Payload  |  
+Return | Macro edits verified
+
+### Sign a Submission
+
+ | |
+---|---  
+Method | `POST`
+End Point | `/{{year}}/submissions/{{sequenceNumber}}/sign`
+Payload  |  
+Return | Submission signed
+
+### Get Sign receipt
+
+ | |
+---|---  
+Method | `GET`
+End Point | `/{{year}}/submissions/{{sequenceNumber}}/sign`
+Payload  |  
+Return | Submission receipt
+
+
+
+
+
+{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}
+{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions
+{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/latest
+{{URL-FILING}}/institutions/{{lei}}/filings/2019/submissions/{{sequenceNumber}}
+{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/{{sequenceNumber}}/edits/quality
+{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/{{sequenceNumber}}/edits/macro
+{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/2/sign
+{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/{{sequenceNumber}}/sign
+
+A year can only have 1 filing
