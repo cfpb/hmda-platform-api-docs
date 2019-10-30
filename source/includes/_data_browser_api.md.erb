@@ -40,12 +40,12 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
 
 ## Aggregation Example
 
-
+> Example
 
   ```shell
   curl "<%= config[:apihost] %>/data-browser-api/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=White,Asian,Joint"
   ```
-  > The above command returns JSON structured like this:
+> JSON Response
 
   ```json
   {
@@ -119,10 +119,12 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
 
 ## CSV Example
 
+  > Example
+
   ```shell
   curl -L "<%= config[:apihost] %>/data-browser-api/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
   ```
-  > The above command returns a stream to a CSV file structured like this:
+  > CSV file
 
   ```GET``` CSV file with the following parameters
 
@@ -134,11 +136,13 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
 
 ## Errors
 
+> Example
+
 ```shell
 curl "<%= config[:apihost] %>/data-browser-api/view/csv"
 ```
 
-> The above command returns JSON structured like this:
+> JSON Response
 
 ```json
 {

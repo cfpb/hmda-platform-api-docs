@@ -25,7 +25,7 @@ bundle exec middleman build --clean
 
 ## Publishing
 
-1. Edit api host variables in ```config.rb``` (bottom of file)
+1. **Edit api host variables in ```config.rb``` (bottom of file)**
 
 2. Edit `layout.erb` logo image to link to root
 

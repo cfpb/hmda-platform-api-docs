@@ -10,7 +10,7 @@ curl "<%= config[:filingapihost] %>"
 
 ```GET``` Health checks could be preformed to see if the api server is live
 
-> The above command should return the following JSON:
+> JSON Response
 
 ```json
 {
@@ -43,16 +43,35 @@ Return  |  JSON with `access_token`
 
 ## End Points
 
-Use `<%= config[:filingapihost] %>/institutions/{lei}/filings` as a prefix for the following endpoints:
+Use `<%= config[:filingapihost] %>/institutions/{lei}/filings` as a prefix for the following endpoints.
 
 ### Start a Filing
 
-> Examples
+> Example
 
 ```shell
 curl -X POST \
   <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019 \
   -H 'Authorization: Bearer  {{access_token}}' \
+```
+
+> JSON Response
+
+```json
+{
+    "filing": {
+        "period": "2018",
+        "lei": "B90YWS6AFX2LGWOXJ1LD",
+        "status": {
+            "code": 2,
+            "message": "in-progress"
+        },
+        "filingRequired": true,
+        "start": 1572378187454,
+        "end": 0
+    },
+    "submissions": []
+}
 ```
 
  | |
@@ -62,10 +81,31 @@ End Point | `/{{year}}`
 
 ### Get a Filing
 
+> Example
+
 ```shell
 curl -X GET \
   <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019 \
   -H 'Authorization: Bearer  {{access_token}}' \
+```
+
+> JSON Response
+
+```json
+{
+    "filing": {
+        "period": "2018",
+        "lei": "B90YWS6AFX2LGWOXJ1LD",
+        "status": {
+            "code": 2,
+            "message": "in-progress"
+        },
+        "filingRequired": true,
+        "start": 1572378187454,
+        "end": 0
+    },
+    "submissions": []
+}
 ```
 
  | |
@@ -73,7 +113,6 @@ curl -X GET \
 Method | `GET`
 End Point | `/{{year}}`
 
----
 
 ### Create Submission
 
@@ -115,6 +154,39 @@ Return | Returns JSON with `{{sequenceNumber}}`
 
 ### Get latest submission
 
+> Example
+
+```shell
+curl -X GET \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/latest \
+  -H 'Authorization: Bearer {{access_token}}' \
+```
+
+> JSON Response
+
+```json
+{
+    "id": {
+        "lei": "B90YWS6AFX2LGWOXJ1LD",
+        "period": "2018",
+        "sequenceNumber": 1520
+    },
+    "status": {
+        "code": 13,
+        "message": "Your data has macro edits that need to be reviewed.",
+        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded."
+    },
+    "start": 1572372016130,
+    "end": 0,
+    "fileName": "clean_file_10.txt",
+    "receipt": "",
+    "qualityVerified": false,
+    "macroVerified": false,
+    "qualityExists": true,
+    "macroExists": true
+}
+```
+
  | |
 ---|---
 Method | `GET`|
@@ -124,72 +196,313 @@ Return | Details for the latest submission
 
 ### Upload File
 
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019/submissions/13 \
+  -H 'Authorization: Bearer {{access_token}}' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -F file=<file.csv>
+```
+
+> JSON Response
+
+```json
+{
+    "id": {
+        "lei": "B90YWS6AFX2LGWOXJ1LD",
+        "period": "2018",
+        "sequenceNumber": 55
+    },
+    "status": {
+        "code": 13,
+        "message": "Your data has macro edits that need to be reviewed.",
+        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded."
+    },
+    "start": 1572372016130,
+    "end": 0,
+    "fileName": "clean_file_10.txt",
+    "receipt": "",
+    "qualityVerified": false,
+    "macroVerified": false,
+    "qualityExists": true,
+    "macroExists": true
+}
+```
+
  | |
 ---|---  
 Method | `POST`|
 End Point | `/{{year}}/submissions/{{sequenceNumber}}`
-Payloads  |  
-Return | File upload status
+Headers  |  `'Content-Type': multipart/form-data`
+Payload |  LAR file
 
 
 ### View parse errors
 
-### View all edits 
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/parseErrors \
+  -H 'Authorization: Bearer {{access_token}}'
+```
+
+> JSON Response
+
+```json
+{
+    "transmittalSheetErrors": [],
+    "larErrors": [],
+    "count": 0,
+    "total": 0,
+    "status": {
+        "code": 13,
+        "message": "Your data has macro edits that need to be reviewed.",
+        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded."
+    },
+    "_links": {
+        "href": "/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/parseErrors{rel}",
+        "self": "?page=1",
+        "first": "?page=1",
+        "prev": "?page=1",
+        "next": "?page=0",
+        "last": "?page=0"
+    }
+}
+```
+
+ | |
+---|---  
+Method | `GET`|
+End Point | `/{{year}}/submissions/{{sequenceNumber}}/parseErrors`
+
+### View all edits
+
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/edits \
+  -H 'Authorization: Bearer {{access_token}}'
+```
+
+> JSON Response
+
+```json
+{
+    "syntactical": {
+        "edits": []
+    },
+    "validity": {
+        "edits": []
+    },
+    "quality": {
+        "edits": [
+            {
+                "edit": "Q630",
+                "description": "If Total Units is greater than or equal to 5, then HOEPA Status generally should equal 3."
+            },
+            {
+                "edit": "Q631",
+                "description": "If Loan Type equals 2, 3 or 4, then Total Units generally should be less than or equal to 4."
+            }
+        ],
+        "verified": false
+    },
+    "macro": {
+        "edits": [
+            {
+                "edit": "Q637",
+                "description": "No more than 15% of the loans in the file should report Action Taken equals 5. Your data indicates a percentage outside of this range."
+            }
+        ],
+        "verified": false
+    },
+    "status": {
+        "code": 13,
+        "message": "Your data has macro edits that need to be reviewed.",
+        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded.",
+        "qualityVerified": false,
+        "macroVerified": false
+    }
+}
+```
+
+ | |
+---|---  
+Method | `GET`|
+End Point | `/{{year}}/submissions/{{sequenceNumber}}/edits`
 
 ### View edit details
 
-view edit
-edit details
+> Example
 
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/edits/Q631 \
+  -H 'Authorization: Bearer {{access_token}}'
+```
 
+> JSON Response
+
+```json
+{
+    "edit": "Q631",
+    "rows": [
+        {
+           "id": "B90YWS6AFX2LGWOXJ1LDHHXWCDPM0ZEHW08FFTXGRXT62",
+           "fields": [
+               {
+                   "name": "Loan Type",
+                   "value": "3"
+               },
+               {
+                   "name": "Total Units",
+                   "value": "16"
+               }
+           ]
+       }
+   ],
+   "count": 20,
+   "total": 54,
+   "_links": {
+       "href": "/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/edits/Q631{rel}",
+       "self": "?page=1",
+       "first": "?page=1",
+       "prev": "?page=1",
+       "next": "?page=2",
+       "last": "?page=3"
+   }
+}
+```
+
+ | |
+---|---  
+Method | `GET`|
+End Point | `/{{year}}/submissions/{{sequenceNumber}}/edits/{{edit_code}}`
 
 ### Verify Quality Edits
+
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/sequenceNumber/edits/quality \
+  -H 'Authorization: Bearer {{access_token}}' \
+  -d '{"verified": true}'
+```
+
+> JSON Response
+
+```json
+{
+    "verified": true,
+    "status": {
+        "code": 13,
+        "message": "Your data has macro edits that need to be reviewed.",
+        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded."
+    }
+}
+```
 
  | |
 ---|---  
 Method | `POST`
 End Point | `/{{year}}/submissions/{{sequenceNumber}}/edits/quality`
-Payload  |  
-Return | Quality edits verified
+Body | `{"verified": true}`
 
 ### Verify Macro Edits
+
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/sequenceNumber/edits/macro \
+  -H 'Authorization: Bearer {{access_token}}' \
+  -d '{"verified": true}'
+```
+
+> JSON Response
+
+```json
+{
+    "verified": true,
+    "status": {
+        "code": 14,
+        "message": "Your data is ready for submission.",
+        "description": "Your financial institution has certified that the data is correct, but it has not been submitted yet."
+    }
+}
+```
 
  | |
 ---|---  
 Method | `POST`
 End Point | `/{{year}}/submissions/{{sequenceNumber}}/edits/macro`
-Payload  |  
-Return | Macro edits verified
+Body | `{"verified": true}`
 
 ### Sign a Submission
+
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/55/sign \
+  -H 'Authorization: Bearer {{access_token}}' \
+  -d '{"verified": true}'
+```
+
+> JSON Response
+
+```json
+{
+    "email": "user@example.com",
+    "timestamp": 1572375004080,
+    "receipt": "B90YWS6AFX2LGWOXJ1LD-2018-55-1572375004080",
+    "status": {
+        "code": 15,
+        "message": "Your submission has been accepted.",
+        "description": "This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted."
+    }
+}
+```
+
 
  | |
 ---|---  
 Method | `POST`
 End Point | `/{{year}}/submissions/{{sequenceNumber}}/sign`
-Payload  |  
-Return | Submission signed
+Body  |  `{"signed": true}`
 
 ### Get Sign receipt
+
+> Example
+
+```shell
+curl -X POST \
+  <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/1520/sign \
+  -H 'Authorization: Bearer {{access_token}}' \
+  -d '{"verified": true}'
+```
+
+> JSON Response
+
+```json
+{
+    "email": "user@example.com",
+    "timestamp": 1572375004080,
+    "receipt": "B90YWS6AFX2LGWOXJ1LD-2018-55-1572375004080",
+    "status": {
+        "code": 15,
+        "message": "Your submission has been accepted.",
+        "description": "This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted."
+    }
+}
+```
 
  | |
 ---|---  
 Method | `GET`
 End Point | `/{{year}}/submissions/{{sequenceNumber}}/sign`
-Payload  |  
-Return | Submission receipt
-
-
-
-
-
-{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}
-{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions
-{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/latest
-{{URL-FILING}}/institutions/{{lei}}/filings/2019/submissions/{{sequenceNumber}}
-{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/{{sequenceNumber}}/edits/quality
-{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/{{sequenceNumber}}/edits/macro
-{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/2/sign
-{{URL-FILING}}/institutions/{{lei}}/filings/{{year}}/submissions/{{sequenceNumber}}/sign
-
-A year can only have 1 filing
