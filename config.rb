@@ -1,5 +1,6 @@
 # Unique header generation
 require './lib/unique_head.rb'
+require './lib/nesting_unique_head.rb'
 
 # Markdown
 set :markdown_engine, :redcarpet
@@ -12,7 +13,8 @@ set :markdown,
     tables: true,
     with_toc_data: true,
     no_intra_emphasis: true,
-    renderer: UniqueHeadCounter
+    renderer: NestingUniqueHeadCounter
+
 
 # Assets
 set :css_dir, 'stylesheets'
@@ -63,7 +65,7 @@ end
 set :apihost, 'http://localhost:8070'
 config[:apihost]
 
-set :filingapihost, 'http://localhost:8080'
+set :filingapihost, 'http://localhost:8080' # https://ffiec.cfpb.gov/v2/filing
 config[:filingapihost]
 
 set :adminapihost, 'http://localhost:8081'
@@ -72,5 +74,8 @@ config[:adminapihost]
 set :publicapihost, 'http://localhost:8082'
 config[:publicapihost]
 
-set :databrowserapihost, 'http://localhost:8070'
+set :databrowserapihost, 'http://localhost:8070' # https://ffiec.cfpb.gov/v2/
 config[:publicapihost]
+
+set :ratespreadapi, 'http://localhost:ratespread' # https://ffiec\.cfpb\.gov/public/rateSpread
+config[:ratespreadapi]
