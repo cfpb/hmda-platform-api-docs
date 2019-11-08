@@ -215,19 +215,15 @@ curl -X POST \
         "period": "2018",
         "sequenceNumber": 55
     },
-    "status": {
-        "code": 13,
-        "message": "Your data has macro edits that need to be reviewed.",
-        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded."
+    "status":{
+        "code": 3,
+        "message": "Your file has been uploaded.",
+        "description": "Your data is ready to be analyzed."
     },
     "start": 1572372016130,
     "end": 0,
-    "fileName": "clean_file_10.txt",
-    "receipt": "",
-    "qualityVerified": false,
-    "macroVerified": false,
-    "qualityExists": true,
-    "macroExists": true
+    "fileName": "",
+    "receipt": ""
 }
 ```
 
@@ -283,7 +279,7 @@ End Point | `/{{year}}/submissions/{{sequenceNumber}}/parseErrors`
 > Example
 
 ```shell
-curl -X POST \
+curl -X GET \
   <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/edits \
   -H 'Authorization: Bearer {{access_token}}'
 ```
@@ -340,7 +336,7 @@ End Point | `/{{year}}/submissions/{{sequenceNumber}}/edits`
 > Example
 
 ```shell
-curl -X POST \
+curl -X GET \
   <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/edits/Q631 \
   -H 'Authorization: Bearer {{access_token}}'
 ```
@@ -481,7 +477,7 @@ Body  |  `{"signed": true}`
 > Example
 
 ```shell
-curl -X POST \
+curl -X GET \
   <%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/1520/sign \
   -H 'Authorization: Bearer {{access_token}}' \
   -d '{"verified": true}'
@@ -533,7 +529,7 @@ End Point | `/{{year}}/submissions/{{sequenceNumber}}/sign`
 }
 ```
 
-Every submission will store a `SubmissionStatus` object ("status") with the following structure:  
+Every submission will store a `SubmissionStatus` object with the following structure:  
 
 Key | Type  
 --- | ---  
@@ -541,7 +537,7 @@ code | Integer
 message | String  
 description | String  
 
-#### Details  
+#### Status Codes  
 
 In order to track the status of a filing for a financial institution, the following states are captured by the backend:  
 
