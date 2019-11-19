@@ -8,7 +8,7 @@ _Note:_ depending on the query, files might take a while to generate and may not
 
 ## End Points
 
-Use ```data-browser-api/view/``` for the end points bellow. Each end point could be called on nationwide data or on specific states/msamds. If ```nationwide``` is not specified, state(s) or msamds **must** be selected. A call made with the nationwide end point will discard any state(s) or msamds if present. For state, use 2 character state name. For msamd use a 5 digit integer.
+Use ```data-browser-api/view/``` for the end points below. Each end point could be called on nationwide data or on specific states/msamds/counties. If ```nationwide``` is not specified, state(s) or msamds or counties **must** be selected. A call made with the nationwide end point will discard any state(s) or msamds if present. For state, use 2 character state name. For msamd use a 5 digit integer. For counties use 5 digit county code.
 
 - __Aggregations__
 
@@ -17,6 +17,39 @@ Use ```data-browser-api/view/``` for the end points bellow. Each end point could
 - __CSV__
 
   The ```csv``` end point can be used to generate CSV reports. The file will be streamed.
+
+_ __Institutions__
+
+  The ```view/filers``` endpoint will show a list of all institutions available. This endpoint takes four parameters 
+ Parameter Name | Options
+--- | ---
+years | CSV list of years (example: 2018,2019)
+states | two letter state code
+msamds | 5 digit integer code
+counties | 5 digit integer code
+
+ > Example
+  ```shell
+  curl "<%= config[:databrowserapihost] %>/data-browser-api/view/filers?states=MD,DCyears=2018"
+  ```
+ > JSON Response
+  ```json
+  { 
+   institutions:[ 
+      { 
+         lei:"lei",
+         name:"institution name",
+         period:2018
+      },
+      { 
+         lei:"lei",
+         name:"institution name",
+         period:2018
+      }
+   ]
+}
+  ``` 
+
 
 ## Filters
 
@@ -43,7 +76,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
 > Example
 
   ```shell
-  curl "<%= config[:apihost] %>/data-browser-api/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=White,Asian,Joint"
+  curl "<%= config[:databrowserapihost] %>/data-browser-api/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=White,Asian,Joint"
   ```
 > JSON Response
 
@@ -122,7 +155,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
   > Example
 
   ```shell
-  curl -L "<%= config[:apihost] %>/data-browser-api/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
+  curl -L "<%= config[:databrowserapihost] %>/data-browser-api/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
   ```
   > CSV file
 
@@ -139,7 +172,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
 > Example
 
 ```shell
-curl "<%= config[:apihost] %>/data-browser-api/view/csv"
+curl "<%= config[:databrowserapihost] %>/data-browser-api/view/csv"
 ```
 
 > JSON Response
