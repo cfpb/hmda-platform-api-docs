@@ -75,7 +75,7 @@ set :publicapihost, 'http://localhost:8082'
 config[:publicapihost]
 
 set :databrowserapihost, 'http://localhost:8070' # https://ffiec.cfpb.gov/v2/
-config[:publicapihost]
+config[:databrowserapihost]
 
 set :ratespreadapi, 'http://localhost:ratespread' # https://ffiec\.cfpb\.gov/public/rateSpread
 config[:ratespreadapi]
