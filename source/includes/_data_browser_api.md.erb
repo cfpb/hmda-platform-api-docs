@@ -8,48 +8,19 @@ _Note:_ depending on the query, files might take a while to generate and may not
 
 ## End Points
 
-Use ```data-browser-api/view/``` for the end points below. Each end point could be called on nationwide data or on specific states/msamds/counties. If ```nationwide``` is not specified, state(s) or msamds or counties **must** be selected. A call made with the nationwide end point will discard any state(s) or msamds if present. For state, use 2 character state name. For msamd use a 5 digit integer. For counties use 5 digit county code.
+Use ```data-browser-api/view/``` for the endpoints below. Each endpoint could be called on nationwide data or on specific states/msamds/counties. If ```nationwide``` is not specified, state(s) or msamds or counties **must** be selected. A call made with the nationwide endpoint will discard any state(s) or msamds if present. For state, use 2 character state name. For msamd use a 5 digit integer. For counties use 5 digit county code.
 
 - __Aggregations__
 
-  The ```aggregation``` end point can be used to generated JSON reports.
+  The ```aggregation``` endpoint can be used to generated JSON reports.
 
 - __CSV__
 
-  The ```csv``` end point can be used to generate CSV reports. The file will be streamed.
+  The ```csv``` endpoint can be used to generate CSV reports. The file will be streamed.
 
-_ __Institutions__
+- __Institutions__
 
-  The ```view/filers``` endpoint will show a list of all institutions available. This endpoint takes four parameters 
- Parameter Name | Options
---- | ---
-years | CSV list of years (example: 2018,2019)
-states | two letter state code
-msamds | 5 digit integer code
-counties | 5 digit integer code
-
- > Example
-  ```shell
-  curl "<%= config[:databrowserapihost] %>/data-browser-api/view/filers?states=MD,DCyears=2018"
-  ```
- > JSON Response
-  ```json
-  { 
-   institutions:[ 
-      { 
-         lei:"lei",
-         name:"institution name",
-         period:2018
-      },
-      { 
-         lei:"lei",
-         name:"institution name",
-         period:2018
-      }
-   ]
-}
-  ``` 
-
+  The ```filers``` endpoint will show a list of all institutions available.
 
 ## Filters
 
@@ -166,6 +137,51 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
   states | CA, MD, DC
   years | 2018
   action_taken | 5
+
+## Filers
+
+The `filers` endpoint takes the following parameters
+
+Parameter Name | Options
+--- | ---
+years | CSV list of years (example: 2018,2019)
+states | two letter state code
+msamds | 5 digit integer code
+counties | 5 digit integer code
+
+## Filers Example
+
+  > Example
+
+  ```shell
+  curl "<%= config[:databrowserapihost] %>/data-browser-api/view/filers?states=MD,DCyears=2018"
+  ```
+
+  > JSON Response
+
+  ```json
+  {
+   institutions:[
+      {
+         lei:"lei",
+         name:"institution name",
+         period:2018
+      },
+      {
+         lei:"lei",
+         name:"institution name",
+         period:2018
+      }
+   ]
+  }
+  ```
+
+  ```GET``` with the following parameters
+
+  var | value
+  --- | ---
+  years | 2018,2019
+  states | MD,DC
 
 ## Errors
 
