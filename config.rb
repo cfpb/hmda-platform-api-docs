@@ -65,17 +65,17 @@ end
 set :apihost, 'http://localhost:8070'
 config[:apihost]
 
-set :filingapihost, 'http://localhost:8080' # https://ffiec.cfpb.gov/v2/filing
+set :filingapihost, 'https://ffiec.cfpb.gov/v2/filing'
 config[:filingapihost]
 
 set :adminapihost, 'http://localhost:8081'
 config[:adminapihost]
 
-set :publicapihost, 'http://localhost:8082'
+set :publicapihost, 'https://ffiec.cfpb.gov/v2/public'
 config[:publicapihost]
 
-set :databrowserapihost, 'http://localhost:8070' # https://ffiec.cfpb.gov/v2/
+set :databrowserapihost, 'https://ffiec.cfpb.gov/v2'
 config[:databrowserapihost]
 
-set :ratespreadapi, 'http://localhost:ratespread' # https://ffiec\.cfpb\.gov/public/rateSpread
+set :ratespreadapi, 'https://ffiec.cfpb.gov/public/rateSpread'
 config[:ratespreadapi]

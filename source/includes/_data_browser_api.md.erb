@@ -6,7 +6,7 @@ _Note:_ depending on the query, files might take a while to generate and may not
 
 
 
-## End Points
+## Endpoints
 
 Use ```data-browser-api/view/``` for the endpoints below. Each endpoint could be called on nationwide data or on specific states/msamds/counties. If ```nationwide``` is not specified, state(s) or msamds or counties **must** be selected. A call made with the nationwide endpoint will discard any state(s) or msamds if present. For state, use 2 character state name. For msamd use a 5 digit integer. For counties use 5 digit county code.
 
@@ -20,7 +20,7 @@ Use ```data-browser-api/view/``` for the endpoints below. Each endpoint could be
 
 - __Institutions__
 
-  The ```filers``` endpoint will show a list of all institutions available.
+  The `filers` endpoint will show a list of all institutions available.
 
 ## Filters
 
@@ -40,7 +40,6 @@ loan_types | 1,2,3,4
 races | Asian<br>Native Hawaiian or Other Pacific Islander<br>Free Form Text Only<br>Race Not Available<br>American Indian or Alaska Native<br>Black or African American<br>2 or more minority races<br>White<br>Joint
 sexes | Male<br>Female<br>Joint<br>Sex Not Available
 total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
-
 
 ## Aggregation Example
 
@@ -140,7 +139,7 @@ total_units | 1,2,3,4,5-24,25-49,50-99,100-149,>149
 
 ## Filers
 
-The `filers` endpoint takes the following parameters
+The `filers` endpoint takes the following parameters:
 
 Parameter Name | Options
 --- | ---
@@ -149,39 +148,39 @@ states | two letter state code
 msamds | 5 digit integer code
 counties | 5 digit integer code
 
-## Filers Example
+### Filers Example
 
-  > Example
+> Example
 
-  ```shell
-  curl "<%= config[:databrowserapihost] %>/data-browser-api/view/filers?states=MD,DCyears=2018"
-  ```
+ ```shell
+ curl "<%= config[:databrowserapihost] %>/data-browser-api/view/filers?states=MD,DC&years=2018"
+ ```
 
-  > JSON Response
+> JSON Format Response
 
-  ```json
-  {
-   institutions:[
-      {
-         lei:"lei",
-         name:"institution name",
-         period:2018
-      },
-      {
-         lei:"lei",
-         name:"institution name",
-         period:2018
-      }
-   ]
-  }
-  ```
+ ```json
+ {
+  institutions:[
+     {
+        lei:"lei",
+        name:"institution name",
+        period:2018
+     },
+     {
+        lei:"lei",
+        name:"institution name",
+        period:2018
+     }
+  ]
+}
+```
 
-  ```GET``` with the following parameters
+`GET` with the following parameters
 
-  var | value
-  --- | ---
-  years | 2018,2019
-  states | MD,DC
+var | value
+--- | ---
+years | 2018
+states | MD, DC
 
 ## Errors
 
