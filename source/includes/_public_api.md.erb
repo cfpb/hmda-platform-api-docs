@@ -1,23 +1,393 @@
 # HMDA Public API
 
-The following are HMDA Public API end points
+The following are HMDA Public API endpoints that do not require authorization. You may use these public endpoints to help prepare your data for sumbission.
 
+Use ```public/``` for all the follwing endpoints.
 
-### Health Check
+## TS and LAR Endpoints
 
-```shell
-curl "<%= config[:publicapihost] %>"
-```
+Use `ts/` and `lar/` for the endpoints bellow. Each endpoint could be called to parse and validate TS and LAR respectfully. Use `parse` to check for parsing errors and `validate/<year>` to check for SVQ (syntactical, validity, quality) errors.
 
-Health checks could be preformed to see if the api server is live
+### Parse TS Example
 
-<br><br>
+> Example
 
-```json
-{
-    "status":"OK",
-    "service":"hmda-public-api",
-    "time":"2019-01-01T01:01:51.866Z",
-    "host":"HOSTNAME"
+  ```shell
+  curl -X POST \
+  "<%= config[:publicapihost] %>/ts/parse" \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "ts" : "1|Bank 0|2018|4|Jane|111-111-1111|janesmith@bank.com|123 Main St|Washington|DC|20001|9|100|99-999999|10Bx939c5543TqA1144M"
+}'
+  ```
+
+> Response
+
+  ```json
+  {
+      "id": 1,
+      "institutionName": "Bank 0",
+      "year": 2018,
+      "quarter": 4,
+      "contact": {
+          "name": "Jane",
+          "phone": "111-111-1111",
+          "email": "janesmith@bank.com",
+          "address": {
+              "street": "123 Main St",
+              "city": "Washington",
+              "state": "DC",
+              "zipCode": "20001"
+          }
+      },
+      "agency": 9,
+      "totalLines": 100,
+      "taxId": "99-999999",
+      "LEI": "10Bx939c5543TqA1144M"
+  }
+  ```
+
+  | |
+ ---|---
+ Method  |  `POST`
+ URL | `<%= config[:publicapihost] %>/ts/parse`
+ Payload  | Pipe delimited TS
+ Return  |  JSON
+
+### Validate TS Example
+
+> Example
+
+  ```shell
+  curl -X POST \
+  "<%= config[:publicapihost] %>/ts/validate/2018" \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "ts" : "1|Bank 0|2018|4|Jane|111-111-1111|janesmith@bank.com|123 Main St|Washington|DC|20001|9|100|99-999999|10Bx939c5543TqA1144M"
+}'
+  ```
+
+> Response
+
+  ```json
+  {
+      "syntactical": {
+          "errors": []
+      },
+      "validity": {
+          "errors": []
+      },
+      "quality": {
+          "errors": []
+      }
+  }
+  ```
+
+  | |
+ ---|---
+ Method  |  `POST`
+ URL | `<%= config[:publicapihost] %>/ts/validate/2018`
+ Payload  | Pipe delimited TS
+ Return  |  JSON
+
+### Parse a LAR Example
+
+> Example
+
+  ```shell
+  curl -X POST \
+  "<%= config[:publicapihost] %>/lar/parse" \
+  -H 'Content-Type: application/json' \
+  -d '{ "lar": "2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|1|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|9|1|9|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500|1|1|5|NA|1|1|12345|1|1|1|1|1||1|1|1|1|1||1|1|1"
+}'
+  ```
+
+> Response
+
+  ```json
+  {
+    "larIdentifier": {
+        "id": 2,
+        "LEI": "10BX939C5543TQA1144M",
+        "NMLSRIdentifier": "12345"
+    },
+    "loan": {
+        "ULI": "10Bx939c5543TqA1144M999143X38",
+        "applicationDate": "20180721",
+        "loanType": 1,
+        "loanPurpose": 1,
+        "constructionMethod": 1,
+        "occupancy": 1,
+        "amount": 110500.0,
+        "loanTerm": "360",
+        "rateSpread": "0.428",
+        "interestRate": "4.125",
+        "prepaymentPenaltyTerm": "NA",
+        "debtToIncomeRatio": "42.95",
+        "combinedLoanToValueRatio": "80.05",
+        "introductoryRatePeriod": "NA"
+    },
+    "larAction": {
+        "preapproval": 1,
+        "actionTakenType": 1,
+        "actionTakenDate": 20180721
+    },
+    "geography": {
+        "street": "123 Main St",
+        "city": "Beverly Hills",
+        "state": "CA",
+        "zipCode": "90210",
+        "county": "06037",
+        "tract": "06037264000"
+    },
+    "applicant": {
+        "ethnicity": {
+            "ethnicity1": 1,
+            "ethnicity2": 1,
+            "ethnicity3": 1,
+            "ethnicity4": 1,
+            "ethnicity5": 1,
+            "otherHispanicOrLatino": "",
+            "ethnicityObserved": 3
+        },
+        "race": {
+            "race1": 5,
+            "race2": 7,
+            "race3": 7,
+            "race4": 7,
+            "race5": 7,
+            "otherNativeRace": "",
+            "otherAsianRace": "",
+            "otherPacificIslanderRace": "",
+            "raceObserved": 3
+        },
+        "sex": {
+            "sex": 1,
+            "sexObserved": 3
+        },
+        "age": 30,
+        "creditScore": 750,
+        "creditScoreType": 1,
+        "otherCreditScoreModel": "9"
+    },
+    "coApplicant": {
+        "ethnicity": {
+            "ethnicity1": 1,
+            "ethnicity2": 1,
+            "ethnicity3": 1,
+            "ethnicity4": 1,
+            "ethnicity5": 1,
+            "otherHispanicOrLatino": "",
+            "ethnicityObserved": 3
+        },
+        "race": {
+            "race1": 5,
+            "race2": 7,
+            "race3": 7,
+            "race4": 7,
+            "race5": 7,
+            "otherNativeRace": "",
+            "otherAsianRace": "",
+            "otherPacificIslanderRace": "",
+            "raceObserved": 3
+        },
+        "sex": {
+            "sex": 1,
+            "sexObserved": 3
+        },
+        "age": 30,
+        "creditScore": 750,
+        "creditScoreType": 1,
+        "otherCreditScoreModel": "9"
+    },
+    "income": "36",
+    "purchaserType": 1,
+    "hoepaStatus": 1,
+    "lienStatus": 1,
+    "denial": {
+        "denialReason1": 10,
+        "denialReason2": 10,
+        "denialReason3": 10,
+        "denialReason4": 10,
+        "otherDenialReason": ""
+    },
+    "loanDisclosure": {
+        "totalLoanCosts": "2399.04",
+        "totalPointsAndFees": "NA",
+        "originationCharges": "NA",
+        "discountPoints": "NA",
+        "lenderCredits": "NA"
+    },
+    "nonAmortizingFeatures": {
+        "balloonPayment": 1,
+        "interestOnlyPayment": 2,
+        "negativeAmortization": 1,
+        "otherNonAmortizingFeatures": 1
+    },
+    "property": {
+        "propertyValue": "350500.0",
+        "manufacturedHomeSecuredProperty": 1,
+        "manufacturedHomeLandPropertyInterest": 1,
+        "totalUnits": 5,
+        "multiFamilyAffordableUnits": "NA"
+    },
+    "applicationSubmission": 1,
+    "payableToInstitution": 1,
+    "AUS": {
+        "aus1": 1,
+        "aus2": 1,
+        "aus3": 1,
+        "aus4": 1,
+        "aus5": 1,
+        "otherAUS": ""
+    },
+    "ausResult": {
+        "ausResult1": 1,
+        "ausResult2": 1,
+        "ausResult3": 1,
+        "ausResult4": 1,
+        "ausResult5": 1,
+        "otherAusResult": ""
+    },
+    "reverseMortgage": 1,
+    "lineOfCredit": 1,
+    "businessOrCommercialPurpose": 1
 }
-```
+  ```
+
+  | |
+ ---|---
+ Method  |  `POST`
+ URL | `<%= config[:publicapihost] %>/lar/parse`
+ Payload  | Pipe delimited TS
+ Return  |  JSON
+
+### Validate a LAR Example
+
+> Example
+
+  ```shell
+  curl -X POST \
+  "<%= config[:publicapihost] %>/lar/validate/2018" \
+  -H 'Content-Type: application/json' \
+  -d '{"lar": "2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|1|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|9|1|9|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500|1|1|5|NA|1|1|12345|1|1|1|1|1||1|1|1|1|1||1|1|1"
+}'
+  ```
+
+> Response
+
+  ```json
+  {
+    "syntactical": {
+        "errors": []
+      },
+    "validity": {
+        "errors": [
+            "V614-3",
+            "V614-4",
+            "V615-2",
+            "V615-3",
+            "V628-3",
+            "V631-3",
+            "V635-2",
+            "V635-3",
+            "V638-2",
+            "V638-3",
+            "V657-3",
+            "V662-1",
+            "V662-2",
+            "V667-1",
+            "V667-2",
+            "V669-2",
+            "V669-3",
+            "V669-4",
+            "V672-3",
+            "V672-4",
+            "V672-5",
+            "V682-2",
+            "V689-3",
+            "V690-3"
+        ]
+    },
+    "quality": {
+        "errors": [
+            "Q608",
+            "Q612",
+            "Q622",
+            "Q630"
+        ]
+    }
+  }
+  ```
+
+  | |
+ ---|---
+ Method  |  `POST`
+ URL | `<%= config[:publicapihost] %>/lar/validate/2018`
+ Payload  | Pipe delimited TS
+ Return  |  JSON
+
+## HMDA Parse
+
+To parse a file, use the `hmda/parse` endpoint and a file.
+
+### HMDA Parse Example
+
+> Example
+
+  ```shell
+  curl -X OPTIONS \
+  "<%= config[:publicapihost] %>/hmda/parse" \
+  -F file=@<PATH>/<FILENAME>.txt
+  ```
+
+> Response
+
+  ```json
+  {
+    "validated": []
+  }
+  ```
+
+  | |
+ ---|---
+ Method  |  `OPTIONS`
+ URL | `<%= config[:publicapihost] %>/hmda/parse`
+ Payload  | LAR file
+ Return  |  JSON
+
+## Check Digit
+
+To use check digit on a csv file, use the `uli/validate/csv` and upload a csv. The respose will list the ULIs along with `true`/`false`.
+
+### Check Digit Eample
+
+> Example
+
+  ```shell
+  curl -X POST \
+  "<%= config[:publicapihost] %>/uli/validate/csv" \
+  -F file=@<PATH>/check_digit_sample_file.csv
+  ```
+
+> Response
+
+  ```csv
+  uli,isValid
+  95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92,true
+  B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89,false
+  ```
+
+ | |
+---|---
+Method  |  `POST`
+URL | `<%= config[:publicapihost] %>/validate/csv`
+Payload  | CSV file as shown bellow
+Return  |  JSON
+
+`check_digit_sample_file.csv`
+
+ |
+--
+95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92 |
+B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89 |

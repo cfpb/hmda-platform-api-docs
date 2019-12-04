@@ -6,21 +6,21 @@ _Note:_ depending on the query, files might take a while to generate and may not
 
 
 
-## End Points
+## Endpoints
 
-Use ```data-browser-api/view/``` for the end points below. Each end point could be called on nationwide data or on specific states/msamds/counties. If ```nationwide``` is not specified, state(s) or msamds or counties **must** be selected. A call made with the nationwide end point will discard any state(s) or msamds if present. For state, use 2 character state name. For msamd use a 5 digit integer. For counties use 5 digit county code.
+Use ```data-browser-api/view/``` for the endpoints below. Each endpoint could be called on nationwide data or on specific states/msamds/counties. If ```nationwide``` is not specified, state(s) or msamds or counties **must** be selected. A call made with the nationwide endpoint will discard any state(s) or msamds if present. For state, use 2 character state name. For msamd use a 5 digit integer. For counties use 5 digit county code.
 
 - __Aggregations__
 
-  The ```aggregation``` end point can be used to generated JSON reports.
+  The ```aggregation``` endpoint can be used to generated JSON reports.
 
 - __CSV__
 
-  The ```csv``` end point can be used to generate CSV reports. The file will be streamed.
+  The ```csv``` endpoint can be used to generate CSV reports. The file will be streamed.
 
 _ __Institutions__
 
-  The ```view/filers``` endpoint will show a list of all institutions available. This endpoint takes four parameters 
+  The ```view/filers``` endpoint will show a list of all institutions available. This endpoint takes four parameters
  Parameter Name | Options
 --- | ---
 years | CSV list of years (example: 2018,2019)
@@ -34,21 +34,21 @@ counties | 5 digit integer code
   ```
  > JSON Response
   ```json
-  { 
-   institutions:[ 
-      { 
+  {
+   institutions:[
+      {
          lei:"lei",
          name:"institution name",
          period:2018
       },
-      { 
+      {
          lei:"lei",
          name:"institution name",
          period:2018
       }
    ]
 }
-  ``` 
+  ```
 
 
 ## Filters
