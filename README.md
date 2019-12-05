@@ -1,6 +1,6 @@
 # HMDA Platform Public API
 
-This repo is for the front end public api
+This repo is for the front end public api that lives here: https://cfpb.github.io/hmda-platform/
 
 ## Running locally
 
