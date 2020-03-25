@@ -68,6 +68,9 @@ config[:apihost]
 set :filingapihost, 'https://ffiec.cfpb.gov/v2/filing'
 config[:filingapihost]
 
+set :authhost, 'https://ffiec.cfpb.gov'
+config[:authhost]
+
 set :adminapihost, 'http://localhost:8081'
 config[:adminapihost]
 
