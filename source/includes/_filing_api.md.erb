@@ -10,17 +10,20 @@ To file HMDA data using the API, an _bearer_ authorization token is required for
 
   ```shell
   curl -X POST \
-  "<%= config[:filingapihost] %>/auth/realms/hmda2/protocol/openid-connect/token" \
+  "<%= config[:authhost] %>/auth/realms/hmda2/protocol/openid-connect/token" \
   -d 'client_id=hmda2-api&grant_type=password&username={{username}}%40{{bank_domain}}&password={{password}}'
   ```
 
  | |
 ---|---
 Method  |  `POST`
-URL | `<%= config[:filingapihost] %>/auth/realms/hmda2/protocol/openid-connect/token`
+URL | `<%= config[:authhost] %>/auth/realms/hmda2/protocol/openid-connect/token`
 Payload  | client_id=hmda2-api <br> grant_type=password <br> username={{username}}%40{{bank_domain}} <br> password={{password}}
 Return  |  JSON with `access_token`
 
+## Postman Collection
+
+The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/newman/postman) can be used to file via HMDA Filing API.
 
 ## Endpoints
 
