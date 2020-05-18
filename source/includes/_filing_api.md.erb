@@ -58,6 +58,8 @@ curl -X POST \
 }
 ```
 
+For evey filing period, you must begin by starting a filing. This only needs to be done once per filing season. The `POST` will result in a `200` only for the first time it's called. If the filing for the given filing period already exists, the `POST` will return a `400`.
+
  | |
 ---|---
 Method | `POST`
@@ -107,6 +109,8 @@ curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions" \
   -H 'Authorization: Bearer {{access_token}}' \
 ```
+
+More than one submissions can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
 
 > JSON Response
 
