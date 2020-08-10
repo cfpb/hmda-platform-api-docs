@@ -356,6 +356,60 @@ To parse a file, use the `hmda/parse` endpoint and a file.
  Payload  | LAR file
  Return  |  JSON
 
+## HMDA Validate
+
+To parse and validate a file, use the `hmda/validate` endpoint and a file.
+
+### HMDA Validate Example
+
+> Example
+
+  ```shell
+  curl -X OPTIONS \
+  "<%= config[:publicapihost] %>/hmda/validate" \
+  -F file=@<PATH>/<FILENAME>.txt
+  ```
+
+> Response
+
+  ```json
+  {
+    "parserErrors": [
+        {
+            "rowNumber": 1,
+            "estimatedULI": "Transmittal Sheet",
+            "errorMessages": [
+                {
+                    "fieldName": "Calendar Quarter",
+                    "inputValue": "a",
+                    "validValues": "Integer"
+                }
+            ]
+        }
+    ],
+    "validationErrors": [
+        [
+            {
+                "uli": "B90YWS6AFX2LGWOXJ1LDNIXOQ6OO7BRA5SLR6FSJJ5R89",
+                "editName": "V619-2",
+                "editDescription": "\"The Action Taken Date must be in the reporting year.\"",
+                "fields": {
+                    "Action Taken Date": "20180908",
+                    "Application Date": "NA"
+                }
+            }
+        ]
+    ]
+  }
+  ```
+
+  | |
+ ---|---
+ Method  |  `OPTIONS`
+ URL | `<%= config[:publicapihost] %>/hmda/validate`
+ Payload  | LAR file
+ Return  |  JSON
+
 ## Check Digit
 
 To use check digit on a csv file, use the `uli/validate/csv` and upload a csv. The respose will list the ULIs along with `true`/`false`.
