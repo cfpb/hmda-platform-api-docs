@@ -77,7 +77,7 @@ config[:adminapihost]
 set :publicapihost, 'https://ffiec.cfpb.gov/v2/public'
 config[:publicapihost]
 
-set :databrowserapihost, 'https://ffiec.cfpb.gov/v2'
+set :databrowserapihost, 'https://ffiec.cfpb.gov/v2/data-browser-api'
 config[:databrowserapihost]
 
 set :ratespreadapi, 'https://ffiec.cfpb.gov/public/rateSpread'
