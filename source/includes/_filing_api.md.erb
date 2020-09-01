@@ -547,3 +547,43 @@ Code | Message | Description
 14 | Your data is ready for submission. | Your financial institution has certified that the data is correct, but it has not been submitted yet.
 15 | Your submission has been accepted. | This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.
 -1 | An error occurred while submitting the data. | Please re-upload your file.
+
+### Quarterly Filing
+
+> Example
+
+```shell
+curl -X GET \
+  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/quarter/Q1/submissions/latest" \
+  -H 'Authorization: Bearer {{access_token}}' \
+```
+
+> JSON Response
+
+```json
+{
+    "id": {
+        "lei": "B90YWS6AFX2LGWOXJ1LD",
+        "period": {
+            "year": 2020,
+            "quarter": "Q1"
+        },
+        "sequenceNumber": 10
+    },
+    "status": {
+        "code": 13,
+        "message": "Your data has macro edits that need to be reviewed.",
+        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded."
+    },
+    "start": 1585750668652,
+    "end": 0,
+    "fileName": "<file_name>",
+    "receipt": "",
+    "qualityVerified": false,
+    "macroVerified": false,
+    "qualityExists": true,
+    "macroExists": false
+}
+```
+
+All the endpoints are the same for quarterly filing with the addtion of `quarter/Q1/`, `quarter/Q2/` or `quarter/Q3/`.
