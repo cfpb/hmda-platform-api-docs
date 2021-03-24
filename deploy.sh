@@ -91,7 +91,7 @@ main() {
   fi
 
   #append hash to commit message unless no hash flag was found
-  if [ $append_hash = true ]; then
+  if [ "$append_hash" = true ]; then
     commit_message="$commit_message"$'\n\n'"generated from commit $commit_hash"
   fi
 
