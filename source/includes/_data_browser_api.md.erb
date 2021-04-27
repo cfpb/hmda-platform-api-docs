@@ -65,14 +65,14 @@ _Note:_ depending on the query, queries may take a while to return and data may 
 
 ### Aggregation Example
 
-Get an aggregation, in JSON format, of HMDA Data reported in 2018 in Maryland, with action takens 5, `File closed for incompleteness`, or 6, `Purchased loan`, where the reported race was Asian.
+> **Example Request and Response**
 
-> Example Request
+<pre>
+<b>Request:</b>
 
-  ```shell
-  curl "<%= config[:databrowserapihost] %>/data-browser-api/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=Asian"
-  ```
-> JSON Response
+curl "<%= config[:databrowserapihost] %>/data-browser-api/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=Asian"
+
+<b>JSON Response:</b>
 
   ```json
   {
@@ -99,7 +99,9 @@ Get an aggregation, in JSON format, of HMDA Data reported in 2018 in Maryland, w
     ],
     "servedFrom": "cache"
 }
-  ```
+</pre>
+
+Get an aggregation, in JSON format, of HMDA Data reported in 2018 in Maryland, with action takens 5, `File closed for incompleteness`, or 6, `Purchased loan`, where the reported race was Asian.
 
 ```GET``` JSON with the following parameters
 
@@ -112,15 +114,19 @@ races | Asian
 
 ### CSV Example
 
-Get a CSV containing all HMDA data reported in 2018 in California, Maryland, or DC, with action taken 5, `File closed for incompleteness`.
+> **Example Request and Response**
 
-> Example Request
+<pre>
+<b>Request:</b>
 
-```shell
 curl -L "<%= config[:databrowserapihost] %>/data-browser-api/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
-```
-> CSV Response ![alt text](images/DataBrowserCsvExample.png)
 
+<b>CSV Response:</b>
+
+[alt text](images/DataBrowserCsvExample.png)
+</pre>
+
+Get a CSV containing all HMDA data reported in 2018 in California, Maryland, or DC, with action taken 5, `File closed for incompleteness`.
 
 ```GET``` CSV file with the following parameters
 
@@ -147,17 +153,15 @@ counties | 5 digit integer code
 
 ### HMDA Filers Example
 
-The example to the right allows you to get a list of filers from 2018 that reported HMDA Data in Maryland and DC.
+> **Example Request and Response:**
 
-> Example Request
+<pre>
+<b>Request:</b>
 
- ```shell
  curl "<%= config[:databrowserapihost] %>/data-browser-api/view/filers?states=MD,DC&years=2018"
- ```
 
-> JSON Format Response
+<b>JSON Response:</b>
 
- ```json
  {
   "institutions":[
      {
@@ -172,7 +176,9 @@ The example to the right allows you to get a list of filers from 2018 that repor
      }
   ]
 }
-```
+</pre>
+
+The example to the right allows you to get a list of filers from 2018 that reported HMDA Data in Maryland and DC.
 
 `GET` with the following parameters
 
@@ -180,5 +186,3 @@ var | value
 --- | ---
 years | 2018
 states | MD, DC
-
-<br>

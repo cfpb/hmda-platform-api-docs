@@ -8,22 +8,20 @@ These endpoints are used to parse and run edits on a TS. Use `parse` to check fo
 
 ### Parse TS
 
-This endpoint runs parsing on a Transmittal Sheet (TS). The endpoint returns a list of parsing errors in JSON format. If the TS is valid it the parsed TS object in JSON format.
+> Example Request and Response
 
-> Example
+<pre>
+<b>Request:</b>
 
-  ```shell
   curl -X POST \
   "<%= config[:publicapihost] %>/ts/parse" \
   -H 'Content-Type: application/json' \
   -d '{
   "ts" : "1|Bank 0|2018|4|Jane|111-111-1111|janesmith@bank.com|123 Main St|Washington|DC|20001|9|100|99-999999|10Bx939c5543TqA1144M"
 }'
-  ```
 
-> Response
+<b>JSON Response:</b>
 
-  ```json
   {
       "id": 1,
       "institutionName": "Bank 0",
@@ -45,7 +43,9 @@ This endpoint runs parsing on a Transmittal Sheet (TS). The endpoint returns a l
       "taxId": "99-999999",
       "LEI": "10Bx939c5543TqA1144M"
   }
-  ```
+</pre>
+  
+This endpoint runs parsing on a Transmittal Sheet (TS). The endpoint returns a list of parsing errors in JSON format. If the TS is valid, the parsed TS object is returned in JSON format.
 
   | |
  ---|---
@@ -56,36 +56,36 @@ This endpoint runs parsing on a Transmittal Sheet (TS). The endpoint returns a l
 
 ### Validate TS
 
-This endpoint runs parsing and a specific year's edit checks on a Transmittal Sheet (TS). It returns edit details if the TS is able to be parsed or parsing errors if not.
+> **Example Request and Response**
 
-_Note:_ Some edit checks require institution data. These checks are not run in any public APIs.
+<pre>
+<b>Request:</b>
 
-> Example
-
-  ```shell
   curl -X POST \
   "<%= config[:publicapihost] %>/ts/validate/2018" \
   -H 'Content-Type: application/json' \
   -d '{
   "ts" : "1|Bank 0|2018|4|Jane|111-111-1111|janesmith@bank.com|123 Main St|Washington|DC|20001|9|100|99-999999|10Bx939c5543TqA1144M"
 }'
-  ```
 
-> Response
+<b>JSON Response:</b>
 
-  ```json
-  {
-      "syntactical": {
-          "errors": []
-      },
-      "validity": {
-          "errors": []
-      },
-      "quality": {
-          "errors": []
-      }
-  }
-  ```
+{
+    "syntactical": {
+        "errors": []
+    },
+    "validity": {
+        "errors": []
+    },
+    "quality": {
+        "errors": []
+    }
+}
+</pre>
+
+This endpoint runs parsing and a specific year's edit checks on a Transmittal Sheet (TS). It returns edit details if the TS is able to be parsed or parsing errors if not.
+
+_Note:_ Some edit checks require institution data. These checks are not run in any public APIs.
 
   | |
  ---|---
@@ -101,21 +101,19 @@ These endpoints are used to parse and and run edits on a LAR. Use `parse` to che
 
 ### Parse a LAR
 
-This endpoint runs parsing on a single Loan Application Register (LAR). The endpoint returns a list of parsing errors in JSON format. If the LAR is valid it returns the parsed LAR object in JSON format.
+> **Example Request and Response**
 
-> Example
+<pre>
+<b>Request:</b>
 
-  ```shell
   curl -X POST \
   "<%= config[:publicapihost] %>/lar/parse" \
   -H 'Content-Type: application/json' \
   -d '{ "lar": "2|10Bx939c5543TqA1144M|10Bx939c5543TqA1144M999143X38|20180721|1|1|1|1|1|110500|1|20180721|123 Main St|Beverly Hills|CA|90210|06037|06037264000|1|1|1|1|1||1|1|1|1|1||3|3|5|7|7|7|7||||5|7|7|7|7||||3|3|1|1|3|3|30|30|36|1|0.428|1|1|750|750|1|9|1|9|10|10|10|10||2399.04|NA|NA|NA|NA|4.125|NA|42.95|80.05|360|NA|1|2|1|1|350500|1|1|5|NA|1|1|12345|1|1|1|1|1||1|1|1|1|1||1|1|1"
 }'
-  ```
 
-> Response
+<b>Response:</b>
 
-  ```json
   {
     "larIdentifier": {
         "id": 2,
@@ -264,7 +262,9 @@ This endpoint runs parsing on a single Loan Application Register (LAR). The endp
     "lineOfCredit": 1,
     "businessOrCommercialPurpose": 1
 }
-  ```
+</pre>
+
+This endpoint runs parsing on a single Loan Application Register (LAR). The endpoint returns a list of parsing errors in JSON format. If the LAR is valid it returns the parsed LAR object in JSON format.
 
   | |
  ---|---
@@ -275,23 +275,17 @@ This endpoint runs parsing on a single Loan Application Register (LAR). The endp
 
 ### Validate a LAR
 
-This endpoint runs parsing and a specific year's edit checks on a Loan Application Register (LAR). It returns edit details if the LAR is able to be parsed or parsing errors if not.
+> **Example Request and Response**
 
-_Note:_ Some edit checks require institution data. These checks are not run in any public APIs. Macro edits are also not run this endpoint checks only a single LAR.
-
-> Example
-
-  ```shell
+<pre>
+<b>Request</b>
   curl -X POST \
   "<%= config[:publicapihost] %>/lar/validate/2018" \
   -H 'Content-Type: application/json' \
   -d '{"lar": ""2|B90YWS6AFX2LGWOXJ1LD|B90YWS6AFX2LGWOXJ1LD0KQ78F1Q02LVT4VCYK1G3D253|20180613|3|2|2|2|3|218910|5|20181031|1234 Hocus Potato Way|Tatertown|NM|14755|35003|35003976400|1|13||11||KE0NW|1|||||NA2IJJ7VBBQ15DTFRNK1PVWOPOXL3NH1PHUMN7S2J4|2|2|7|||||E120FYAU7BTSC3P51IL87C97W3N9VT791BMJI57RLJQSHOFDTUD7PQSPGHQ69D7I2P8JBDCBUIGRLX2BUS7SJR|DOOOI8UXY9PZDSRVFKP91CUQG95E88Y22KDR1AI3|1K1JINAYSIHCWBGJW3KOHU5D5TSK1Z61SUT5M9WQVWOHX|27|24|41|43|2|MS1LKLX7XZRKL23TV01I49RADZGUN0QY5AG9H4BJCVFTA4ZQ1EJUS1376QJXD87ZZDN5EFZIUWB8SK5EU34RVGOVTE|Y083OZN1VFT6B2XGL397ABL0Z4EV4CD45I7ZJ7FRSXXL4BRMKVPR5UCVV0K6IDLP7WLCBZAQ5KXT69PNE9PWQKCPKJB|UV0FTHG00G8WM65I7591IJYP9TEMXMDCVGZYRJTBUBBKEZI65HGL9ML|3|2|2|2|1|1|75|4|NA|0|NA|3|2|8888|8888|9||9||10|||||NA|NA|NA|NA|NA|NA|32|NA|NA|256|29|1111|1111|1111|1111|NA|3|2|16|Exempt|2|2|NA|3|1|5|1||DOREBESQSW1QT58SD2OZTHQUGXLSKCAJYZ63NJE2MUIAFQL4KW6PU26YSU786GT0IMCWWKCN25Y7KU0VLU0PPKWR8G6DKWI9BANPIE9I2ZZ5XDUX0TBAY4XFRFQZF087WS9ESTAKIV5V9HSZ2VXW7J5JMGPP4CGYA51BK68T57NN4KTKJVXIQMFXBTN5E3LGKKX3LITQ4C7OPFJ|7|6|5|5|||1111|2|1111""
 }'
-  ```
 
-> Response
-
-  ```json
+<b>JSON Response</b>
   {
     "syntactical": {
         "errors": []
@@ -316,7 +310,12 @@ _Note:_ Some edit checks require institution data. These checks are not run in a
         ]
     }
 }
-  ```
+</pre>
+
+This endpoint runs parsing and a specific year's edit checks on a Loan Application Register (LAR). It returns edit details if the LAR is able to be parsed or parsing errors if not.
+
+_Note:_ Some edit checks require institution data. These checks are not run in any public APIs. Macro edits are also not run this endpoint checks only a single LAR.
+
 
   | |
  ---|---
@@ -331,23 +330,23 @@ The following endpoints can be used to parse and run edit checks on a full HMDA 
 
 ### Parse a HMDA File
 
+> **Example Request and Response**
+
+<pre>
+<b>Request:</b>
+
+curl -X OPTIONS \
+"<%= config[:publicapihost] %>/hmda/parse" \
+-F file=&ltPATH&gt/&ltFILENAME&gt.txt
+
+<b>JSON Response:</b>
+
+{
+  "validated": []
+}
+</pre>
+
 This endpoint runs parsing on a HMDA file. The endpoint returns a list of parsing errors in JSON format. If the file is valid it returns and empty list.
-
-> Example Request
-
-  ```shell
-  curl -X OPTIONS \
-  "<%= config[:publicapihost] %>/hmda/parse" \
-  -F file=@<PATH>/<FILENAME>.txt
-  ```
-
-> JSON Response
-
-  ```json
-  {
-    "validated": []
-  }
-  ```
 
   | |
  ---|---
@@ -358,50 +357,51 @@ This endpoint runs parsing on a HMDA file. The endpoint returns a list of parsin
 
 ### Validate a HMDA File
 
+> **Example Request and Response**
+
+<pre>
+<b>Request:</b>
+
+curl -X OPTIONS \
+"<%= config[:publicapihost] %>/hmda/validate" \
+-F file=@&ltPATH&gt/&ltFILENAME&gt.txt
+
+<b>JSON Response:</b>
+
+{
+  "parserErrors": [
+      {
+          "rowNumber": 1,
+          "estimatedULI": "Transmittal Sheet",
+          "errorMessages": [
+              {
+                  "fieldName": "Calendar Quarter",
+                  "inputValue": "a",
+                  "validValues": "Integer"
+              }
+          ]
+      }
+  ],
+  "validationErrors": [
+      [
+          {
+              "uli": "B90YWS6AFX2LGWOXJ1LDNIXOQ6OO7BRA5SLR6FSJJ5R89",
+              "editName": "V619-2",
+              "editDescription": "\"The Action Taken Date must be in the reporting year.\"",
+              "fields": {
+                  "Action Taken Date": "20180908",
+                  "Application Date": "NA"
+              }
+          }
+      ]
+  ]
+}
+</pre>
+
 This endpoint runs parsing and a specific year's edit checks on a HMDA file. This endpoint runs checks row by row and so can return both parsing and edit check information if some rows pass parsing and others do not.
 
-_Note:_ Some edit checks require institution data. These checks are not run in any public APIs. Macro edits are also not run as the check runs line by line.
-
-> Example Request
-
-  ```shell
-  curl -X OPTIONS \
-  "<%= config[:publicapihost] %>/hmda/validate" \
-  -F file=@<PATH>/<FILENAME>.txt
-  ```
-
-> JSON Response
-
-  ```json
-  {
-    "parserErrors": [
-        {
-            "rowNumber": 1,
-            "estimatedULI": "Transmittal Sheet",
-            "errorMessages": [
-                {
-                    "fieldName": "Calendar Quarter",
-                    "inputValue": "a",
-                    "validValues": "Integer"
-                }
-            ]
-        }
-    ],
-    "validationErrors": [
-        [
-            {
-                "uli": "B90YWS6AFX2LGWOXJ1LDNIXOQ6OO7BRA5SLR6FSJJ5R89",
-                "editName": "V619-2",
-                "editDescription": "\"The Action Taken Date must be in the reporting year.\"",
-                "fields": {
-                    "Action Taken Date": "20180908",
-                    "Application Date": "NA"
-                }
-            }
-        ]
-    ]
-  }
-  ```
+  _Note:_ Some edit checks require institution data. These checks are not run in any public APIs. Macro edits are also not run as the check runs line by line.
+  
 
   | |
  ---|---

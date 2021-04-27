@@ -23,21 +23,22 @@ reverse_mortgage | integer | `2` = false<br>`1` = true, will result in `NA`
 
 ## Single Ratespread
 
+> **Example Request and Response**
+
+<pre>
+<b>Request:</b>
+
+curl -X POST "<%= config[:ratespreadapi] %>" -H "Content-Type: application/json" -d '{ "actionTakenType": 1, "loanTerm": 30, "amortizationType": "FixedRate", "apr": 6.0, "lockInDate": "2017-11-20", "reverseMortgage": 2 }'
+
+<b>JSON Response:</b>
+
+{"rateSpread":"2.010"}
+
+</pre>
+
 This endpoint accepts loan data in JSON format and returns a JSON object containing the associated ratespread.
 
 `POST` `<%= config[:ratespreadapi] %>`
-
-  > Example Request
-
-  ```shell
-  curl -X POST "<%= config[:ratespreadapi] %>" -H "Content-Type: application/json" -d '{ "actionTakenType": 1, "loanTerm": 30, "amortizationType": "FixedRate", "apr": 6.0, "lockInDate": "2017-11-20", "reverseMortgage": 2 }'
-  ```
-
-  > JSON Response
-
-  ```json
-  {"rateSpread":"2.010"}
-  ```
 
 The JSON example contains the following parameters:
 
@@ -53,23 +54,23 @@ reverseMortgage | 2
 
 ## Batch Ratespreads
 
-In order to batch caluculate ratespreads the `csv` endpoint can be used. This endpoint accepts a CSV file of ratespread data and returns a CSV file with a new column for the ratespread.
+> **Example Request and Response**
 
-`POST` `<%= config[:ratespreadapi] %>/csv`
+<pre>
+<b>Request:</b>
 
-> Example Request
-
-```shell
 curl -X POST "<%= config[:ratespreadapi] %>/csv" -F file=<file.csv>
-```
 
-> CSV file with an added column for rate_spread calculated for each row
+<b>CSV Response:</b>
 
-```csv
 action_taken_type,loan_term,amortization_type,apr,lock_in_date,reverse_mortgage,rate_spread
 1,30,FixedRate,6.0,2017-11-20,2,2.010
 1,30,VariableRate,6.0,2017-11-20,2,2.150
-```
+</pre>
+
+In order to batch caluculate ratespreads the `csv` endpoint can be used. This endpoint accepts a CSV file of ratespread data and returns a CSV file with a new column for the ratespread.
+
+`POST` `<%= config[:ratespreadapi] %>/csv`
 
 The CSV file example contains the following contents:
 
