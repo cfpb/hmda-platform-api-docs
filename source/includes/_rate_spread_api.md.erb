@@ -2,19 +2,30 @@
 
 ## Rate Spread API
 
-The `/rateSpread` endpoint you can provide information about a loan and have the rate spread calculated via `POST`.
+The following endpoints allow users to provide loan information and returns the associated ratespread either one at a time in JSON format or in a batch in CSV format.
+
+This API is what powers the [Rate Spread Calculator application](https://ffiec.cfpb.gov/tools/rate-spread).
 
 **Note:** The response is either a number representing the rate spread or "NA".
 
-## Endpoints
+## Rate Spread Parameters
 
-Rate spread has 2 API endpoints, one for submitting JSON and one for CSV.
+The following parameters must be provided when using any ratespread API. These are provided in either JSON or CSV format.
 
-  `POST` `<%= config[:ratespreadapi] %>` <br>
-  `POST` `<%= config[:ratespreadapi] %>/csv`
+Variable | Type | Accepted Values
+---|---|---
+action_taken_type | integer | `1` = Originated<br>`2` = Approved Not Accepted<br>`8` = Pre-approval request approved but not Accepted<br>`3`, `4`, `5`, `6` or `7` will result in `NA`
+loan_term | integer | Range from `1` - `50`
+amortization_type | String | `FixedRate` or `VariableRate`
+apr | double | The annual Percentage Rate on the loan, eg `6.0`
+lock_in_date | date |  `YYYY-MM-DD`
+reverse_mortgage | integer | `2` = false<br>`1` = true, will result in `NA`
 
-## JSON Example
+## Single Ratespread
 
+This endpoint accepts loan data in JSON format and returns a JSON object containing the associated ratespread.
+
+`POST` `<%= config[:ratespreadapi] %>`
 
   > Example
 
@@ -28,9 +39,9 @@ Rate spread has 2 API endpoints, one for submitting JSON and one for CSV.
   {"rateSpread":"2.010"}
   ```
 
-JSON with the following parameters
+The JSON example contains the following parameters:
 
-var | value
+Variable | Value
 --- | ---
 actionTakenType | 1
 loanTerm | 30
@@ -40,21 +51,11 @@ lockInDate | 2017-11-20
 reverseMortgage | 2
 
 
+## Batch Ratespreads
 
-## CSV File Format
-The contents of this file must include the following information:
+In order to batch caluculate ratespreads the `csv` endpoint can be used. This endpoint accepts a CSV file of ratespread data and returns a CSV file with a new column for the ratespread.
 
-var | type | accepted values
----|---|---
-action_taken_type | integer | `1` = Originated<br>`2` = Approved Not Accepted<br>`8` = Pre-approval request approved but not Accepted<br>`3`, `4`, `5`, `6` or `7` will result in `NA`
-loan_term | integer | Range from `1` - `50`
-amortization_type | String | `FixedRate` or `VariableRate`
-apr | double | The annual Percentage Rate on the loan, eg `6.0`
-lock_in_date | date |  `YYYY-MM-DD`
-reverse_mortgage | integer | `2` = false<br>`1` = true, will result in `NA`
-
-
-## CSV Example
+`POST` `<%= config[:ratespreadapi] %>/csv`
 
 > Example
 
@@ -70,7 +71,7 @@ action_taken_type,loan_term,amortization_type,apr,lock_in_date,reverse_mortgage,
 1,30,VariableRate,6.0,2017-11-20,2,2.150
 ```
 
-Example CSV file with contents:
+The CSV file example contains the following contents:
 
    |    |              |     |            |
 ---|----|--------------|-----|------------|---
