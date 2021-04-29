@@ -180,7 +180,6 @@ Headers | `Authorization: Bearer {{access_token}}`
 curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions" \
   -H 'Authorization: Bearer {{access_token}}' \
-```
 
 <b>JSON Response:</b>
 
@@ -459,7 +458,6 @@ curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/sequenceNumber/edits/quality" \
   -H 'Authorization: Bearer {{access_token}}' \
   -d '{"verified": true}'
-```
 
 <b>JSON Response:</b>
 
@@ -481,7 +479,7 @@ Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}
 Headers | `Authorization: Bearer {{access_token}}`
 Body | `{"verified": true}`
 
-### **Verify Macro Edits**
+### Verify Macro Edits
 
 > **Example Request and Response**
 
