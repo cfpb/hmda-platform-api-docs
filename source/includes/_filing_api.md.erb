@@ -1,10 +1,14 @@
 # HMDA Filing API
 
-The following are HMDA Filling API endpoints
+The following documentation addresses the process for filing a HMDA file and the associated APIs.
+
+This API is what powers the [HMDA Filing Platform application](https://ffiec.cfpb.gov/filing/)
 
 ## Authorization
 
 To file HMDA data using the API, an _bearer_ authorization token is required for all api calls. To acquire an authorization token use the `/auth` endpoint with your username and password as payload.
+
+For local development, no authorization is needed. See [One-line Local Development Environment (No Auth)](https://github.com/cfpb/hmda-platform#one-line-local-development-environment-no-auth) for more info.
 
 > Example
 
@@ -19,15 +23,79 @@ To file HMDA data using the API, an _bearer_ authorization token is required for
 Method  |  `POST`
 URL | `<%= config[:authhost] %>/auth/realms/hmda2/protocol/openid-connect/token`
 Payload  | client_id=hmda2-api <br> grant_type=password <br> username={{username}}%40{{bank_domain}} <br> password={{password}}
-Return  |  JSON with `access_token`
 
 ## Postman Collection
 
-The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/newman/postman) can be used to file via HMDA Filing API.
+The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/newman/postman) has been prepared to simplify the process of using the HMDA Platform Filing APIs.
+
+[Postman](https://www.postman.com/product/api-client/) is a client side application that allows users to easily construct API calls and import external API collections.
+
+## Filing Process
+
+Submission of a HMDA file flows in the following steps which are mirriored in the submission status codes:
+
+1. Create a Filing: These are unique per institution per filing season and are created by the HMDA-Ops teams in preperation for each filing season.
+1. Create a Submission: Submissions are the primary object in a HMDA Filing. They are created within a filing and each is able to accept a single file upload. Many submissions can be created for a filing and they carry an id which is incrimented.
+1. Upload a File: A file is then uploaded to the submission which was created. Only one file can be uploaded to a submission. To upload a new file you must create a new submission.
+1. Check the status of the Submission the file was uploaded to: If parsing syntactical or validity edits are triggered a new file must be uploaded.
+1. Validate Quality Edits: Review triggered Quality Edits and confirm the submitted data are correct.
+1. Validate Macro Edits: Review triggered Macro Edits and confirm the submitted data are correct.
+1. Sign the Submission: Perform final review of the data and complete the HMDA filing.
+
+### Object Hierarchy
+
+<img src="../images/filingObjectHierarchy.png">
+
+### Submission Status
+
+As a submission represents a HMDA filing the submission status is the best way to see the state of a HMDA filing. It will be useful to query for 
+the submission status often throughout the process of uploading and checking edits for a submission.
+
+#### Submission Status Codes
+
+> Example
+
+```json
+{
+  "id": {
+    "lei": "12345abc",
+    "period": "2018",
+    "sequenceNumber": 3
+  },
+  "status": {
+    "code": 1,
+    "message": "No data has been uploaded yet.",
+    "description": "The filing period is open and available to accept HMDA data. Make sure your data is in a pipe-delimited text file."
+  },
+  "start": 0,
+  "end": 0,
+  "fileName": "test.txt",
+  "receipt": ""
+}
+```
+
+In order to track the status of a filing for a financial institution, the following states are captured by the backend:
+
+Code | Message | Description
+--- | --- | ---
+1 | No data has been uploaded yet. | The filing period is open and available to accept HMDA data. Make sure your data is in a pipe-delimited text file.
+2 | Your file is uploading. | Your file is currently being uploaded to the HMDA Platform.
+3 | Your file has been uploaded. | Your data is ready to be analyzed.
+4 | Checking the formatting of your data. | Your file is being analyzed to ensure that it meets formatting requirements specified in the HMDA Filing Instructions Guide.
+5 | Your data has formatting errors. | Review these errors and update your file. Then, upload the corrected file.
+6 | Your data is formatted correctly. | Your file meets the formatting requirements specified in the HMDA Filing Instructions Guide. Your data will now be analyzed for any edits.
+7 | Your data is being analyzed. | Your data has been uploaded and is being checked for any edits.
+8 | Your data has been analyzed for Syntactical and Validity Errors. | Your file has been analyzed and does not contain any Syntactical or Validity errors.
+9 | Your data has syntactical and/or validity edits that need to be reviewed. | Your file has been uploaded, but the filing process may not proceed until the file is corrected and re-uploaded.
+10 | Your data has been analyzed for Quality Errors. | Your file has been analyzed, and does not contain quality errors.
+11 | Your data has quality edits that need to be reviewed. | Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded.
+12 | Your data has been analyzed for macro errors. | Your file has been analyzed, and does not contain macro errors.
+13 | Your data has macro edits that need to be reviewed. | Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded.
+14 | Your data is ready for submission. | Your financial institution has certified that the data is correct, but it has not been submitted yet.
+15 | Your submission has been accepted. | This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.
+-1 | An error occurred while submitting the data. | Please re-upload your file.
 
 ## Endpoints
-
-Use `<%= config[:filingapihost] %>/institutions/{lei}/filings` as a prefix for the following endpoints.
 
 ### Start a Filing
 
@@ -58,14 +126,18 @@ curl -X POST \
 }
 ```
 
-For evey filing period, you must begin by starting a filing. This only needs to be done once per filing season. The `POST` will result in a `200` only for the first time it's called. If the filing for the given filing period already exists, the `POST` will return a `400`.
+For evey filing period, you must begin by starting a filing. This only needs to be done once per filing season. In the production HMDA filing application this will have already been creaed. 
+The `POST` will result in a `200` only for the first time it's called. If the filing for the given filing period already exists, the `POST` will return a `400`.
 
  | |
 ---|---
 Method | `POST`
-Endpoint | `/{{year}}`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}`
+Headers| `Authorization: Bearer {{access_token}}`
 
 ### Get a Filing
+
+This endpoint can be used to confirm that a filing exists for the relevant period.
 
 > Example
 
@@ -97,10 +169,11 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`
-Endpoint | `/{{year}}`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}`
+Headers | `Authorization: Bearer {{access_token}}`
 
 
-### Create Submission
+### Create a Submission
 
 > Example
 
@@ -110,7 +183,7 @@ curl -X POST \
   -H 'Authorization: Bearer {{access_token}}' \
 ```
 
-More than one submissions can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
+A submission must be created for each file upload. More than one submission can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
 
 > JSON Response
 
@@ -119,7 +192,7 @@ More than one submissions can be created for a filing period. The most recent su
     "id": {
         "lei": "B90YWS6AFX2LGWOXJ1LD",
         "period": "2018",
-        "sequenceNumber": 4
+        "sequenceNumber": 10
     },
     "status": {
         "code": 1,
@@ -136,11 +209,12 @@ More than one submissions can be created for a filing period. The most recent su
  | |
 ---|---
 Method | `POST`
-Endpoint | `/{{year}}/submissions`
-Payload  |  {{access_token}}
-Return | Returns JSON with `{{sequenceNumber}}`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions`
+Headers  |  {{access_token}}
 
-### Get latest submission
+### Get the Latest Submission
+
+Returns details about the last created submission including it's sequence number and status.
 
 > Example
 
@@ -157,7 +231,7 @@ curl -X GET \
     "id": {
         "lei": "B90YWS6AFX2LGWOXJ1LD",
         "period": "2018",
-        "sequenceNumber": 1520
+        "sequenceNumber": 10
     },
     "status": {
         "code": 13,
@@ -178,17 +252,17 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`|
-Endpoint | `/{{year}}/submissions/latest`
-Return | Details for the latest submission
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/latest`
+Headers | `Authorization: Bearer {{access_token}}`
 
 
-### Upload File
+### Upload a File
 
 > Example
 
 ```shell
 curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019/submissions/13" \
+  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019/submissions/10" \
   -H 'Authorization: Bearer {{access_token}}' \
   -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
   -F file=<file.csv>
@@ -201,7 +275,7 @@ curl -X POST \
     "id": {
         "lei": "B90YWS6AFX2LGWOXJ1LD",
         "period": "2018",
-        "sequenceNumber": 55
+        "sequenceNumber": 10
     },
     "status":{
         "code": 3,
@@ -218,18 +292,18 @@ curl -X POST \
  | |
 ---|---
 Method | `POST`|
-Endpoint | `/{{year}}/submissions/{{sequenceNumber}}`
-Headers  |  `'Content-Type': multipart/form-data`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}`
+Headers  |  `Authorization: Bearer {{access_token}}`, `'Content-Type': multipart/form-data`
 Payload |  LAR file
 
 
-### View parse errors
+### View Parsing Errors
 
 > Example
 
 ```shell
 curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/parseErrors" \
+  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/10/parseErrors" \
   -H 'Authorization: Bearer {{access_token}}'
 ```
 
@@ -260,9 +334,12 @@ curl -X POST \
  | |
 ---|---
 Method | `GET`|
-Endpoint | `/{{year}}/submissions/{{sequenceNumber}}/parseErrors`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/parseErrors`
+Headers | `Authorization: Bearer {{access_token}}`
 
-### View all edits
+### View All Edits
+
+Returns a summary of all edits triggered by an upload in a submission.
 
 > Example
 
@@ -317,9 +394,12 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`|
-Endpoint | `/{{year}}/submissions/{{sequenceNumber}}/edits`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits`
+Headers | `Authorization: Bearer {{access_token}}`
 
-### View edit details
+### View Edit Details
+
+Returns more information about a specific edit including a list of lines that triggered the edit and the relevant fields from those lines.
 
 > Example
 
@@ -365,7 +445,8 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`|
-Endpoint | `/{{year}}/submissions/{{sequenceNumber}}/edits/{{edit_code}}`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/{{edit_code}}`
+Headers | `Authorization: Bearer {{access_token}}`
 
 ### Verify Quality Edits
 
@@ -394,7 +475,8 @@ curl -X POST \
  | |
 ---|---
 Method | `POST`
-Endpoint | `/{{year}}/submissions/{{sequenceNumber}}/edits/quality`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/quality`
+Headers | `Authorization: Bearer {{access_token}}`
 Body | `{"verified": true}`
 
 ### Verify Macro Edits
@@ -424,7 +506,8 @@ curl -X POST \
  | |
 ---|---
 Method | `POST`
-Endpoint | `/{{year}}/submissions/{{sequenceNumber}}/edits/macro`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/macro`
+Headers | `Authorization: Bearer {{access_token}}`
 Body | `{"verified": true}`
 
 ### Sign a Submission
@@ -444,7 +527,7 @@ curl -X POST \
 {
     "email": "user@example.com",
     "timestamp": 1572375004080,
-    "receipt": "B90YWS6AFX2LGWOXJ1LD-2018-55-1572375004080",
+    "receipt": "B90YWS6AFX2LGWOXJ1LD-2018-10-1572375004080",
     "status": {
         "code": 15,
         "message": "Your submission has been accepted.",
@@ -457,7 +540,8 @@ curl -X POST \
  | |
 ---|---
 Method | `POST`
-Endpoint | `/{{year}}/submissions/{{sequenceNumber}}/sign`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
+Headers | `Authorization: Bearer {{access_token}}`
 Body  |  `{"signed": true}`
 
 ### Get Sign receipt
@@ -466,9 +550,8 @@ Body  |  `{"signed": true}`
 
 ```shell
 curl -X GET \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/1520/sign" \
-  -H 'Authorization: Bearer {{access_token}}' \
-  -d '{"verified": true}'
+  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/10/sign" \
+  -H 'Authorization: Bearer {{access_token}}'
 ```
 
 > JSON Response
@@ -489,66 +572,12 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`
-Endpoint | `/{{year}}/submissions/{{sequenceNumber}}/sign`
+Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
+Headers | `Authorization: Bearer {{access_token}}`
 
+## Quarterly Filing
 
-### Submission Status
-
-#### Structure
-
-> Example
-
-```json
-{
-  "id": {
-    "lei": "12345abc",
-    "period": "2018",
-    "sequenceNumber": 3
-  },
-  "status": {
-    "code": 1,
-    "message": "No data has been uploaded yet.",
-    "description": "The filing period is open and available to accept HMDA data. Make sure your data is in a pipe-delimited text file."
-  },
-  "start": 0,
-  "end": 0,
-  "fileName": "test.txt",
-  "receipt": ""
-}
-```
-
-Every submission will store a `SubmissionStatus` object with the following structure:
-
-Key | Type
---- | ---
-code | Integer
-message | String
-description | String
-
-#### Status Codes
-
-In order to track the status of a filing for a financial institution, the following states are captured by the backend:
-
-Code | Message | Description
---- | --- | ---
-1 | No data has been uploaded yet. | The filing period is open and available to accept HMDA data. Make sure your data is in a pipe-delimited text file.
-2 | Your file is uploading. | Your file is currently being uploaded to the HMDA Platform.
-3 | Your file has been uploaded. | Your data is ready to be analyzed.
-4 | Checking the formatting of your data. | Your file is being analyzed to ensure that it meets formatting requirements specified in the HMDA Filing Instructions Guide.
-5 | Your data has formatting errors. | Review these errors and update your file. Then, upload the corrected file.
-6 | Your data is formatted correctly. | Your file meets the formatting requirements specified in the HMDA Filing Instructions Guide. Your data will now be analyzed for any edits.
-7 | Your data is being analyzed. | Your data has been uploaded and is being checked for any edits.
-8 | Your data has been analyzed for Syntactical and Validity Errors. | Your file has been analyzed and does not contain any Syntactical or Validity errors.
-9 | Your data has syntactical and/or validity edits that need to be reviewed. | Your file has been uploaded, but the filing process may not proceed until the file is corrected and re-uploaded.
-10 | Your data has been analyzed for Quality Errors. | Your file has been analyzed, and does not contain quality errors.
-11 | Your data has quality edits that need to be reviewed. | Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded.
-12 | Your data has been analyzed for macro errors. | Your file has been analyzed, and does not contain macro errors.
-13 | Your data has macro edits that need to be reviewed. | Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded.
-14 | Your data is ready for submission. | Your financial institution has certified that the data is correct, but it has not been submitted yet.
-15 | Your submission has been accepted. | This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.
--1 | An error occurred while submitting the data. | Please re-upload your file.
-
-### Quarterly Filing
+All the endpoints are the same for quarterly filing with the addtion of `quarter/Q1/`, `quarter/Q2/` or `quarter/Q3/` after the filing parameter and before the submission parameter.
 
 > Example
 
@@ -585,5 +614,3 @@ curl -X GET \
     "macroExists": false
 }
 ```
-
-All the endpoints are the same for quarterly filing with the addtion of `quarter/Q1/`, `quarter/Q2/` or `quarter/Q3/`.
