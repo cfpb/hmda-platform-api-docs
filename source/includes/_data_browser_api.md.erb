@@ -68,7 +68,7 @@ _Note:_ depending on the query, queries may take a while to return and data may 
 > Example
 
   ```shell
-  curl "<%= config[:databrowserapihost] %>/data-browser-api/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=Asian"
+  curl "<%= config[:databrowserapihost] %>/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=White,Asian,Joint"
   ```
 > JSON Response
 
@@ -113,7 +113,7 @@ _Note:_ depending on the query, queries may take a while to return and data may 
   > Example
 
   ```shell
-  curl -L "<%= config[:databrowserapihost] %>/data-browser-api/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
+  curl -L "<%= config[:databrowserapihost] %>/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
   ```
   > <img src="../images/DataBrowserCsvExample.png">
 
@@ -145,7 +145,7 @@ counties | 5 digit integer code
 > Example
 
  ```shell
- curl "<%= config[:databrowserapihost] %>/data-browser-api/view/filers?states=MD,DC&years=2018"
+ curl "<%= config[:databrowserapihost] %>/view/filers?states=MD,DC&years=2018"
  ```
 
 > JSON Format Response
@@ -173,5 +173,24 @@ var | value
 --- | ---
 years | 2018
 states | MD, DC
+
+## Errors
+
+> Example
+
+```shell
+curl "<%= config[:databrowserapihost] %>/view/csv"
+```
+
+> JSON Response
+
+```json
+{
+    "errorType": "provide-atleast-msamds-or-states",
+    "message": "Provide year and either states or msamds or both"
+}
+```
+
+Incorrect calls will result in an error. For example the following call will result in an error since there is no state(s)/msamds and years provided.
 
 <br>
