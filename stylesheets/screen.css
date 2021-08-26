@@ -1,8 +1,7 @@
 @charset "utf-8";
-@import "normalize";
-@import "variables";
-@import "icon-font";
-// @import 'rtl'; // uncomment to switch to RTL format
+@import 'normalize';
+@import 'variables';
+@import 'icon-font';
 
 /*
 Copyright 2008-2013 Concur Technologies, Inc.
@@ -59,7 +58,7 @@ html, body {
   bottom: 0;
   width: $nav-width;
   background-color: $nav-bg;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bold;
 
   // language selector for mobile devices
@@ -74,8 +73,7 @@ html, body {
   // This is the logo at the top of the ToC
   .logo {
     display: block;
-    max-width: 85%;
-    padding: 6px 0 6px 15px;
+    max-width: 100%;
     margin-bottom: $logo-margin;
   }
 
@@ -172,7 +170,7 @@ html, body {
 
   .toc-h2 {
     padding-left: $nav-padding + $nav-indent;
-    font-size: 14px;
+    font-size: 12px;
   }
 
   .toc-list-h3 {
@@ -210,7 +208,7 @@ html, body {
     }
 
     li {
-      font-size: 16px;
+      font-size: 0.8em;
       line-height: 1.7;
       text-decoration: none;
     }
@@ -335,7 +333,6 @@ html, body {
 // This is all the stuff with the light background in the left half of the page
 
 .content {
-  // fixes webkit rendering bug for some: see #538
   -webkit-transform: translateZ(0);
   // to place content above the dark box
   position: relative;
@@ -372,8 +369,8 @@ html, body {
     padding-bottom: 0.5em;
     margin-bottom: $h1-margin-bottom;
     margin-top: 2em;
-    border-top: 1px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
     background-color: #fdfdfd;
   }
 
@@ -387,7 +384,7 @@ html, body {
     font-size: 19px;
     margin-top: 4em;
     margin-bottom: 0;
-    border-top: 1px solid #ffffff;
+    border-top: 1px solid gray;
     padding-top: 1.2em;
     padding-bottom: 1.2em;
     background-image: linear-gradient(to bottom, rgba(#fff, 0.2), rgba(#fff, 0));
@@ -422,7 +419,7 @@ html, body {
 
   h5, h6 {
     @extend %header-font;
-    font-size: 18px;
+    font-size: 15px;
     margin-top: 2.5em;
     margin-bottom: 0.8em;
   }
@@ -490,7 +487,7 @@ html, body {
   }
 
   code {
-    background-color: #e1f3f8;
+    background-color: rgba(0,0,0,0.05);
     padding: 3px;
     border-radius: 3px;
     @extend %break-words;
@@ -554,7 +551,7 @@ html, body {
 .content {
   pre, blockquote {
     background-color: $code-bg;
-    color: rgb(0, 0, 0);
+    color: #fff;
 
     margin: 0;
     width: $examples-width;
@@ -569,7 +566,7 @@ html, body {
     &>p { margin: 0; }
 
     a {
-      color: rgb(0, 0, 0);
+      color: #fff;
       text-decoration: none;
       border-bottom: dashed 1px #ccc;
     }
@@ -586,7 +583,7 @@ html, body {
     &>p {
       background-color: $code-annotation-bg;
       padding: $code-annotation-padding 2em;
-      color: rgb(0, 0, 0);
+      color: #eee;
     }
   }
 }
@@ -661,15 +658,15 @@ html, body {
     clear: none;
     left: 0;
     float: left;
-    background-color: #d6d7d9;
+    background-color: #2E3336;
   }
   .highlight, .highlight .w{
-    background-color: #d6d7d9;
+    background-color: #2E3336;
   }
 }
 
 .page-wrapper .dark-box, .toc-wrapper {
-  background-color: #ffffff;
+  background-color: gray;
 }
 
 .content table tr:nth-child(odd) > td {
