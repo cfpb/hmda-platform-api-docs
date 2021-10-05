@@ -32,26 +32,24 @@ This endpoint multiple ULIs with check digits in CSV format and returns whether 
 
 ### Single Check Digit Generation
 
-`POST` request to get a single check digit.
-
-> Example Request and Response
+> **Example Request and Response**
   
 
-  ```shell
-  Request:
-
+<pre><code class="text">
+  <b>Request:</b>
   curl POST 'https://ffiec.cfpb.gov/v2/public/uli/checkDigit' \
   --header 'Content-Type: application/json' \
   --data-raw '{loanId: "EILKZAIZF6TX4HB8ZDX33H"}'
 
-  JSON Response:
-
+  <b>JSON Response:</b>
   {
     "loanId":"EILKZAIZF6TX4HB8ZDX33H",
     "checkDigit":"54",
     "uli":"EILKZAIZF6TX4HB8ZDX33H54"
   }
-  ```
+  </code></pre>
+
+  `POST` request to get a single check digit.
 
   | |
   ---|---
@@ -62,27 +60,25 @@ This endpoint multiple ULIs with check digits in CSV format and returns whether 
 
 ### Batch Check Digit Generation
 
+> **Example Request and Response**
+
+<pre><code class="text">
+  <b>Request:</b>
+  curl -X POST \
+  "https://ffiec.cfpb.gov/v2/public/uli/validate/csv" \
+  -F file=@<PATH>/check_digit_sample_file.csv
+
+  <b>Request Payload:</b>
+  B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87
+  95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS
+
+  <b>CSV Response:</b>
+  loanId,checkDigit,uli
+  B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87,51,B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R8751
+  95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS,92,95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92
+</code></pre>
+
 `POST` request to get batch check digits.
-
-> Example Request and Response
-
-```shell
-Request:
-curl -X POST \
-"https://ffiec.cfpb.gov/v2/public/uli/validate/csv" \
--F file=@<PATH>/check_digit_sample_file.csv
-
- Request Payload:
-
-B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87
-95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS
-
- CSV Response:
-
-loanId,checkDigit,uli
-B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87,51,B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R8751
-95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS,92,95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92
-```
 
  | |
 ---|---
@@ -94,23 +90,22 @@ Return  |  CSV
 
 ### Single Check Digit Validation
 
+> **Example Request and Response**
+
+<pre><code class="text">
+  <b>Request:</b>
+  curl POST 'https://ffiec.cfpb.gov/v2/public/uli/validate' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{"uli": "EILKZAIZF6TX4HB8ZDX33H54"}'
+
+  <b>JSON Response:</b>
+  {
+    "isValid": true
+  }
+</code></pre>
+
 `POST` request to validate a single check digit.
 
-> Example Request and Response
-
-  ```shell
-  Request:
-
-curl POST 'https://ffiec.cfpb.gov/v2/public/uli/validate' \
---header 'Content-Type: application/json' \
---data-raw '{"uli": "EILKZAIZF6TX4HB8ZDX33H54"}'
-
-JSON Response:
-
-{
-  "isValid": true
-}
-  ```
    | |
   ---|---
   Method  |  `POST`
@@ -118,33 +113,28 @@ JSON Response:
   Payload  | JSON
   Return  |  JSON
 
-
 ### Batch Check Digit Validation
 
-`POST` request to batch validate check digits.
+> **Example Request and Response**
 
 
-> Example Request and Response
-
-
-  ```
-  Request:
-
+<pre><code class="text">
+  <b>Request:</b>
   curl -X POST \
   "https://ffiec.cfpb.gov/v2/public/uli/validate/csv" \
   -F file=@<PATH>/check_digit_sample_file.csv
   
-  Request Payload:
-  
+  <b>Request Payload:</b>
   95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92
   B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89
   
-  CSV Response:
-  
+  <b>CSV Response:</b>
   uli,isValid
   95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92,true
   B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89,false
-  ```
+</code></pre>
+
+`POST` request to batch validate check digits.
 
  | |
 ---|---

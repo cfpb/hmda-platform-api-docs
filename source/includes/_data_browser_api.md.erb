@@ -65,15 +65,13 @@ _Note:_ depending on the query, queries may take a while to return and data may 
 
 ### Aggregation Example
 
-> Example Request and Response
+> **Example Request and Response**
 
-  ```shell
-  Request:
-
+<pre><code class="text">
+  <b>Request:</b>
   curl "<%= config[:databrowserapihost] %>/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=White,Asian,Joint"
 
-  JSON Response:
-
+  <b>JSON Response:</b>
   {
     "parameters": {
         "state": "MD",
@@ -98,7 +96,7 @@ _Note:_ depending on the query, queries may take a while to return and data may 
     ],
     "servedFrom": "cache"
 }
-  ```
+</code></pre>
 
   ```GET``` JSON with the following parameters
 
@@ -111,17 +109,15 @@ _Note:_ depending on the query, queries may take a while to return and data may 
 
 ### CSV Example
 
-> Example Request and Response
+> **Example Request and Response**
 
-  ```shell
-  Request:
-
+<pre><code class="text">
+  <b>Request:</b>
   curl -L "<%= config[:databrowserapihost] %>/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
 
-  CSV Response:
-
+  <b>CSV Response:</b>
   <img src="../images/DataBrowserCsvExample.png" class="lang-specific shell">
-  ```
+</code></pre>
 
   ```GET``` CSV file with the following parameters
 
@@ -148,15 +144,13 @@ counties | 5 digit integer code
 
 ### HMDA Filers Example
 
-> Example Request and Response
+> **Example Request and Response**
 
-  ```shell
-  Request:
-
+<pre><code class="text">
+  <b>Request:</b>
   curl "<%= config[:databrowserapihost] %>/view/filers?states=MD,DC&years=2018"
 
-  JSON Format Response:
-
+  <b>JSON Format Response:</b>
   {
     "institutions":[
       {
@@ -171,7 +165,7 @@ counties | 5 digit integer code
       }
     ]
   }
-  ```
+</code></pre>
 
 `GET` with the following parameters
 
@@ -182,20 +176,18 @@ states | MD, DC
 
 ## Errors
 
-> Example Request and Response
+> **Example Request and Response**
 
-  ```shell
-  Request:
-
+<pre><code class="text">
+  <b>Request:</b>
   curl "<%= config[:databrowserapihost] %>/view/csv"
 
-  JSON Response:
-
+  <b>JSON Response:</b>
   {
       "errorType": "provide-atleast-msamds-or-states",
       "message": "Provide year and either states or msamds or both"
   }
-  ```
+</code></pre>
 
 Incorrect calls will result in an error. For example the following call will result in an error since there is no state(s)/msamds and years provided.
 
