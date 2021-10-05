@@ -26,13 +26,14 @@ under the License.
 <!doctype html>
 <html>
   <head>
+    <%= favicon_tag 'favicon-57.png' %>
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title><%= current_page.data.title || "API Documentation" %></title>
 
     <style>
-      <%= Rouge::Themes::MonokaiSublime.render(:scope => '.highlight') %>
+      <%= Rouge::Themes::IgorPro.render(:scope => '.highlight') %>
     </style>
     <%= stylesheet_link_tag :screen, media: :screen %>
     <%= stylesheet_link_tag :print, media: :print %>
@@ -51,7 +52,7 @@ under the License.
       </span>
     </a>
     <div class="toc-wrapper">
-      <a href="/"><%= image_tag "ffiec-logo.png", class: 'logo', alt: "FFIEC Logo" %></a>
+      <a href="/"><%= image_tag "ffiec-logo.svg", class: 'logo', alt: "FFIEC Logo" %></a>
       <% if language_tabs.any? %>
         <div class="lang-selector">
           <% language_tabs.each do |lang| %>

@@ -58,7 +58,6 @@ the submission status often throughout the process of uploading and checking edi
 #### Submission Status Codes
 
 > Example
-
 ```json
 {
   "id": {
@@ -103,17 +102,17 @@ Code | Message | Description
 
 ### Start a Filing
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019" \
   -H 'Authorization: Bearer  {{access_token}}' \
-```
 
-> JSON Response
+  JSON Response:
 
-```json
 {
     "filing": {
         "period": "2018",
@@ -143,17 +142,17 @@ Headers| `Authorization: Bearer {{access_token}}`
 
 This endpoint can be used to confirm that a filing exists for the relevant period.
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X GET \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019" \
   -H 'Authorization: Bearer  {{access_token}}' \
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "filing": {
         "period": "2018",
@@ -179,19 +178,19 @@ Headers | `Authorization: Bearer {{access_token}}`
 
 ### Create a Submission
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions" \
   -H 'Authorization: Bearer {{access_token}}' \
-```
 
 A submission must be created for each file upload. More than one submission can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "id": {
         "lei": "B90YWS6AFX2LGWOXJ1LD",
@@ -209,6 +208,7 @@ A submission must be created for each file upload. More than one submission can 
     "receipt": ""
 }
 ```
+A submission must be created for each file upload. More than one submission can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
 
  | |
 ---|---
@@ -220,17 +220,17 @@ Headers  |  {{access_token}}
 
 Returns details about the last created submission including it's sequence number and status.
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X GET \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/latest" \
   -H 'Authorization: Bearer {{access_token}}' \
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "id": {
         "lei": "B90YWS6AFX2LGWOXJ1LD",
@@ -262,19 +262,19 @@ Headers | `Authorization: Bearer {{access_token}}`
 
 ### Upload a File
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2019/submissions/10" \
   -H 'Authorization: Bearer {{access_token}}' \
   -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
   -F file=<file.csv>
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "id": {
         "lei": "B90YWS6AFX2LGWOXJ1LD",
@@ -303,17 +303,17 @@ Payload |  LAR file
 
 ### View Parsing Errors
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/10/parseErrors" \
   -H 'Authorization: Bearer {{access_token}}'
-```
 
-> JSON Response
+JSON Response
 
-```json
 {
     "transmittalSheetErrors": [],
     "larErrors": [],
@@ -345,17 +345,17 @@ Headers | `Authorization: Bearer {{access_token}}`
 
 Returns a summary of all edits triggered by an upload in a submission.
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X GET \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/edits" \
   -H 'Authorization: Bearer {{access_token}}'
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "syntactical": {
         "edits": []
@@ -405,17 +405,15 @@ Headers | `Authorization: Bearer {{access_token}}`
 
 Returns more information about a specific edit including a list of lines that triggered the edit and the relevant fields from those lines.
 
-> Example
+> Example Request and Response
 
 ```shell
 curl -X GET \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/24/edits/Q631" \
   -H 'Authorization: Bearer {{access_token}}'
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "edit": "Q631",
     "rows": [
@@ -454,18 +452,18 @@ Headers | `Authorization: Bearer {{access_token}}`
 
 ### Verify Quality Edits
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/sequenceNumber/edits/quality" \
   -H 'Authorization: Bearer {{access_token}}' \
   -d '{"verified": true}'
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "verified": true,
     "status": {
@@ -485,18 +483,18 @@ Body | `{"verified": true}`
 
 ### Verify Macro Edits
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/sequenceNumber/edits/macro" \
   -H 'Authorization: Bearer {{access_token}}' \
   -d '{"verified": true}'
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "verified": true,
     "status": {
@@ -516,18 +514,18 @@ Body | `{"verified": true}`
 
 ### Sign a Submission
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/55/sign" \
   -H 'Authorization: Bearer {{access_token}}' \
   -d '{"verified": true}'
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "email": "user@example.com",
     "timestamp": 1572375004080,
@@ -550,17 +548,17 @@ Body  |  `{"signed": true}`
 
 ### Get Sign receipt
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X GET \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/submissions/10/sign" \
   -H 'Authorization: Bearer {{access_token}}'
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "email": "user@example.com",
     "timestamp": 1572375004080,
@@ -583,17 +581,17 @@ Headers | `Authorization: Bearer {{access_token}}`
 
 All the endpoints are the same for quarterly filing with the addtion of `quarter/Q1/`, `quarter/Q2/` or `quarter/Q3/` after the filing parameter and before the submission parameter.
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X GET \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/2018/quarter/Q1/submissions/latest" \
   -H 'Authorization: Bearer {{access_token}}' \
-```
 
-> JSON Response
+JSON Response:
 
-```json
 {
     "id": {
         "lei": "B90YWS6AFX2LGWOXJ1LD",

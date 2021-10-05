@@ -65,14 +65,15 @@ _Note:_ depending on the query, queries may take a while to return and data may 
 
 ### Aggregation Example
 
-> Example
+> Example Request and Response
 
   ```shell
-  curl "<%= config[:databrowserapihost] %>/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=White,Asian,Joint"
-  ```
-> JSON Response
+  Request:
 
-  ```json
+  curl "<%= config[:databrowserapihost] %>/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=White,Asian,Joint"
+
+  JSON Response:
+
   {
     "parameters": {
         "state": "MD",
@@ -110,9 +111,11 @@ _Note:_ depending on the query, queries may take a while to return and data may 
 
 ### CSV Example
 
-  > Example
+> Example Request and Response
 
   ```shell
+  Request:
+
   curl -L "<%= config[:databrowserapihost] %>/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
   ```
   > <img src="../images/DataBrowserCsvExample.png">
@@ -142,30 +145,30 @@ counties | 5 digit integer code
 
 ### HMDA Filers Example
 
-> Example
+> Example Request and Response
 
- ```shell
- curl "<%= config[:databrowserapihost] %>/view/filers?states=MD,DC&years=2018"
- ```
+  ```shell
+  Request:
 
-> JSON Format Response
+  curl "<%= config[:databrowserapihost] %>/view/filers?states=MD,DC&years=2018"
 
- ```json
- {
-  "institutions":[
-     {
-        "lei":"lei",
-        "name":"institution name",
-        "period":2018
-     },
-     {
-        "lei":"lei",
-        "name":"institution name",
-        "period":2018
-     }
-  ]
-}
-```
+  JSON Format Response:
+
+  {
+    "institutions":[
+      {
+          "lei":"lei",
+          "name":"institution name",
+          "period":2018
+      },
+      {
+          "lei":"lei",
+          "name":"institution name",
+          "period":2018
+      }
+    ]
+  }
+  ```
 
 `GET` with the following parameters
 
@@ -176,20 +179,20 @@ states | MD, DC
 
 ## Errors
 
-> Example
+> Example Request and Response
 
-```shell
-curl "<%= config[:databrowserapihost] %>/view/csv"
-```
+  ```shell
+  Request:
 
-> JSON Response
+  curl "<%= config[:databrowserapihost] %>/view/csv"
 
-```json
-{
-    "errorType": "provide-atleast-msamds-or-states",
-    "message": "Provide year and either states or msamds or both"
-}
-```
+  JSON Response:
+
+  {
+      "errorType": "provide-atleast-msamds-or-states",
+      "message": "Provide year and either states or msamds or both"
+  }
+  ```
 
 Incorrect calls will result in an error. For example the following call will result in an error since there is no state(s)/msamds and years provided.
 

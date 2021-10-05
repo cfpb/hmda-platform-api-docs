@@ -34,12 +34,23 @@ This endpoint multiple ULIs with check digits in CSV format and returns whether 
 
 `POST` request to get a single check digit.
 
-> Example
+> Example Request and Response
+  
 
   ```shell
+  Request:
+
   curl POST 'https://ffiec.cfpb.gov/v2/public/uli/checkDigit' \
   --header 'Content-Type: application/json' \
   --data-raw '{loanId: "EILKZAIZF6TX4HB8ZDX33H"}'
+
+  JSON Response:
+
+  {
+    "loanId":"EILKZAIZF6TX4HB8ZDX33H",
+    "checkDigit":"54",
+    "uli":"EILKZAIZF6TX4HB8ZDX33H54"
+  }
   ```
 
   | |
@@ -49,26 +60,24 @@ This endpoint multiple ULIs with check digits in CSV format and returns whether 
   Payload  | JSON
   Return  |  JSON
 
-  > Response
-
-  ```json
-    {
-      "loanId":"EILKZAIZF6TX4HB8ZDX33H",
-      "checkDigit":"54",
-      "uli":"EILKZAIZF6TX4HB8ZDX33H54"
-    }
-  ```
-
 ### Batch Check Digit Generation
 
 `POST` request to get batch check digits.
 
-> Example
+> Example Request and Response
 
 ```shell
+Request:
+
 curl -X POST \
 "<%= config[:publicapihost] %>/uli/validate/csv" \
 -F file=@<PATH>/check_digit_sample_file.csv
+
+CSV Response:
+
+loanId,checkDigit,uli
+B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87,51,B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R8751
+95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS,92,95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92
 ```
 
  | |
@@ -78,24 +87,28 @@ URL | `<%= config[:publicapihost] %>/uli/checkDigit/csv`
 Payload  | CSV file as shown bellow
 Return  |  CSV
 
-> Response
+  Response
 
-```csv
-loanId,checkDigit,uli
-B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87,51,B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R8751
-95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS,92,95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92
-```
+
 
 ### Single Check Digit Validation
 
 `POST` request to validate a single check digit.
 
-> Example
+> Example Request and Response
 
   ```shell
+  Request:
+
   curl POST 'https://ffiec.cfpb.gov/v2/public/uli/validate' \
   --header 'Content-Type: application/json' \
   --data-raw '{"uli": "EILKZAIZF6TX4HB8ZDX33H54"}'
+
+  JSON Response:
+
+  {
+    "isValid": true
+  }
   ```
    | |
   ---|---
@@ -104,25 +117,27 @@ B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87,51,B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SL
   Payload  | JSON
   Return  |  JSON
 
-  > Response
-
-  ```json
-  {
-    "isValid": true
-  }
-  ```
 
 ### Batch Check Digit Validation
 
 `POST` request to batch validate check digits.
 
 
-> Example
+> Example Request and Response
+
 
   ```shell
+  \*\*Request\*\*:
+
   curl -X POST \
   "<%= config[:publicapihost] %>/uli/validate/csv" \
   -F file=@<PATH>/check_digit_sample_file.csv
+
+  CSV Response:
+
+  uli,isValid
+  95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92,true
+  B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89,false
   ```
 
  | |
@@ -138,11 +153,3 @@ Return  |  CSV
 --
 95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92 |
 B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89 |
-
-> Response
-
-  ```csv
-  uli,isValid
-  95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92,true
-  B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89,false
-  ```
