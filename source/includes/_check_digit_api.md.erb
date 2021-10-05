@@ -68,12 +68,16 @@ This endpoint multiple ULIs with check digits in CSV format and returns whether 
 
 ```shell
 Request:
-
 curl -X POST \
-"<%= config[:publicapihost] %>/uli/validate/csv" \
+"https://ffiec.cfpb.gov/v2/public/uli/validate/csv" \
 -F file=@<PATH>/check_digit_sample_file.csv
 
-CSV Response:
+ Request Payload:
+
+B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87
+95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS
+
+ CSV Response:
 
 loanId,checkDigit,uli
 B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R87,51,B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R8751
@@ -87,9 +91,6 @@ URL | `<%= config[:publicapihost] %>/uli/checkDigit/csv`
 Payload  | CSV file as shown bellow
 Return  |  CSV
 
-  Response
-
-
 
 ### Single Check Digit Validation
 
@@ -100,15 +101,15 @@ Return  |  CSV
   ```shell
   Request:
 
-  curl POST 'https://ffiec.cfpb.gov/v2/public/uli/validate' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{"uli": "EILKZAIZF6TX4HB8ZDX33H54"}'
+curl POST 'https://ffiec.cfpb.gov/v2/public/uli/validate' \
+--header 'Content-Type: application/json' \
+--data-raw '{"uli": "EILKZAIZF6TX4HB8ZDX33H54"}'
 
-  JSON Response:
+JSON Response:
 
-  {
-    "isValid": true
-  }
+{
+  "isValid": true
+}
   ```
    | |
   ---|---
@@ -126,15 +127,20 @@ Return  |  CSV
 > Example Request and Response
 
 
-  ```shell
-  \*\*Request\*\*:
+  ```
+  Request:
 
   curl -X POST \
-  "<%= config[:publicapihost] %>/uli/validate/csv" \
+  "https://ffiec.cfpb.gov/v2/public/uli/validate/csv" \
   -F file=@<PATH>/check_digit_sample_file.csv
-
+  
+  Request Payload:
+  
+  95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92
+  B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89
+  
   CSV Response:
-
+  
   uli,isValid
   95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92,true
   B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89,false
@@ -146,10 +152,3 @@ Method  |  `POST`
 URL | `<%= config[:publicapihost] %>/uli/validate/csv`
 Payload  | CSV file as shown bellow
 Return  |  CSV
-
-  `check_digit_sample_file.csv`
-
- |
---
-95GVQQ61RS6CWQF0SZD9F4VRXNN1OCVXHP1JURF9ZJS92 |
-B90YWS6AFX2LGWOXJ1LDNIXOQ6O0000SLR6FSJJ5R89 |
