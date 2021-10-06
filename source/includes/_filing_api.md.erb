@@ -16,7 +16,7 @@ For local development, no authorization is needed. See [One-line Local Developme
 
 > Example
 
-  ```shell
+  ```text
   curl -X POST \
   "<%= config[:authhost] %>/auth/realms/hmda2/protocol/openid-connect/token" \
   -d 'client_id=hmda2-api&grant_type=password&username={{username}}%40{{bank_domain}}&password={{password}}'
@@ -58,7 +58,8 @@ the submission status often throughout the process of uploading and checking edi
 #### Submission Status Codes
 
 > **Example**
-```json
+
+```text
 {
   "id": {
     "lei": "12345abc",
@@ -202,6 +203,7 @@ A submission must be created for each file upload. More than one submission can 
     "receipt": ""
 }
 </pre></code>
+
 A submission must be created for each file upload. More than one submission can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
 
  | |
@@ -283,6 +285,8 @@ curl -X POST \
 }
 </pre></code>
 
+Upload a file to a submission.
+
  | |
 ---|---
 Method | `POST`|
@@ -322,6 +326,8 @@ curl -X POST \
     }
 }
 </pre></code>
+
+Returns a list of all parsing errors triggered by the file uploaded to a submission.
 
  | |
 ---|---
@@ -458,6 +464,8 @@ curl -X POST \
 }
 </pre></code>
 
+Verify that the uploaded data is correct and that the reported quality edits are not relevent to the submission.
+
  | |
 ---|---
 Method | `POST`
@@ -486,6 +494,8 @@ curl -X POST \
     }
 }
 </pre></code>
+
+Verify that the uploaded data is correct and that the reported macro edits are not relevent to the submission.
 
  | |
 ---|---
@@ -518,6 +528,7 @@ curl -X POST \
 }
 </pre></code>
 
+Sign and complete a HMDA submission.
 
  | |
 ---|---
