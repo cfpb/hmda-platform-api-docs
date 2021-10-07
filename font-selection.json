@@ -113,7 +113,7 @@
 		"fontPref": {
 			"prefix": "icon-",
 			"metadata": {
-				"fontFamily": "slate",
+				"fontFamily": "SourceSansPro",
 				"majorVersion": 1,
 				"minorVersion": 0,
 				"description": "Based on FontAwesome",

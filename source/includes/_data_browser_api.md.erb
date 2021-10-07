@@ -65,14 +65,13 @@ _Note:_ depending on the query, queries may take a while to return and data may 
 
 ### Aggregation Example
 
-> Example
+> **Example Request and Response**
 
-  ```shell
+<pre><code class="text">
+  <b>Request:</b>
   curl "<%= config[:databrowserapihost] %>/view/aggregations?states=MD&years=2018&actions_taken=5,6&races=White,Asian,Joint"
-  ```
-> JSON Response
 
-  ```json
+  <b>JSON Response:</b>
   {
     "parameters": {
         "state": "MD",
@@ -97,9 +96,11 @@ _Note:_ depending on the query, queries may take a while to return and data may 
     ],
     "servedFrom": "cache"
 }
-  ```
+</code></pre>
 
-  ```GET``` JSON with the following parameters
+Get an aggregation, in JSON format, of HMDA Data reported in 2018 in Maryland, with action takens `5 - File closed for incompleteness`, or `6 - Purchased loan`, where the reported race was Asian.
+
+`GET` JSON with the following parameters
 
   var | value
   --- | ---
@@ -110,14 +111,19 @@ _Note:_ depending on the query, queries may take a while to return and data may 
 
 ### CSV Example
 
-  > Example
+> **Example Request and Response**
 
-  ```shell
+<pre><code class="text">
+  <b>Request:</b>
   curl -L "<%= config[:databrowserapihost] %>/view/csv?states=CA,MD,DC&years=2018&actions_taken=5"
-  ```
-  > <img src="../images/DataBrowserCsvExample.png">
 
-  ```GET``` CSV file with the following parameters
+  <b>CSV Response:</b>
+  <img src="../images/DataBrowserCsvExample.png" class="lang-specific shell">
+</code></pre>
+
+Get a CSV containing all HMDA data reported in 2018 in California, Maryland, or DC, with action taken `5 - File closed for incompleteness`.
+
+`GET` CSV file with the following parameters
 
   var | value
   --- | ---
@@ -142,30 +148,28 @@ counties | 5 digit integer code
 
 ### HMDA Filers Example
 
-> Example
+> **Example Request and Response**
 
- ```shell
- curl "<%= config[:databrowserapihost] %>/view/filers?states=MD,DC&years=2018"
- ```
+<pre><code class="text">
+  <b>Request:</b>
+  curl "<%= config[:databrowserapihost] %>/view/filers?states=MD,DC&years=2018"
 
-> JSON Format Response
-
- ```json
- {
-  "institutions":[
-     {
-        "lei":"lei",
-        "name":"institution name",
-        "period":2018
-     },
-     {
-        "lei":"lei",
-        "name":"institution name",
-        "period":2018
-     }
-  ]
-}
-```
+  <b>JSON Format Response:</b>
+  {
+    "institutions":[
+      {
+          "lei":"lei",
+          "name":"institution name",
+          "period":2018
+      },
+      {
+          "lei":"lei",
+          "name":"institution name",
+          "period":2018
+      }
+    ]
+  }
+</code></pre>
 
 `GET` with the following parameters
 
@@ -176,20 +180,18 @@ states | MD, DC
 
 ## Errors
 
-> Example
+> **Example Request and Response**
 
-```shell
-curl "<%= config[:databrowserapihost] %>/view/csv"
-```
+<pre><code class="text">
+  <b>Request:</b>
+  curl "<%= config[:databrowserapihost] %>/view/csv"
 
-> JSON Response
-
-```json
-{
-    "errorType": "provide-atleast-msamds-or-states",
-    "message": "Provide year and either states or msamds or both"
-}
-```
+  <b>JSON Response:</b>
+  {
+      "errorType": "provide-atleast-msamds-or-states",
+      "message": "Provide year and either states or msamds or both"
+  }
+</code></pre>
 
 Incorrect calls will result in an error. For example the following call will result in an error since there is no state(s)/msamds and years provided.
 
