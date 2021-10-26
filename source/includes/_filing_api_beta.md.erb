@@ -1,39 +1,48 @@
-# HMDA Filing API
+# Beta HMDA Filing API
 
-The following documentation addresses the process for filing a HMDA file and the associated APIs.
+The following documentation addresses the process for testing in the HMDA Platform Beta environment and the associated Beta APIs.
 
-This API is what powers the [HMDA Filing Platform application](https://ffiec.cfpb.gov/filing/)
+The [HMDA Beta Filing Platform](https://ffiec.beta.cfpb.gov/filing) serves as a test environment for the latest builds of the Hmda Platform backend service and Frontend UI. It is in no way linked to the official submission of filing data.
 
 ## Authorization
 
-To file HMDA data using the API, a _bearer_ authorization token is required for all api calls. To acquire an authorization token use the `/auth` endpoint with your username and password as payload.
+To test a HMDA filing using the Beta API, a _bearer_ authorization token is required for all Beta API calls. To acquire an authorization token use the `/auth` endpoint with your username and password as payload.
 
 For local development, no authorization is needed. See [One-line Local Development Environment (No Auth)](https://github.com/cfpb/hmda-platform#one-line-local-development-environment-no-auth) for more info.
 
+<p style="background: #ffe4c4; padding-top: 10px; padding-bottom: 10px;">
+<b><u>Please note:</u></b> When testing the filing process via the  <b>HMDA Beta</b> platform, this filing process is for test purposes only and is <b>NOT</b> acknowledged as an official filing. If you wish to submit <b>official data</b> to the HMDA Platform, please use the  
+production platform application: https://ffiec.cfpb.gov/filing.
+
+</p>
 
 > Example
 
   ```text
   curl -X POST \
-  "<%= config[:authhost] %>/auth/realms/hmda2/protocol/openid-connect/token" \
+  "<%= config[:authhostbeta] %>/auth/realms/hmda2/protocol/openid-connect/token" \
   -d 'client_id=hmda2-api&grant_type=password&username={{username}}%40{{bank_domain}}&password={{password}}'
   ```
 
  | |
 ---|---
 Method  |  `POST`
-URL | `<%= config[:authhost] %>/auth/realms/hmda2/protocol/openid-connect/token`
+URL | `<%= config[:authhostbeta] %>/auth/realms/hmda2/protocol/openid-connect/token`
 Payload  | client_id=hmda2-api <br> grant_type=password <br> username={{username}}%40{{bank_domain}} <br> password={{password}}
 
 ## Postman Collection
 
-The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/newman/postman) has been prepared to simplify the process of using the HMDA Platform Filing APIs.
+The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/newman/postman) has been prepared to simplify the process of using the HMDA Platform Filing Beta APIs.
 
-[Postman](https://www.postman.com/product/api-client/) is a client side application that allows users to easily construct API calls and import external API collections.
+[Postman](https://www.postman.com/product/api-client/) is a client side application that allows users to easily construct Beta API calls and import external Beta API collections.
 
 ## Filing Process
 
 Submission of a HMDA file flows in the following steps which are mirriored in the submission status codes:
+
+<p style="background: #ffe4c4; padding-top: 10px; padding-bottom: 10px;">
+<b><u>Please note:</u></b> When testing the filing process via the  <b>HMDA Beta</b> platform, the signing of submissions via the HMDA Beta platform is <b>prohibted</b> as it is not considered an official submission of data and to avoid any confusion in this regard. 
+</p>
 
 1. Create a Filing: These are unique per institution per filing season and are created by the HMDA-Ops teams in preperation for each filing season.
 1. Create a Submission: Submissions are the primary object in a HMDA Filing. They are created within a filing and each is able to accept a single file upload. Many submissions can be created for a filing and they carry an id which is incrimented.
@@ -41,7 +50,7 @@ Submission of a HMDA file flows in the following steps which are mirriored in th
 1. Check the status of the Submission the file was uploaded to: If parsing syntactical or validity edits are triggered a new file must be uploaded.
 1. Validate Quality Edits: Review triggered Quality Edits and confirm the submitted data are correct.
 1. Validate Macro Edits: Review triggered Macro Edits and confirm the submitted data are correct.
-1. Sign the Submission: Perform final review of the data and complete the HMDA filing.
+
 
 ### Object Hierarchy
 
@@ -93,7 +102,6 @@ Code | Message | Description
 12 | Your data has been analyzed for macro errors. | Your file has been analyzed, and does not contain macro errors.
 13 | Your data has macro edits that need to be reviewed. | Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded.
 14 | Your data is ready for submission. | Your financial institution has certified that the data is correct, but it has not been submitted yet.
-15 | Your submission has been accepted. | This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted.
 -1 | An error occurred while submitting the data. | Please re-upload your file.
 
 ## Endpoints
@@ -105,7 +113,7 @@ Code | Message | Description
 <pre><code class="text">
 <b>Request:</b>
 curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}" \
   -H 'Authorization: Bearer  {{access_token}}' \
 
 <b>JSON Response:</b>
@@ -131,7 +139,7 @@ The `POST` will result in a `200` only for the first time it's called. If the fi
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}`
 Headers| `Authorization: Bearer {{access_token}}`
 
 ### Get a Filing
@@ -143,7 +151,7 @@ This endpoint can be used to confirm that a filing exists for the relevant perio
 <pre><code class="text">
 <b>Request:</b>
 curl -X GET \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}" \
   -H 'Authorization: Bearer  {{access_token}}' \
 
 <b>JSON Response:</b>
@@ -166,7 +174,7 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}`
 Headers | `Authorization: Bearer {{access_token}}`
 
 
@@ -177,7 +185,7 @@ Headers | `Authorization: Bearer {{access_token}}`
 <pre><code class="text">
 <b>Request:</b>
 curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions" \
   -H 'Authorization: Bearer {{access_token}}' \
 
 A submission must be created for each file upload. More than one submission can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
@@ -206,7 +214,7 @@ A submission must be created for each file upload. More than one submission can 
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}/submissions`
 Headers  |  {{access_token}}
 
 ### Get the Latest Submission
@@ -216,7 +224,7 @@ Headers  |  {{access_token}}
 <pre><code class="text">
 <b>Request:</b>
 curl -X GET \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/latest" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/latest" \
   -H 'Authorization: Bearer {{access_token}}' \
 
 <b>JSON Response:</b>
@@ -247,7 +255,7 @@ Returns details about the last created submission including it's sequence number
  | |
 ---|---
 Method | `GET`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/latest`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}/submissions/latest`
 Headers | `Authorization: Bearer {{access_token}}`
 
 
@@ -258,7 +266,7 @@ Headers | `Authorization: Bearer {{access_token}}`
 <pre><code class="text">
 <b>Request:</b>
 curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/10" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}" \
   -H 'Authorization: Bearer {{access_token}}' \
   -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
   -F file=<file.csv>
@@ -287,7 +295,7 @@ Upload a file to a submission.
  | |
 ---|---
 Method | `POST`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}/submissions/{{sequenceNumber}}`
 Headers  |  `Authorization: Bearer {{access_token}}`, `'Content-Type': multipart/form-data`
 Payload |  LAR file
 
@@ -299,7 +307,7 @@ Payload |  LAR file
 <pre><code class="text">
 <b>Request:</b>
 curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/10/parseErrors" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/parseErrors" \
   -H 'Authorization: Bearer {{access_token}}'
 
 <b>JSON Response</b>
@@ -329,7 +337,7 @@ Returns a list of all parsing errors triggered by the file uploaded to a submiss
  | |
 ---|---
 Method | `GET`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/parseErrors`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}/submissions/{{sequenceNumber}}/parseErrors`
 Headers | `Authorization: Bearer {{access_token}}`
 
 ### View All Edits
@@ -339,7 +347,7 @@ Headers | `Authorization: Bearer {{access_token}}`
 <pre><code class="text">
 <b>Request:</b>
 curl -X GET \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/24/edits" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/edits" \
   -H 'Authorization: Bearer {{access_token}}'
 
 <b>JSON Response:</b>
@@ -387,7 +395,7 @@ Returns a summary of all edits triggered by an upload in a submission.
  | |
 ---|---
 Method | `GET`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}/submissions/{{sequenceNumber}}/edits`
 Headers | `Authorization: Bearer {{access_token}}`
 
 ### View Edit Details
@@ -397,7 +405,7 @@ Headers | `Authorization: Bearer {{access_token}}`
 <pre><code class="text">
 <b>Request:</b>
 curl -X GET \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/24/edits/Q631" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/edits/Q631" \
   -H 'Authorization: Bearer {{access_token}}'
 
 <b>JSON Response:</b>
@@ -421,7 +429,7 @@ curl -X GET \
    "count": 20,
    "total": 54,
    "_links": {
-       "href": "/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/24/edits/Q631{rel}",
+       "href": "/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/edits/Q631{rel}",
        "self": "?page=1",
        "first": "?page=1",
        "prev": "?page=1",
@@ -436,7 +444,7 @@ Returns more information about a specific edit including a list of lines that tr
  | |
 ---|---
 Method | `GET`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/{{edit_code}}`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}/submissions/{{sequenceNumber}}/edits/{{edit_code}}`
 Headers | `Authorization: Bearer {{access_token}}`
 
 ### Verify Quality Edits
@@ -446,7 +454,7 @@ Headers | `Authorization: Bearer {{access_token}}`
 <pre><code class="text">
 <b>Request:</b>
 curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/edits/quality" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/edits/quality" \
   -H 'Authorization: Bearer {{access_token}}' \
   -d '{"verified": true}'
 
@@ -466,7 +474,7 @@ Verify that the uploaded data is correct and that the reported quality edits are
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/quality`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}/submissions/{{sequenceNumber}}/edits/quality`
 Headers | `Authorization: Bearer {{access_token}}`
 Body | `{"verified": true}`
 
@@ -477,7 +485,7 @@ Body | `{"verified": true}`
 <pre><code class="text">
 <b>Request:</b>
 curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/edits/macro" \
+  "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/edits/macro" \
   -H 'Authorization: Bearer {{access_token}}' \
   -d '{"verified": true}'
 
@@ -497,169 +505,9 @@ Verify that the uploaded data is correct and that the reported macro edits are n
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/macro`
+Endpoint | `<%= config[:filingapihostbeta] %>/{{year}}/submissions/{{sequenceNumber}}/edits/macro`
 Headers | `Authorization: Bearer {{access_token}}`
 Body | `{"verified": true}`
 
-### Sign a Submission
-
-> **Example Request and Response**
-
-<pre><code class="text">
-<b>Request:</b>
-curl -X POST \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/sign" \
-  -H 'Authorization: Bearer {{access_token}}' \
-  -d '{"verified": true}'
-
-<b>JSON Response:</b>
-{
-    "email": "user@example.com",
-    "timestamp": 1572375004080,
-    "receipt": "B90YWS6AFX2LGWOXJ1LD-{{year}}-10-1572375004080",
-    "status": {
-        "code": 15,
-        "message": "Your submission has been accepted.",
-        "description": "This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted."
-    }
-}
-</pre></code>
-
-Sign and complete a HMDA submission.
-
- | |
----|---
-Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
-Headers | `Authorization: Bearer {{access_token}}`
-Body  |  `{"signed": true}`
-
-### Get Sign receipt
-
-> Example Request and Response
-
-<pre><code class="text">
-<b>Request:</b>
-curl -X GET \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/sign" \
-  -H 'Authorization: Bearer {{access_token}}'
-
-<b>JSON Response:</b>
-{
-    "email": "user@example.com",
-    "timestamp": 1572375004080,
-    "receipt": "B90YWS6AFX2LGWOXJ1LD-{{year}}-55-1572375004080",
-    "status": {
-        "code": 15,
-        "message": "Your submission has been accepted.",
-        "description": "This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted."
-    }
-}
-</pre></code>
-
- | |
----|---
-Method | `GET`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
-Headers | `Authorization: Bearer {{access_token}}`
-
-
-### Get Submission Summary
-
-> Example Request and Response
-
-<pre><code class="text">
-<b>Request:</b>
-curl -X GET \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions/{{sequenceNumber}}/summary'" \
-  -H 'Authorization: Bearer {{access_token}}'
-
-<b>JSON Response:</b>
-{
-    "submission": {
-        "id": {
-            "lei": "B90YWS6AFX2LGWOXJ1LD",
-            "period": {
-                "year": "2020"
-                "quarter": null
-            },
-            "sequenceNumber": 20
-        },
-        "status": {
-            "code": 15,
-            "message": "Your submission has been accepted.",
-            "description": "This completes your HMDA filing process for this year. If you need to upload a new HMDA file, the previously completed filing will not be overridden until all edits have been cleared and verified, and the new file has been submitted."
-        },
-        "start": 1634228617589,
-        "end": 1634229085705,
-        "fileName": "clean_file_5_rows_Bank0_2020.txt",
-        "receipt": "B90YWS6AFX2LGWOXJ1LD-2020-26-1634229085705",
-        "signerUsername": "test@testerbank.com"
-    },
-    "ts": {
-        "id": 1,
-        "institutionName": "Bank0",
-        "year": "2020"
-        "quarter": 4,
-        "contact": {
-            "name": "Mr. Smug Pockets",
-            "phone": "555-555-5555",
-            "email": "pockets@ficus.com",
-            "address": {
-                "street": "1234 Hocus Potato Way",
-                "city": "Tatertown",
-                "state": "UT",
-                "zipCode": "84096"
-            }
-        },
-        "agency": 9,
-        "totalLines": 5,
-        "taxId": "01-0123456",
-        "LEI": "B90YWS6AFX2LGWOXJ1LD"
-    }
-}
-</pre></code>
-
- | |
----|---
-Method | `GET`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
-Headers | `Authorization: Bearer {{access_token}}`
-
-## Quarterly Filing
-
-> **Example Request and Response**
-
-<pre><code class="text">
-<b>Request:</b>
-curl -X GET \
-  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/quarter/Q1/submissions/latest" \
-  -H 'Authorization: Bearer {{access_token}}' \
-
-<b>JSON Response:</b>
-{
-    "id": {
-        "lei": "B90YWS6AFX2LGWOXJ1LD",
-        "period": {
-            "year": "2020"
-            "quarter": "Q1"
-        },
-        "sequenceNumber": 10
-    },
-    "status": {
-        "code": 13,
-        "message": "Your data has macro edits that need to be reviewed.",
-        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded."
-    },
-    "start": 1585750668652,
-    "end": 0,
-    "fileName": "<file_name>",
-    "receipt": "",
-    "qualityVerified": false,
-    "macroVerified": false,
-    "qualityExists": true,
-    "macroExists": false
-}
-</pre></code>
 
 All the endpoints are the same for quarterly filing with the addtion of `quarter/Q1/`, `quarter/Q2/` or `quarter/Q3/` after the filing parameter and before the submission parameter.
