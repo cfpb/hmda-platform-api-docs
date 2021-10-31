@@ -1,17 +1,17 @@
-# Beta HMDA Filing API
+# HMDA Beta Platform Filing API
 
-The following documentation addresses the process for testing on the Beta HMDA Filing Platform and with its associated Beta Platform APIs.
+The following documentation outlines the simulated submission of HMDA data using the Beta Filing API.
 
-The [Beta HMDA Filing Platform](https://ffiec.beta.cfpb.gov/filing) serves as a test environment for pre-release builds of the HMDA Platform backend services and user interface. No data submitted to the Beta HMDA Platform will be considered for regulatory compliance.
+The [HMDA Beta Platform](https://ffiec.beta.cfpb.gov/filing) is a test environment for pre-release builds of the [HMDA Platform](https://ffiec.cfpb.gov/filing). No data submitted to the HMDA Beta Platform will be considered as evidence of regulatory compliance.
 
 ## Authorization
 
-To test a HMDA Filing using the Beta Platform API, a _bearer_ authorization token is required for all Beta Platform API calls. To acquire an authorization token use the `/auth` endpoint with your username and password as payload.
+To simulate filing of HMDA data using the Beta Filing API, a _bearer_ authorization token is required for all Beta Filing API calls. To acquire an authorization token use the `/auth` endpoint with your username and password as payload.
 
 For local development, no authorization is needed. See [One-line Local Development Environment (No Auth)](https://github.com/cfpb/hmda-platform#one-line-local-development-environment-no-auth) for more info.
 
 <p style="background: #ffe4c4; padding-top: 10px; padding-bottom: 10px;">
-<b><u>Please note:</u></b> When testing the filing process via the <b>Beta HMDA Filing Platform</b>, this filing process is for test purposes only and is <b>NOT</b> acknowledged as an official Filing. If you wish to submit <b>official regulatory data</b> to the HMDA Platform, please use the official application: <a href='https://ffiec.cfpb.gov/filing'>https://ffiec.cfpb.gov/filing</a>.
+<b><u>Please note:</u></b> The <b>HMDA Beta Platform</b> is for <b>test purposes only</b>. Any data submitted <b>WILL NOT</b> be considered as evidence of regulatory compliance. For official Submissions, please visit <a href='https://ffiec.cfpb.gov/filing'>https://ffiec.cfpb.gov/filing</a>.
 
 </p>
 
@@ -31,7 +31,7 @@ Payload  | client_id=hmda2-api <br> grant_type=password <br> username={{username
 
 ## Postman Collection
 
-The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/newman/postman) has been prepared to simplify the process of using the Beta HMDA Filing Platform APIs.
+The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/newman/postman) has been prepared to simplify the process of using the HMDA Platform Filing APIs.
 
 [Postman](https://www.postman.com/product/api-client/) is a client side application that allows users to easily construct Beta HMDA Platform API calls and import external Beta Platform API collections.
 
@@ -40,20 +40,20 @@ The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/
 Submission of HMDA data follows these steps which are mirrored in the Submission status codes:
 
 <p style="background: #ffe4c4; padding-top: 10px; padding-bottom: 10px;">
-<b><u>Please note:</u></b> The filing process via the <b>HMDA Beta</b> platform is for testing purposes only. Signing of Submissions to the Beta Platform is <b>disabled</b> to reinforce the fact that these are not official submissions. 
+<b><u>Please note:</u></b> The <b>HMDA Beta Platform</b> is for <b>test purposes only</b>. Signing of Submissions on the Beta Platform is <b>disabled</b>, as any data submitted <b>WILL NOT</b> be considered as evidence of regulatory compliance. 
 </p>
 
-1. Create a Filing: There is one Filing per institution, per filing season and it is created by the HMDA Operations team in preperation for each filing season.
-1. Create a Submission: Submissions are the primary object in a HMDA Filing. They are created within a Filing and each Submission is able to accept a single file upload. Many Submissions can be created for a Filing and they carry an id which is sequentially incremented.
-1. Upload a File: A file is then uploaded to the Submission which was created. Only one file can be uploaded to a Submission. To upload a new file you must create a new Submission.
+1. Create a Filing: There is one Filing per institution, per filing season. This Filing is created by the HMDA Operations team in preperation for each filing season.
+1. Create a Submission: Submissions are created within a Filing with each representing a single file upload. Many Submissions can be created for a Filing. Each new Submission is assigned a sequentially incremented ID.
+1. Upload a File: A file is then uploaded to the Submission that was created. Only one file can be uploaded per Submission. To upload a new file you must create a new Submission.
 1. Check the status of the Submission: If a Submission triggers Syntactical or Validity Edits, a corrected file must be uploaded.
 1. Validate Quality Edits: Review any Quality Edits that have been triggered and confirm that the submitted data are correct.
 1. Validate Macro Edits: Review any Macro Edits that have been triggered and confirm that the submitted data are correct.
-
+1. Simulation Complete: Signing is disabled for Beta Platform Submissions.
 
 ### Object Hierarchy
 
-<img src="../images/filingObjectHierarchy.png">
+<img src="images/filingObjectHierarchy.png">
 
 ### Submission Status
 
@@ -82,7 +82,7 @@ The Submission status is the best way to check the state of a Filing. It will be
 }
 ```
 
-In order to track the status of a Filing for a financial institution, the following states are captured by the backend:
+In order to track the status of a Filing for a financial institution, the following states are captured by the HMDA Platform:
 
 Code | Message | Description
 --- | --- | ---
@@ -131,7 +131,7 @@ curl -X POST \
 }
 </pre></code>
 
-For evey filing period, you must begin by starting a Filing. This only needs to be done once per filing season. On the official HMDA Filing Platform this Filing will have already been created by the HMDA Operations team. 
+For every filing period, you must begin by starting a Filing. This only needs to be done once per filing season. On the official HMDA Platform this Filing will have already been created by the HMDA Operations team. 
 The `POST` will result in a `200` only for the first time it's called. If the Filing for the given filing period already exists, the `POST` will return a `400`.
 
  | |
@@ -186,7 +186,7 @@ curl -X POST \
   "<%= config[:filingapihostbeta] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions" \
   -H 'Authorization: Bearer {{access_token}}' \
 
-A Submission must be created for each file upload. More than one Submission can be created for a filing period. The most recent Submission will be considered the latest Submission. Each `POST` on the Submission endpoint will return a new Submission `sequenceNumber`.
+A Submission must be created for each file upload. More than one Submission can be created for a filing period. The most recent Submission will be considered the Latest Submission. Each `POST` on the Submission endpoint will return a new Submission `sequenceNumber`.
 
 <b>JSON Response:</b>
 {
@@ -437,7 +437,7 @@ curl -X GET \
 }
 </pre></code>
 
-Returns detailed information about a specific Edit including a list of lines that triggered the Edit and the relevant fields from those lines.
+Returns detailed information about a specific Edit, including a list of lines that triggered the Edit and the relevant fields from those lines.
 
  | |
 ---|---
@@ -508,4 +508,40 @@ Headers | `Authorization: Bearer {{access_token}}`
 Body | `{"verified": true}`
 
 
-All the endpoints are the same for quarterly filing with the addtion of `quarter/Q1/`, `quarter/Q2/` or `quarter/Q3/` after the filing parameter and before the Submission parameter.
+## Quarterly Filing
+
+> **Example Request and Response**
+
+<pre><code class="text">
+<b>Request:</b>
+curl -X GET \
+  "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/quarter/Q1/submissions/latest" \
+  -H 'Authorization: Bearer {{access_token}}' \
+
+<b>JSON Response:</b>
+{
+    "id": {
+        "lei": "B90YWS6AFX2LGWOXJ1LD",
+        "period": {
+            "year": "2020"
+            "quarter": "Q1"
+        },
+        "sequenceNumber": 10
+    },
+    "status": {
+        "code": 13,
+        "message": "Your data has macro edits that need to be reviewed.",
+        "description": "Your file has been uploaded, but the filing process may not proceed until edits are verified or the file is corrected and re-uploaded."
+    },
+    "start": 1585750668652,
+    "end": 0,
+    "fileName": "<file_name>",
+    "receipt": "",
+    "qualityVerified": false,
+    "macroVerified": false,
+    "qualityExists": true,
+    "macroExists": false
+}
+</pre></code>
+
+All the endpoints are the same for quarterly filing with the addtion of `quarter/Q1/`, `quarter/Q2/` or `quarter/Q3/` after the filing parameter and before the submission parameter.

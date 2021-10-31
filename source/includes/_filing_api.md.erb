@@ -1,12 +1,12 @@
-# HMDA Filing API
+# HMDA Platform Filing API
 
-The following documentation addresses the process for filing a HMDA file and the associated APIs.
+The following documentation outlines the submission of HMDA data using the Filing API.
 
-This API is what powers the [HMDA Filing Platform application](https://ffiec.cfpb.gov/filing/)
+This API powers the [HMDA Filing application](https://ffiec.cfpb.gov/filing/)
 
 ## Authorization
 
-To file HMDA data using the API, a _bearer_ authorization token is required for all api calls. To acquire an authorization token use the `/auth` endpoint with your username and password as payload.
+To file HMDA data using the Filing API, a _bearer_ authorization token is required for all Filing API calls. To acquire an authorization token use the `/auth` endpoint with your username and password as payload.
 
 For local development, no authorization is needed. See [One-line Local Development Environment (No Auth)](https://github.com/cfpb/hmda-platform#one-line-local-development-environment-no-auth) for more info.
 
@@ -33,24 +33,23 @@ The [HMDA Postman Collection](https://github.com/cfpb/hmda-platform/tree/master/
 
 ## Filing Process
 
-Submission of a HMDA file flows in the following steps which are mirriored in the submission status codes:
+Submission of a HMDA file flows in the following steps which are mirrored in the Submission status codes:
 
-1. Create a Filing: These are unique per institution per filing season and are created by the HMDA-Ops teams in preperation for each filing season.
-1. Create a Submission: Submissions are the primary object in a HMDA Filing. They are created within a filing and each is able to accept a single file upload. Many submissions can be created for a filing and they carry an id which is incrimented.
-1. Upload a File: A file is then uploaded to the submission which was created. Only one file can be uploaded to a submission. To upload a new file you must create a new submission.
-1. Check the status of the Submission the file was uploaded to: If parsing syntactical or validity edits are triggered a new file must be uploaded.
-1. Validate Quality Edits: Review triggered Quality Edits and confirm the submitted data are correct.
-1. Validate Macro Edits: Review triggered Macro Edits and confirm the submitted data are correct.
+1. Create a Filing: There is one Filing per institution, per filing season. This Filing is created by the HMDA Operations team in preperation for each filing season.
+1. Create a Submission: Submissions are created within a Filing, each representing a single file upload. Many Submissions can be created for a Filing. Each new Submission is assigned a sequentially incremented ID.
+1. Upload a File: A file is then uploaded to the Submission that was created. Only one file can be uploaded per Submission. To upload a new file you must create a new Submission.
+1. Check the status of the Submission: If a Submission triggers Syntactical or Validity Edits, a corrected file must be uploaded.
+1. Validate Quality Edits: Review any Quality Edits that have been triggered and confirm that the submitted data are correct.
+1. Validate Macro Edits: Review any Macro Edits that have been triggered and confirm that the submitted data are correct.
 1. Sign the Submission: Perform final review of the data and complete the HMDA filing.
 
 ### Object Hierarchy
 
-<img src="../images/filingObjectHierarchy.png">
+<img src="images/filingObjectHierarchy.png">
 
 ### Submission Status
 
-As a submission represents a HMDA filing the submission status is the best way to see the state of a HMDA filing. It will be useful to query for 
-the submission status often throughout the process of uploading and checking edits for a submission.
+The Submission status is the best way to check the state of a Filing. It will be useful to query the Submission status often throughout the process of file upload and Edit validation.
 
 #### Submission Status Codes
 
@@ -75,7 +74,7 @@ the submission status often throughout the process of uploading and checking edi
 }
 ```
 
-In order to track the status of a filing for a financial institution, the following states are captured by the backend:
+In order to track the status of a Filing for a financial institution, the following states are captured by the HMDA Platform:
 
 Code | Message | Description
 --- | --- | ---
@@ -125,7 +124,7 @@ curl -X POST \
 }
 </pre></code>
 
-For evey filing period, you must begin by starting a filing. This only needs to be done once per filing season. In the production HMDA filing application this will have already been creaed. 
+For every filing period, you must begin by starting a Filing. This only needs to be done once per filing season. On the official HMDA Platform this Filing will have already been created by the HMDA Operations team.
 The `POST` will result in a `200` only for the first time it's called. If the filing for the given filing period already exists, the `POST` will return a `400`.
 
  | |
@@ -136,7 +135,7 @@ Headers| `Authorization: Bearer {{access_token}}`
 
 ### Get a Filing
 
-This endpoint can be used to confirm that a filing exists for the relevant period.
+This endpoint can be used to confirm that a Filing exists for the relevant period.
 
 > **Example Request and Response**
 
@@ -180,7 +179,7 @@ curl -X POST \
   "<%= config[:filingapihost] %>/institutions/B90YWS6AFX2LGWOXJ1LD/filings/{{year}}/submissions" \
   -H 'Authorization: Bearer {{access_token}}' \
 
-A submission must be created for each file upload. More than one submission can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
+A Submission must be created for each file upload. More than one Submission can be created for a filing period. The most recent Submission will be considered the Latest Submission. Each `POST` on the Submission endpoint will return a new Submission `sequenceNumber`.
 
 <b>JSON Response:</b>
 {
@@ -201,7 +200,7 @@ A submission must be created for each file upload. More than one submission can 
 }
 </pre></code>
 
-A submission must be created for each file upload. More than one submission can be created for a filing period. The most recent submission will be considered the latest submission. Each `POST` on the submission endpoint will return a new submission number.
+A new Submission must be created for each file upload. More than one Submission can be created for a filing period. The most recent Submission will be considered the Latest Submission. Each `POST` on the Submission endpoint will return a new Submission `sequenceNumber`.
 
  | |
 ---|---
@@ -242,7 +241,7 @@ curl -X GET \
 }
 </pre></code>
 
-Returns details about the last created submission including it's sequence number and status.
+Returns details about the last created Submission including its sequence number and status.
 
  | |
 ---|---
@@ -282,7 +281,7 @@ curl -X POST \
 }
 </pre></code>
 
-Upload a file to a submission.
+Upload a file to a Submission.
 
  | |
 ---|---
@@ -324,7 +323,7 @@ curl -X POST \
 }
 </pre></code>
 
-Returns a list of all parsing errors triggered by the file uploaded to a submission.
+Returns a list of all parsing errors triggered by the file uploaded to a Submission.
 
  | |
 ---|---
@@ -382,7 +381,7 @@ curl -X GET \
 }
 </pre></code>
 
-Returns a summary of all edits triggered by an upload in a submission.
+Returns a summary of all Edits triggered by an upload in a Submission.
 
  | |
 ---|---
@@ -431,7 +430,7 @@ curl -X GET \
 }
 </pre></code>
 
-Returns more information about a specific edit including a list of lines that triggered the edit and the relevant fields from those lines.
+Returns detailed information about a specific Edit, including a list of lines that triggered the Edit and the relevant fields from those lines.
 
  | |
 ---|---
@@ -461,7 +460,7 @@ curl -X POST \
 }
 </pre></code>
 
-Verify that the uploaded data is correct and that the reported quality edits are not relevent to the submission.
+Verify that the uploaded data is correct and that the reported Quality Edits are not relevent to the Submission.
 
  | |
 ---|---
@@ -492,7 +491,7 @@ curl -X POST \
 }
 </pre></code>
 
-Verify that the uploaded data is correct and that the reported macro edits are not relevent to the submission.
+Verify that the uploaded data is correct and that the reported Macro Edits are not relevent to the Submission.
 
  | |
 ---|---
@@ -525,7 +524,7 @@ curl -X POST \
 }
 </pre></code>
 
-Sign and complete a HMDA submission.
+Sign and complete a HMDA Submission.
 
  | |
 ---|---
