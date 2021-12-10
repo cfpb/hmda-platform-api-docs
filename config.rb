@@ -40,6 +40,8 @@ end
 activate :relative_assets
 set :relative_links, true
 
+activate :livereload
+
 # Build Configuration
 configure :build do
   # If you're having trouble with Middleman hanging, commenting
@@ -68,8 +70,14 @@ config[:apihost]
 set :filingapihost, 'https://ffiec.cfpb.gov/v2/filing'
 config[:filingapihost]
 
+set :filingapihostbeta, 'https://ffiec.beta.cfpb.gov/v2/filing'
+config[:filingapihostbeta]
+
 set :authhost, 'https://ffiec.cfpb.gov'
 config[:authhost]
+
+set :authhostbeta, 'https://ffiec.beta.cfpb.gov'
+config[:authhostbeta]
 
 set :adminapihost, 'http://localhost:8081'
 config[:adminapihost]
@@ -77,7 +85,7 @@ config[:adminapihost]
 set :publicapihost, 'https://ffiec.cfpb.gov/v2/public'
 config[:publicapihost]
 
-set :databrowserapihost, 'https://ffiec.cfpb.gov/v2'
+set :databrowserapihost, 'https://ffiec.cfpb.gov/v2/data-browser-api'
 config[:databrowserapihost]
 
 set :ratespreadapi, 'https://ffiec.cfpb.gov/public/rateSpread'
