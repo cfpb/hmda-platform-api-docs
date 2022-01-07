@@ -643,7 +643,7 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
+Endpoint | `<%= config[:filingapihost] %>/v2/filing/institutions/{{lei}}/filings/{{year}}/submissions/{{sequenceNumber}}/summary`
 Headers | `Authorization: Bearer {{access_token}}`
 
 ## Quarterly Filing
