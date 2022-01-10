@@ -23,6 +23,13 @@ You can now see the docs at http://localhost:4567. Whoa! That was fast!
 bundle exec middleman build --clean
 ```
 
+## Build from Docker container
+
+1. Build the included Dockerfile which builds the code: `docker build -t=<name:tag> .`
+1. Run the container: `docker run -i <name:tag> /bin/bash`
+1. Find the container name: `docker container ls`
+1. Copy the built files to your local machine: `docker cp <containerName>:./app/build/ ./dockerBuild`
+
 ## Publishing
 
 1. **Edit api host variables in ```config.rb``` (bottom of file)**
