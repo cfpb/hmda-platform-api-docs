@@ -90,3 +90,6 @@ config[:databrowserapihost]
 
 set :ratespreadapi, 'https://ffiec.cfpb.gov/public/rateSpread'
 config[:ratespreadapi]
+
+set :quarterlydataapi, 'https://ffiec.cfpb.gov/quarterly-data/graphs'
+config[:quarterlydataapi]

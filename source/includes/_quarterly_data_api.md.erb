@@ -10,7 +10,7 @@ This API is what powers the [Data Browser's Quarterly Graphs](<%= config[:authho
 
 <pre><code class="text">
 <b>Request:</b>
-curl "<%= config[:authhost] %>/quarterly-data/graphs" -H 'Content-Type: application/json'
+curl "<%= config[:quarterlydataapi] %>" -H 'Content-Type: application/json'
 
 <b>JSON Response:</b>
 {
@@ -33,7 +33,7 @@ curl "<%= config[:authhost] %>/quarterly-data/graphs" -H 'Content-Type: applicat
   | |
  ---|---
  Method  |  `GET`
- URL | `<%= config[:authhost] %>/quarterly-data/graphs/`
+ URL | `<%= config[:quarterlydataapi] %>`
  Return  |  JSON
 
 This endpoint lists out all the available graph data accessible through the API. The returned `graphs` field is a list of metadata consisting of `title`, `category`, and `endpoint`;
@@ -45,7 +45,7 @@ by appending the `endpoint` field of the desired graph metadata to the API root 
 
 <pre><code class="text">
 <b>Request:</b>
-curl "<%= config[:authhost] %>/quarterly-data/graphs/applications" -H 'Content-Type: application/json'
+curl "<%= config[:quarterlydataapi] %>/applications" -H 'Content-Type: application/json'
 
 <b>JSON Response:</b>
 {
@@ -80,11 +80,11 @@ curl "<%= config[:authhost] %>/quarterly-data/graphs/applications" -H 'Content-T
   | |
  ---|---
  Method  |  `GET`
- URL | `<%= config[:authhost] %>/quarterly-data/graphs/{endpoint}`
+ URL | `<%= config[:quarterlydataapi] %>/{endpoint}`
  Return  |  JSON
 
 To get the specific graph data, append the `endpoint` value from the above [Graph Data Summary](#quarterly-data-graph-api-quarterly-data-endpoints-graph-data-summary) section example response to the base url of `<%= config[:authhost] %>/quarterly-data/graphs/`,
-e.g. `<%= config[:authhost] %>/quarterly-data/graphs/applications`.
+e.g. `<%= config[:quarterlydataapi] %>/applications`.
 
 The response contains the following sections:
 
