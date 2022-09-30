@@ -67,10 +67,10 @@ end
 set :apihost, 'http://localhost:8070'
 config[:apihost]
 
-set :filingapihost, 'https://ffiec.cfpb.gov/v2/filing'
+set :filingapihost, 'https://ffiec.cfpb.gov/v2/filing/institutions/{{lei}}'
 config[:filingapihost]
 
-set :filingapihostbeta, 'https://ffiec.beta.cfpb.gov/v2/filing'
+set :filingapihostbeta, 'https://ffiec.beta.cfpb.gov/v2/filing/institutions/{{lei}}'
 config[:filingapihostbeta]
 
 set :authhost, 'https://ffiec.cfpb.gov'
@@ -90,3 +90,9 @@ config[:databrowserapihost]
 
 set :ratespreadapi, 'https://ffiec.cfpb.gov/public/rateSpread'
 config[:ratespreadapi]
+
+set :fileapi, 'https://hmda4.demo.cfpb.gov/file'
+config[:fileapi]
+
+set :s3api, 'https://s3.amazonaws.com/cfpb-hmda-public/prod'
+config[:s3api]
