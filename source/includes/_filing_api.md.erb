@@ -151,7 +151,7 @@ The `POST` will result in a `200` only for the first time it's called. If the fi
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}`
 Headers| `Authorization: Bearer {{access_token}}`
 
 ### Get a Filing
@@ -186,7 +186,7 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}`
 Headers | `Authorization: Bearer {{access_token}}`
 
 
@@ -226,7 +226,7 @@ A new Submission must be created for each file upload. More than one Submission 
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions`
 Headers  |  {{access_token}}
 
 ### Get the Latest Submission
@@ -267,7 +267,7 @@ Returns details about the last created Submission including its sequence number 
  | |
 ---|---
 Method | `GET`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/latest`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/latest`
 Headers | `Authorization: Bearer {{access_token}}`
 
 
@@ -307,7 +307,7 @@ Upload a file to a Submission.
  | |
 ---|---
 Method | `POST`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}`
 Headers  |  `Authorization: Bearer {{access_token}}`, `'Content-Type': multipart/form-data`
 Payload |  LAR file
 
@@ -349,7 +349,7 @@ Returns a list of all parsing errors triggered by the file uploaded to a Submiss
  | |
 ---|---
 Method | `GET`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/parseErrors`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}/parseErrors`
 Headers | `Authorization: Bearer {{access_token}}`
 
 ### View All Edits
@@ -407,7 +407,7 @@ Returns a summary of all Edits triggered by an upload in a Submission.
  | |
 ---|---
 Method | `GET`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}/edits`
 Headers | `Authorization: Bearer {{access_token}}`
 
 ### View Edit Details
@@ -456,7 +456,7 @@ Returns detailed information about a specific Edit, including a list of lines th
  | |
 ---|---
 Method | `GET`|
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/{{edit_code}}`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}/edits/{{edit_code}}`
 Headers | `Authorization: Bearer {{access_token}}`
 
 ### Verify Quality Edits
@@ -486,7 +486,7 @@ Verify that the uploaded data is correct and that the reported Quality Edits are
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/quality`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}/edits/quality`
 Headers | `Authorization: Bearer {{access_token}}`
 Body | `{"verified": true}`
 
@@ -517,7 +517,7 @@ Verify that the uploaded data is correct and that the reported Macro Edits are n
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/edits/macro`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}/edits/macro`
 Headers | `Authorization: Bearer {{access_token}}`
 Body | `{"verified": true}`
 
@@ -550,7 +550,7 @@ Sign and complete a HMDA Submission.
  | |
 ---|---
 Method | `POST`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}/sign`
 Headers | `Authorization: Bearer {{access_token}}`
 Body  |  `{"signed": true}`
 
@@ -580,7 +580,7 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}/sign`
 Headers | `Authorization: Bearer {{access_token}}`
 
 
@@ -643,7 +643,7 @@ curl -X GET \
  | |
 ---|---
 Method | `GET`
-Endpoint | `<%= config[:filingapihost] %>/{{year}}/submissions/{{sequenceNumber}}/sign`
+Endpoint | `<%= config[:filingapihost] %>/filings/{{year}}/submissions/{{sequenceNumber}}/sign`
 Headers | `Authorization: Bearer {{access_token}}`
 
 ## Quarterly Filing

@@ -17,28 +17,28 @@ The HMDA File API is used for accessing the Modified LAR and Institution Registe
 
 ### Get Modified LAR Pipe Delimited TXT File
 
-| |
+ | |
 ---|---
 Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/modifiedLar/year/{{year}}/institution/{{lei}}/txt`
 
 ### Get Modified LAR Pipe Delimited TXT File with Header
 
-| |
+ | |
 ---|---
 Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/modifiedLar/year/{{year}}/institution/{{lei}}/txt/header`
 
 ### Get Modified LAR CSV File
 
-| |
+ | |
 ---|---
 Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/modifiedLar/year/{{year}}/institution/{{lei}}/csv`
 
 ### Get Modified LAR CSV File with Header
 
-| |
+ | |
 ---|---
 Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/modifiedLar/year/{{year}}/institution/{{lei}}/csv/header`
@@ -65,7 +65,7 @@ As such, access to each IRS is restricted to users associated with the instituti
 
 (More information on authentication can be found above in the [Authorization section](https://cfpb.github.io/hmda-platform/#hmda-platform-filing-api-authorization) in the HMDA Platform Filing API section of these docs)
 
-| |
+ | |
 ---|---
 Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/reports/irs/year/{{year}}/institution/{{lei}}`
