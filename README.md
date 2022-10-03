@@ -2,6 +2,21 @@
 
 This repo is for the front end public api that lives here: https://cfpb.github.io/hmda-platform/
 
+## Prerequisite
+Have `homebrew` and `ruby` installed
+
+_Recommended to use rbenv and ruby-build from `homebrew`, and specify the ruby version in [.ruby-version](./.ruby-version)_
+```shell
+brew install rbenv ruby-build
+RUBY_VERSION=2.4.1
+ruby-build $RUBY_VERSION $HOME/.rbenv/versions/$RUBY_VERSION
+```
+
+Install bundler
+```shell
+gem install bundler
+```
+
 ## Running locally
 
 You can either do this locally, or with Vagrant:

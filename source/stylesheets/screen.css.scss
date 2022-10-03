@@ -446,7 +446,7 @@ html, body {
       vertical-align: top;
       line-height: 1.6;
       code {
-        white-space: nowrap;
+        word-break: break-all;
       }
     }
 
