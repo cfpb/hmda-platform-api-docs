@@ -9,34 +9,34 @@ The HMDA Platform serves a number of files including:
 1. Snapshot National Loan-Level Dataset
 1. Rate Spread Data
 
-The HMDA Platform serves these files in two seperate ways, through direct S3 links or through the HMDA File api.
+The HMDA Platform serves these files in two seperate ways, through the HMDA File api or direct S3 links.
 
 ## HMDA File API
 
 The HMDA File API is used for accessing the Modified LAR and Institution Register Summaries.
 
-### Get Modified LAR Pipe Delimited TXT File
+### Get Modified LAR Pipe Delimited .txt File
 
  | |
 ---|---
 Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/modifiedLar/year/{{year}}/institution/{{lei}}/txt`
 
-### Get Modified LAR Pipe Delimited TXT File with Header
+### Get Modified LAR Pipe Delimited .txt File with Header
 
  | |
 ---|---
 Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/modifiedLar/year/{{year}}/institution/{{lei}}/txt/header`
 
-### Get Modified LAR CSV File
+### Get Modified LAR .csv File
 
  | |
 ---|---
 Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/modifiedLar/year/{{year}}/institution/{{lei}}/csv`
 
-### Get Modified LAR CSV File with Header
+### Get Modified LAR .csv File with Header
 
  | |
 ---|---
@@ -73,6 +73,6 @@ Headers | `Authorization: Bearer {{access_token}}`
 
 ## Direct S3 File Service
 
-All other files are accessed through S3 links to the HMDA Platforms public S3 bucket.
+All other files are accessed through direcnt links to the HMDA Platform's public S3 bucket.
 
-These S3 links can be found in the following S3 bucket: `<%= config[:s3api] %>`. The list of avaiable filese can be found at `ffiec.cfpb.gov`.
+These S3 links are all prefixed with: `<%= config[:s3api] %>`. The list of available files can be found at ffiec.cfpb.gov.
