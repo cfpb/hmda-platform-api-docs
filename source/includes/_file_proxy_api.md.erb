@@ -2,14 +2,18 @@
 
 The HMDA Platform serves a number of files including:
 
-1. Documentation
-1. Modified LAR
-1. Institution Register Summaries
-1. Dynamic National Loan-Level Dataset
-1. Snapshot National Loan-Level Dataset
-1. Rate Spread Data
+1. [Documentation](https://ffiec.cfpb.gov/documentation)
+1. [Modified LAR](https://ffiec.cfpb.gov/data-publication/modified-lar)
+1. [Institution Register Summaries](https://ffiec.cfpb.gov/filing)
+1. [Dynamic National Loan-Level Dataset](https://ffiec.cfpb.gov/data-publication/dynamic-national-loan-level-dataset)
+1. [Snapshot National Loan-Level Dataset](https://ffiec.cfpb.gov/data-publication/snapshot-national-loan-level-dataset)
+1. [Disclosure Reports](https://ffiec.cfpb.gov/data-publication/disclosure-reports)
+1. [Aggregate Reports](https://ffiec.cfpb.gov/data-publication/aggregate-reports)
+1. [Rate Spread Data](https://ffiec.cfpb.gov/tools/rate-spread)
 
-The HMDA Platform serves these files in two seperate ways, through the HMDA File api or direct S3 links.
+The HMDA Platform serves these files in three seperate ways, through the HMDA File api, Githhub, and S3. 
+
+The HMDA File api is used to serve the Modfied LAR and Institution Register Summaries. Github is used to serve documentation in the form of markdown files which are formatted by the HMDA-Frontend. S3 is used to serve all other files
 
 ## HMDA File API
 
@@ -71,8 +75,10 @@ Method | `GET`
 Endpoint | `<%= config[:fileapi] %>/reports/irs/year/{{year}}/institution/{{lei}}`
 Headers | `Authorization: Bearer {{access_token}}`
 
-## Direct S3 File Service
+## Github File Service
 
-All other files are accessed through direct links to the HMDA Platform's public S3 bucket.
+Documentation served from github can be found on the [HMDA Frontend github repository](https://github.com/cfpb/hmda-frontend/tree/master/src/documentation/markdown)
 
-These S3 links are all prefixed with: `<%= config[:s3api] %>`. The list of available files can be found at [ffiec.cfpb.gov](ffiec.cfpb.gov).
+## S3 File Service
+
+All other files are accessed through direct links to the HMDA Platform's public S3 bucket. These S3 links are all prefixed with: `<%= config[:s3api] %>`.

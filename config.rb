@@ -94,7 +94,7 @@ config[:ratespreadapi]
 set :quarterlydataapi, 'https://ffiec.cfpb.gov/quarterly-data/graphs'
 config[:quarterlydataapi]
 
-set :fileapi, 'https://hmda4.demo.cfpb.gov/file'
+set :fileapi, 'https://ffiec.cfpb.gov/file'
 config[:fileapi]
 
 set :s3api, 'https://s3.amazonaws.com/cfpb-hmda-public/prod'
