@@ -37,9 +37,9 @@ This endpoint multiple ULIs with check digits in CSV format and returns whether 
 
 <pre><code class="text">
   <b>Request:</b>
-  curl POST 'https://ffiec.cfpb.gov/v2/public/uli/checkDigit' \
+  curl -X POST 'https://ffiec.cfpb.gov/v2/public/uli/checkDigit' \
   --header 'Content-Type: application/json' \
-  --data-raw '{loanId: "EILKZAIZF6TX4HB8ZDX33H"}'
+  --data-raw '{"loanId": "EILKZAIZF6TX4HB8ZDX33H"}'
 
   <b>JSON Response:</b>
   {
@@ -131,7 +131,7 @@ Return  |  CSV
 
 <pre><code class="text">
   <b>Request:</b>
-  curl POST 'https://ffiec.cfpb.gov/v2/public/uli/validate' \
+  curl -X POST 'https://ffiec.cfpb.gov/v2/public/uli/validate' \
   --header 'Content-Type: application/json' \
   --data-raw '{"uli": "EILKZAIZF6TX4HB8ZDX33H54"}'
 
